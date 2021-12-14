@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/JLearn.iml" filepath="$PROJECT_DIR$/JLearn.iml" />
+      <module fileurl="file://$PROJECT_DIR$/examples/examples.iml" filepath="$PROJECT_DIR$/examples/examples.iml" />
+      <module fileurl="file://$PROJECT_DIR$/regression/regression.iml" filepath="$PROJECT_DIR$/regression/regression.iml" />
+    </modules>
+  </component>
+</project>
