@@ -3,18 +3,45 @@ package com.pyredevelopment.data;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.LinkedList;
 
 /**
  * This is the dataframe object that the machine learning algorithms take as an input.
- * Note that this is an array-based object and intended to simulate a Panda dataFrame
+ * Note that this is an LinkedList-based object and intended to simulate a Panda dataFrame
  */
 public class DataFrame {
 
+    // - - - - - - - - - - Instance Values - - - - - - - - - -
+
+    // This saves the headers of the file
+    private String[] headers;
+
+    // Indicates the number of features
+    private int features;
+
     // This is the object that contains all the data
-    private Object[][] data;
+    private LinkedList<Instance> data;
 
 
-    // - - - - - - - - - - Static Methods - - - - - - - - - - -
+    // = = = = = = = = = = Instance Methods = = = = = = = = = =
+
+    // - - - - - - - - - - Public Methods - - - - - - - - - -
+
+    /**
+     * Allows you to set the headers on a DataFrame
+     * @param headers The headers you want set on the DataFrame
+     * @throws RuntimeException If number of headers != number of features
+     */
+    private void setHeaders(String[] headers) {
+
+        // Make sure the number of headers they provided are the same as number of features
+        if (this.headers != null && headers.length != features)
+            throw new RuntimeException("Number of headers provided doesn't equal number of features found!");
+    }
+
+    // = = = = = = = = = = Static Methods = = = = = = = = = = =
+
+    // - - - - - - - - - - Public Static Methods - - - - - - - - - -
 
     // - - - - - readCSV - - - - -
 
@@ -36,7 +63,13 @@ public class DataFrame {
             // Create a variable to store the current line being processed
             String currentLine;
 
+            DataFrame output = new DataFrame();
+
             // If we're including fileHeaders read that line first
+            if (includeFileHeaders)
+            {
+
+            }
 
             // For each line we iterate through
             while((currentLine = bufferedReader.readLine()) != null) {
