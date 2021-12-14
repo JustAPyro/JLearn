@@ -13,7 +13,7 @@ public class LinearRegressionExample {
 
         // First we load the data into a dataframe using CSV
         DataFrame data = DataFrame.readCSV("com.pyredevelopment.examples/src/resources/CarDetails.csv");
-
+        data.printHeaders();
 
     }
 

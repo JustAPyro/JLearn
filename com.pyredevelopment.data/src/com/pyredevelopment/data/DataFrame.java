@@ -25,6 +25,8 @@ public class DataFrame {
 
     // = = = = = = = = = = Instance Methods = = = = = = = = = =
 
+
+
     // - - - - - - - - - - Public Methods - - - - - - - - - -
 
     /**
@@ -32,12 +34,25 @@ public class DataFrame {
      * @param headers The headers you want set on the DataFrame
      * @throws RuntimeException If number of headers != number of features
      */
-    private void setHeaders(String[] headers) {
+    public void setHeaders(String[] headers) {
 
         // Make sure the number of headers they provided are the same as number of features
         if (this.headers != null && headers.length != features)
             throw new RuntimeException("Number of headers provided doesn't equal number of features found!");
+
+        this.headers = headers;
+
     }
+
+    /**
+     * Prints the header of this DataFrame
+     */
+    public void printHeaders() {
+        // For each header print, seperated by tab
+        for (String s : headers)
+            System.out.print(s + "\t");
+    }
+
 
     // = = = = = = = = = = Static Methods = = = = = = = = = = =
 
@@ -52,7 +67,7 @@ public class DataFrame {
      * @param includeFileHeaders If the csv includes headers as the first line or not
      * @return DataFrame representation of the file
      */
-    public static DataFrame readCSV(String fileLocation, boolean includeFileHeaders) {
+    public static DataFrame readCSV(String fileLocation, boolean includeFileHeaders, char divider) {
 
         // Try, in case we encounter IO exception
         try {
@@ -66,9 +81,37 @@ public class DataFrame {
             DataFrame output = new DataFrame();
 
             // If we're including fileHeaders read that line first
-            if (includeFileHeaders)
-            {
+            if (includeFileHeaders) {
 
+                // Get the first line of the file
+                String headerLine = bufferedReader.readLine();
+
+                // Create a list of the headers
+                LinkedList<String> headers = new LinkedList<>();
+
+                // And a buffer for each header we might add
+                String buffer = "";
+
+                // For each character
+                for (char c : headerLine.toCharArray()) {
+
+                    // If the character is the divider (usually comma)
+                    if (c == divider) {
+
+                        // Add the word to the headers
+                        headers.add(buffer);
+
+                    }
+                    else {
+
+                        // Other-wise add the character to the buffer
+                        buffer += c;
+
+                    }
+                }
+
+                // Convert the list to an array and pass it to setHeaders
+                output.setHeaders(headers.toArray(new String[0]));
             }
 
             // For each line we iterate through
@@ -79,7 +122,8 @@ public class DataFrame {
 
             }
 
-            return null;
+            // Return the DataFrame
+            return output;
 
         } catch (IOException e) {
             // If we do encounter an error, just print the error and return null
@@ -93,12 +137,13 @@ public class DataFrame {
      * Overloaded to allow you to call with just fileLocation by defaulting others
      * Defaults:
      * includeFileHeaders = true
+     * divider = , [comma]
      * @param fileLocation The location of the file you want to load
      * @return DataFrame representation of the file
      */
     public static DataFrame readCSV(String fileLocation) {
         // Just call the primary readCSV function, defaulting file headers to true
-        return readCSV(fileLocation, true);
+        return readCSV(fileLocation, true, ',');
     }
 
     // TODO: Implement reading ARFF to dataframe
