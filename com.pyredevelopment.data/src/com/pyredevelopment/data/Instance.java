@@ -53,12 +53,19 @@ public class Instance
                 stringBuffer += c;
             }
         }
+        stringObjects.add(stringBuffer);
 
         // Create a new array based on the size
         Object[] allObjects = new Object[stringObjects.size()];
 
         // For each string object determine their correct type and add them to the new array
         for (int i = 0; i < allObjects.length; i++) {
+            //TODO Remove try catch to max speed
+            try {
+                allObjects[i] = Double.valueOf(stringObjects.get(i));
+            } catch (Exception e) {
+                allObjects[i] = stringObjects.get(i);
+            }
             allObjects[i] = stringObjects.get(i);
         }
 
@@ -66,7 +73,10 @@ public class Instance
         return new Instance(allObjects);
     }
 
+    // ORGANIZE
 
+    public double feature(int i) {
 
-
+        return Double.parseDouble((String) instanceData[i]);
+    }
 }

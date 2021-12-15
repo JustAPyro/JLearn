@@ -9,5 +9,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="com.pyredevelopment.data" />
+    <orderEntry type="module" module-name="com.pyredevelopment.regression" />
   </component>
 </module>
