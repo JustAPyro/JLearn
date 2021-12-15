@@ -5,7 +5,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.NoSuchElementException;
 import java.util.Spliterator;
 import java.util.function.Consumer;
 
@@ -25,25 +24,33 @@ public class DataFrame implements Iterable<Instance>{
     private int instances;  // Number of instances or rows
 
     // This is the object that contains all the data
-    private LinkedList<Instance> data;
+    private final LinkedList<Instance> data = new LinkedList<>();
 
     // - - - - - - - - - - Constructors - - - - - - - - - -
 
     /**
      * Create the DataFrame / Instantiate
+     * Default empty constructor
      */
     public DataFrame() {
 
-        // Instantiate the data list
-        data = new LinkedList<>();
     }
 
     // - - - - - - - - - - - Getters / Setters / Printers - - - - - - - - - -
 
+    /**
+     *
+     * @return True if this Dataframe contains headers, false otherwise
+     */
+    @SuppressWarnings("unused")
     public boolean getContainsHeaders() {
         return containsHeaders;
     }
 
+    /**
+     * This will allow you to change the configuration of if the DataFrame includes headers or not
+     * @param containsHeaders Whether you want this DataFrame to contain headers
+     */
     public void setContainsHeaders(boolean containsHeaders) {
         this.containsHeaders = containsHeaders;
     }
@@ -70,6 +77,7 @@ public class DataFrame implements Iterable<Instance>{
     /**
      * Prints the header of this DataFrame
      */
+    @SuppressWarnings("unused")
     public void printHeaders() {
         // For each header print, seperated by tab
         for (String s : headers)
@@ -86,15 +94,16 @@ public class DataFrame implements Iterable<Instance>{
     }
 
     /**
-     * TODO: FILL
+     * Note: This only returns the QUANTITY of features, not the features themselves
+     * @return The number of features (columns)
      */
     public int numFeatures() {
         return features;
     }
 
     /**
-     * TODO: FILL
-     * @return
+     * Note: This only returns the QUANTITY of instances, not the instances themselves
+     * @return The number of instances (Rows, data points) in this data frame
      */
     public int numInstances() {
         return instances;
@@ -137,7 +146,7 @@ public class DataFrame implements Iterable<Instance>{
                 LinkedList<String> headers = new LinkedList<>();
 
                 // And a buffer for each header we might add
-                String buffer = "";
+                StringBuilder buffer = new StringBuilder();
 
                 // For each character
                 for (char c : headerLine.toCharArray()) {
@@ -146,18 +155,18 @@ public class DataFrame implements Iterable<Instance>{
                     if (c == divider) {
 
                         // Add the word to the headers and clear buffer
-                        headers.add(buffer);
-                        buffer = "";
+                        headers.add(buffer.toString());
+                        buffer = new StringBuilder();
 
                     }
                     else {
 
                         // Other-wise add the character to the buffer
-                        buffer += c;
+                        buffer.append(c);
 
                     }
                 }
-                headers.add(buffer);
+                headers.add(buffer.toString());
 
                 // Set contains headers to true
                 output.setContainsHeaders(true);
@@ -199,29 +208,37 @@ public class DataFrame implements Iterable<Instance>{
     }
 
     // TODO: Implement reading ARFF to dataframe
+    @SuppressWarnings("unused")
     public static DataFrame readARFF() {
         throw new RuntimeException("NOT IMPLEMENTED");
     }
 
     // TODO: Implement reading XML to dataframe
+    @SuppressWarnings("unused")
     public static DataFrame readXML() {
         throw new RuntimeException("NOT IMPLEMENTED");
     }
 
     // TODO: Implement reading Excel files to dataframe
+    @SuppressWarnings("unused")
     public static DataFrame readExcel() {
         throw new RuntimeException("NOT IMPLEMENTED");
     }
 
+    // - - - - - - - - - - OVERRIDDEN ENHANCED FOR LOOP - - - - - - - - - -
 
-    // PLEASE ORGANIZE AND ADD JAVADOCS
-
+    /**
+     *
+     * @return An object that will allow you to iterate through the instances available to this dataframe
+     */
     @Override
     public Iterator<Instance> iterator() {
 
-        return new Iterator<Instance>() {
+        // Return a new iterator of the available instances
+        return new Iterator<>() {
 
-            Iterator<Instance> iter = data.iterator();
+            // Just return the iterator associated with the data structure
+            final Iterator<Instance> iter = data.iterator();
 
             @Override
             public boolean hasNext() {
@@ -235,11 +252,19 @@ public class DataFrame implements Iterable<Instance>{
         };
     }
 
+    /**
+     * Overridden to allow access to enhanced for loop when using DataFrame
+     * @param action See above
+     */
     @Override
     public void forEach(Consumer<? super Instance> action) {
         Iterable.super.forEach(action);
     }
 
+    /**
+     * Required Override
+     * @return Returns a spliterator of instances
+     */
     @Override
     public Spliterator<Instance> spliterator() {
         return Iterable.super.spliterator();
