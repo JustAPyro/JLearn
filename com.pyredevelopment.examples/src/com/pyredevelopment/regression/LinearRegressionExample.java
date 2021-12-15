@@ -18,6 +18,9 @@ public class LinearRegressionExample {
         // fit the model to our data
         lr.fit(data);
 
+        // Print our linear regression
+        System.out.println(lr);
+
     }
 
 }

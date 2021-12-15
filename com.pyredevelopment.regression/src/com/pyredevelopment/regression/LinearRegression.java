@@ -13,15 +13,10 @@ public class LinearRegression {
     private double a;   // y-intercept
     private double b;   // slope of line
 
-    private double[] x;
-    private double[] y;
-    private double[] xy;
-    private double[] xSquared;
-    private double[] ySquared;
-
-    private final int SUM = 0;
-
-
+    /**
+     * Allows you to fit this linear regression model to a dataframe provided
+     * @param data The data you want to fit/train the model on
+     */
     public void fit(DataFrame data) {
 
         // Quick error handling, make sure we have two features
@@ -31,43 +26,39 @@ public class LinearRegression {
         // Get the number of rows/instances in the data
         int n = data.numInstances();
 
+        // This is where we will store the sums as we perform the regression
+        double xSUM = 0;
+        double ySUM = 0;
+        double xySUM = 0;
+        double xSquaredSUM = 0;
 
-
-        // Create lists that are just as long to hold the data (Plus one row for sums)
-        x = new double[n+1];
-        y = new double[n+1];
-        xy = new double[n+1];
-        xSquared = new double[n+1];
-        ySquared = new double[n+1];
-
-        int index = 1;
+        // For each instance of data
         for (Instance instance : data) {
 
-            x[index] = instance.feature(0);
-            x[SUM] += instance.feature(0);
+            // Add the features and calculations to appropriate locations
+            xSUM += instance.feature(0);
+            ySUM += instance.feature(1);
+            xySUM += instance.feature(0) * instance.feature(1);
+            xSquaredSUM += Math.pow(instance.feature(0), 2);
 
-            y[index] = instance.feature(1);
-            y[SUM] += instance.feature(1);
-
-            xy[index] = instance.feature(0) * instance.feature(1);
-            xy[SUM] += instance.feature(0) * instance.feature(1);
-
-            xSquared[index] = Math.pow(instance.feature(0), 2);
-            xSquared[SUM] += Math.pow(instance.feature(0), 2);
-
-            ySquared[index] = Math.pow(instance.feature(1), 2);
-            ySquared[SUM] += Math.pow(instance.feature(1), 2);
-
-            index++;
         }
 
         // Calculate the value of a/b using the linear regression equation
-        a = (y[SUM]*xSquared[SUM]-x[SUM]*xy[SUM])/(n*xSquared[SUM]-Math.pow(x[SUM], 2));
-        b = (n*xy[SUM]-x[SUM]*y[SUM])/(n*xSquared[SUM]-Math.pow(x[SUM], 2));
-
-        System.out.println("Linear Regression is: y = " + b + "x + " + a);
-
+        double divisor = n * xSquaredSUM - Math.pow(xSUM, 2);
+        a = (ySUM*xSquaredSUM-xSUM*xySUM)/ divisor;
+        b = (n*xySUM-xSUM*ySUM)/ divisor;
 
     }
+
+    /**
+     *
+     * @return A string representation of the object
+     */
+    @Override
+    public String toString() {
+        return "y = " + b + "x + " + a;
+    }
+
+
 
 }
