@@ -3,51 +3,24 @@ package com.pyredevelopment.window;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
-
-import java.util.ArrayList;
 import java.util.HashMap;
 
-import static java.lang.Thread.sleep;
-
+/**
+ * This is a primarily static class that handles all the back end and JavaFX Thread for the Window object wrappers
+ */
 public class WindowManager extends Application{
 
     // This is a volatile flag indicating if the JFX toolkit is instantiated
     private static volatile boolean javaFxActive = false;
 
-    static HashMap<Window, Stage> windows = new HashMap<>();
+    // This allows Window objects to pass themselves in to indicate which stage they want to modify
+    private static final HashMap<Window, Stage> windows = new HashMap<>();
 
-    public static void newWindow(Window window) {
-
-        // Wait for the volatile flag to be true
-        while (!javaFxActive)
-            Thread.onSpinWait();
-
-        // Create a new frame
-        Platform.runLater(() -> {
-
-            Stage stage = new Stage();
-
-            windows.put(window, stage);
-
-
-            stage.show();
-        });
-
-    }
-
-    public static void setTitle(Window window, String title) {
-        getStage(window).setTitle(title);
-    }
-
-    private static Stage getStage(Window window) {
-        while (!windows.containsKey(window))
-            Thread.onSpinWait();
-
-        return windows.get(window);
-    }
-
-
-
+    /**
+     * This has to be called before any other WindowManager functions can be called,
+     * it will initialize the JavaFX Thread and prepare the class to manage Stage-Window interactions.
+     * NOTE: If for some reason this fails, following methods may DeadLock trying to access specific Stages
+     */
     public static void initialize()
     {
         // Create a new thread and launch the JFX application on it
@@ -57,6 +30,61 @@ public class WindowManager extends Application{
         t.start();
     }
 
+    /**
+     * This allows the Window wrapper class to create a new Stage
+     * @param window The Window wrapper that will control this stage
+     */
+    public static void newWindow(Window window) {
+
+        // Wait for the volatile flag to be true
+        while (!javaFxActive)
+            Thread.onSpinWait();
+
+        // Run this on the JavaFX Thread whenever possible
+        Platform.runLater(() -> {
+            Stage stage = new Stage();      // Create a new stage
+            windows.put(window, stage);     // Insert it into the window index hashmap
+            stage.show();                   // Set it to display
+        });
+
+    }
+
+    /**
+     * Allows a Window wrapper to set the title of a window
+     * @param window The window object handler
+     * @param title The title they want the window set to
+     */
+    public static void setTitle(Window window, String title) {
+        getStage(window).setTitle(title);
+    }
+
+    // - - - - - - - - - - Private Methods - - - - - - - - - -
+
+    /**
+     * This allows class methods to get the stage they should be modifying but ensures that initialization has completed
+     * first.
+     * @param window The window associated with the stage you want to access
+     * @return The stage that is managed by {@param window}
+     */
+    private static Stage getStage(Window window) {
+
+        // While there isn't a window in the hashmap, let the thread wait
+        //noinspection LoopConditionNotUpdatedInsideLoop
+        while (!windows.containsKey(window)) {
+            Thread.onSpinWait();
+        }
+
+
+        // Once we know that the hashmap contains the key, pass the window to retrieve the stage and return it
+        return windows.get(window);
+    }
+
+    // - - - - - - - - - - Overridden Methods - - - - - - - - - -
+
+    /**
+     * Entry point for the JavaFX Thread. This tells the JavaFX to remain open and waiting to handle any other functions
+     * @param stage The stage provided by default
+     */
     @Override
     public void start(Stage stage) {
         // Set the javaFX thread/toolkit to remain open ad set our flag to true
