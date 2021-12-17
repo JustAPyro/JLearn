@@ -3,14 +3,11 @@ package com.pyredevelopment;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
-public class Window extends Application {
+import static javafx.application.Application.launch;
 
-    public static void main(String[] args) {
-        launch(args);
-    }
+public class Window {
 
-    @Override
-    public void start(Stage stage) throws Exception {
-        stage.show();
+    public Window() {
+        launch(WindowManager.class);
     }
 }
