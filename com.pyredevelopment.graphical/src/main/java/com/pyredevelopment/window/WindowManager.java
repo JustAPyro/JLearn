@@ -2,11 +2,15 @@ package com.pyredevelopment.window;
 
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import java.util.HashMap;
 
 /**
- * This is a primarily static class that handles all the back end and JavaFX Thread for the Window object wrappers
+ * This is a primarily static class that handles all the back end and JavaFX Thread for the Window object wrappers.
+ * <b><u>YOU ARE RECOMMENDED AGAINST USING THIS CLASS DIRECTLY</u></b>
  */
 public class WindowManager extends Application{
 
@@ -43,8 +47,15 @@ public class WindowManager extends Application{
         // Run this on the JavaFX Thread whenever possible
         Platform.runLater(() -> {
             Stage stage = new Stage();      // Create a new stage
-            windows.put(window, stage);     // Insert it into the window index hashmap
-            stage.show();                   // Set it to display
+
+            VBox root = new VBox();
+            Canvas canvas = new Canvas(500, 500);
+            canvas.getGraphicsContext2D().fillRect(50, 50, 50, 50);
+            root.getChildren().add(canvas);
+
+            stage.setScene(new Scene(root));    // Set the root into the scene
+            windows.put(window, stage);         // Insert it into the window index hashmap
+            stage.show();                       // Set it to display
         });
 
     }
@@ -56,6 +67,18 @@ public class WindowManager extends Application{
      */
     public static void setTitle(Window window, String title) {
         getStage(window).setTitle(title);
+    }
+
+    /**
+     * Allows a window wrapper to set the size of a window
+     * @param window The window who's size you want to chage
+     * @param width The desired width
+     * @param height The desired height
+     */
+    public static void setSize(Window window, int width, int height) {
+        Stage s = getStage(window); // Get the stage we're working on
+        s.setWidth(width);          // Set the width of it
+        s.setHeight(height);        // Set the height of it
     }
 
     // - - - - - - - - - - Private Methods - - - - - - - - - -
