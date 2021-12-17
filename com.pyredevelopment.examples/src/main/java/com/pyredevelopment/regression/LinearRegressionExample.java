@@ -1,6 +1,6 @@
 package com.pyredevelopment.regression;
 
-import com.pyredevelopment.Window;
+import com.pyredevelopment.window.Window;
 import com.pyredevelopment.data.DataFrame;
 
 
@@ -25,7 +25,10 @@ public class LinearRegressionExample {
 
         // Create a GUI!
         Window win = new Window();
+        System.out.println("Ending");
 
+        // TODO: Implement this
+        // Plot plot = Plot.scatterPlot(data)
 
     }
 
