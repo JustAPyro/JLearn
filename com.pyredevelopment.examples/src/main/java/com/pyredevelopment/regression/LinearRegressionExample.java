@@ -25,7 +25,7 @@ public class LinearRegressionExample {
 
         // Create a GUI!
         Window win = new Window();
-        System.out.println("Ending");
+        win.setTitle("Linear Regression Example");
 
         // TODO: Implement this
         // Plot plot = Plot.scatterPlot(data)

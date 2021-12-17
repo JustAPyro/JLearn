@@ -1,9 +1,8 @@
 package com.pyredevelopment.window;
 
-import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.stage.Stage;
 
+import static java.lang.Thread.sleep;
 import static javafx.application.Application.launch;
 
 /**
@@ -11,16 +10,27 @@ import static javafx.application.Application.launch;
  */
 public class Window {
 
+    // This flag indicates if the WindowManager has been initialized
+    private static boolean wmReady = false;
 
     public Window() {
 
-        System.out.println("First");
-        WindowManager.myInit();
-        System.out.println("Mid");
-        WindowManager.newFrame();
-        System.out.println("Last");
+        // If it's not ready
+        if (!wmReady) {
+            // Initialize WindowManager and set wmReady to true
+            WindowManager.initialize();
+            wmReady = true;
+        }
+
+
+        WindowManager.newWindow(this);
 
     }
+
+    public void setTitle(String title) {
+        WindowManager.setTitle(this, title);
+    }
+
 
 
 
