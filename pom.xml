@@ -6,11 +6,20 @@
 
     <groupId>com.pyredevelopment</groupId>
     <artifactId>JLearn</artifactId>
+    <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>com.pyredevelopment.data</module>
+        <module>com.pyredevelopment.examples</module>
+        <module>com.pyredevelopment.regression</module>
+        <module>com.pyredevelopment.graphical</module>
+    </modules>
 
     <properties>
         <maven.compiler.sourcesZS>11</maven.compiler.sourcesZS>
         <maven.compiler.target>11</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-    
+
+
 </project>

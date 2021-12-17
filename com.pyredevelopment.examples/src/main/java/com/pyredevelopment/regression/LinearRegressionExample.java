@@ -2,6 +2,7 @@ package com.pyredevelopment.regression;
 
 import com.pyredevelopment.data.DataFrame;
 
+
 /**
  * This class gives an example of simple Linear Regression using JLearn
  */
@@ -20,6 +21,8 @@ public class LinearRegressionExample {
 
         // Print our linear regression
         System.out.println(lr);
+
+
 
     }
 
