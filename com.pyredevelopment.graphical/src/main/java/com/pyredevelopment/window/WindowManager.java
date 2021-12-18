@@ -1,5 +1,6 @@
 package com.pyredevelopment.window;
 
+import com.pyredevelopment.chart.Chart;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Scene;
@@ -19,6 +20,7 @@ public class WindowManager extends Application{
 
     // This allows Window objects to pass themselves in to indicate which stage they want to modify
     private static final HashMap<Window, Stage> windows = new HashMap<>();
+    private static final HashMap<Stage, Canvas> canvases = new HashMap<>();
 
     /**
      * This has to be called before any other WindowManager functions can be called,
@@ -50,7 +52,7 @@ public class WindowManager extends Application{
 
             VBox root = new VBox();
             Canvas canvas = new Canvas(500, 500);
-            canvas.getGraphicsContext2D().fillRect(50, 50, 50, 50);
+            canvases.put(stage, canvas);
             root.getChildren().add(canvas);
 
             stage.setScene(new Scene(root));    // Set the root into the scene
@@ -79,6 +81,16 @@ public class WindowManager extends Application{
         Stage s = getStage(window); // Get the stage we're working on
         s.setWidth(width);          // Set the width of it
         s.setHeight(height);        // Set the height of it
+    }
+
+    public static void draw(Window window, Chart chart) {
+        Stage s = getStage(window); // Get the stage
+        Canvas c = canvases.get(s); // Get the canvas associated with the stage
+
+        // Draw the chart on the canvas
+        chart.draw(c);
+
+
     }
 
     // - - - - - - - - - - Private Methods - - - - - - - - - -

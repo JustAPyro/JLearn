@@ -16,4 +16,16 @@ public class Point {
         this.size = size;
         this.color = new double[]{1, 0, 0};
     }
+
+    public double getX() {
+        return x;
+    }
+
+    public double getY() {
+        return y;
+    }
+
+    public double getSize() {
+        return size;
+    }
 }

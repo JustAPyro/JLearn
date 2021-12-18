@@ -15,21 +15,17 @@ public class LinearRegressionExample {
         // Load the data
         DataFrame data = DataFrame.readCSV("C:/Users/Luke/Programming/DataSets/Daniel/Absorbance_BSA");
 
-        // Create a linear regression object
+        // Create a linear regression object and fit the model to data
         LinearRegression lr = new LinearRegression();
-
-        // fit the model to our data
         lr.fit(data);
 
         // Print our linear regression
         System.out.println(lr);
 
-        // Create a GUI!
+        // Create a GUI and ScatterPlot based on our data
         Window window = new Window();
-
-        // Create a plot to see your data visually
         ScatterPlot plot = new ScatterPlot(data);
-
+        plot.setTitle("Bradford Assay BSA Standard Curve");
         window.show(plot);
 
 

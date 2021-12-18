@@ -117,7 +117,8 @@ public class Window {
     // - - - - - - - - - - Other Methods - - - - - - - - - -
 
     public void show(Chart chart) {
-
+        // Have the window manager draw the chart on this window
+        WindowManager.draw(this, chart);
     }
 
 
