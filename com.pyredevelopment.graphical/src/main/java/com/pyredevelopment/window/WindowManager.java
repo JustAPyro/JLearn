@@ -79,8 +79,10 @@ public class WindowManager extends Application{
      */
     public static void setSize(Window window, int width, int height) {
         Stage s = getStage(window); // Get the stage we're working on
-        s.setWidth(width);          // Set the width of it
-        s.setHeight(height);        // Set the height of it
+        Canvas c = canvases.get(s);
+
+        c.setWidth(width);          // Set the width of it
+        c.setHeight(height);        // Set the height of it
     }
 
     public static void draw(Window window, Chart chart) {

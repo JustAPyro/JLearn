@@ -3,7 +3,7 @@ package com.pyredevelopment.chart;
 import com.pyredevelopment.data.DataFrame;
 import com.pyredevelopment.data.Instance;
 import com.pyredevelopment.graphics.Point;
-import javafx.geometry.Pos;
+import javafx.geometry.Insets;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.text.TextAlignment;
@@ -15,9 +15,13 @@ import java.util.ArrayList;
  */
 public class ScatterPlot implements Chart{
 
-    // This contains a list of the points in the scatterplots
+    // This contains a list of the points in the scatter-plots
     ArrayList<Point> scatterPoints = new ArrayList<>();
 
+    // Graphical Information
+    private Insets padding = new Insets(10, 10, 10, 10);
+
+    // Logical/Organization Information
     String title = "Scatter Plot";
 
     public ScatterPlot(DataFrame data) {
@@ -39,10 +43,16 @@ public class ScatterPlot implements Chart{
     }
 
     public void draw(Canvas canvas) {
+        // Get the graphics Context
         GraphicsContext gc = canvas.getGraphicsContext2D();
+
+        // Stroke the border of the box
+        gc.strokeRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
         gc.setTextAlign(TextAlignment.CENTER);
         gc.strokeText(title, canvas.getWidth()/2, 10);
+
+
 
         // For each point
         for (Point p : scatterPoints) {
