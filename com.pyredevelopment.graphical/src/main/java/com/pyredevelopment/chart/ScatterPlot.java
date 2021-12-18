@@ -6,6 +6,7 @@ import com.pyredevelopment.graphics.Point;
 import javafx.geometry.Insets;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ public class ScatterPlot implements Chart{
     ArrayList<Point> scatterPoints = new ArrayList<>();
 
     // Graphical Information
-    private Insets padding = new Insets(10, 10, 10, 10);
+    private Insets chartPadding = new Insets(20, 10, 10, 10);
 
     // Logical/Organization Information
     String title = "Scatter Plot";
@@ -34,7 +35,7 @@ public class ScatterPlot implements Chart{
         for (Instance inst : data) {
 
             // Create a new point associated with the data point
-            scatterPoints.add(new Point(inst.feature(0), inst.feature(1), 20));
+            scatterPoints.add(new Point(inst.feature(0), inst.feature(1), 10));
         }
     }
 
@@ -46,11 +47,20 @@ public class ScatterPlot implements Chart{
         // Get the graphics Context
         GraphicsContext gc = canvas.getGraphicsContext2D();
 
-        // Stroke the border of the box
-        gc.strokeRect(0, 0, canvas.getWidth(), canvas.getHeight());
+        int $this = 0;
+        int _isweird;
 
         gc.setTextAlign(TextAlignment.CENTER);
+        Text titleText = new Text(title);
+        titleText.getLayoutBounds().getHeight(); // Get the height of the text
         gc.strokeText(title, canvas.getWidth()/2, 10);
+
+        // Stroke the border of the box
+        gc.strokeRect(chartPadding.getLeft(), chartPadding.getTop(),                    // Start in top left based on left/top padding
+                canvas.getWidth()- chartPadding.getLeft()- chartPadding.getRight(),         // Width is canvas width - padding on left/right
+                canvas.getHeight()- chartPadding.getTop()- chartPadding.getBottom());       // Height is canvas height - padding on top/bottom
+
+
 
 
 
