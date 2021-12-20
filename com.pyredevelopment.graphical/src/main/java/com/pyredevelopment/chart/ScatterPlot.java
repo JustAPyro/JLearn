@@ -4,10 +4,10 @@ import com.pyredevelopment.data.DataFrame;
 import com.pyredevelopment.data.Instance;
 import com.pyredevelopment.graphics.Point;
 import javafx.geometry.Insets;
+import javafx.geometry.VPos;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
+import javafx.scene.text.*;
 
 import java.util.ArrayList;
 
@@ -20,10 +20,11 @@ public class ScatterPlot implements Chart{
     ArrayList<Point> scatterPoints = new ArrayList<>();
 
     // Graphical Information
-    private Insets chartPadding = new Insets(20, 10, 10, 10);
+    private Insets chartPadding = new Insets(0, 0, 0, 0);
 
     // Logical/Organization Information
     String title = "Scatter Plot";
+    Font titleFont = Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 20);
 
     public ScatterPlot(DataFrame data) {
 
@@ -39,29 +40,37 @@ public class ScatterPlot implements Chart{
         }
     }
 
+    /**
+     * Allows you to set the title (Primary header) of the Scatter plot
+     * @param title The title you would like given to the scatter plot
+     */
     public void setTitle(String title) {
         this.title = title;
     }
 
+    /**
+     * Draws the scatter-plot onto the provided canvas, using available parameters
+     * @param canvas The canvas you want to draw to
+     */
     public void draw(Canvas canvas) {
         // Get the graphics Context
         GraphicsContext gc = canvas.getGraphicsContext2D();
 
-        int $this = 0;
-        int _isweird;
-
+        gc.setTextBaseline(VPos.TOP);
         gc.setTextAlign(TextAlignment.CENTER);
-        Text titleText = new Text(title);
-        titleText.getLayoutBounds().getHeight(); // Get the height of the text
-        gc.strokeText(title, canvas.getWidth()/2, 10);
+        gc.setFont(titleFont);
+
+
+        gc.fillText(title, canvas.getWidth()/2, 0);
+
+        Insets adjPadding = new Insets(titleFont.getSize(), 0, 0, 0);
+
+
 
         // Stroke the border of the box
-        gc.strokeRect(chartPadding.getLeft(), chartPadding.getTop(),                    // Start in top left based on left/top padding
-                canvas.getWidth()- chartPadding.getLeft()- chartPadding.getRight(),         // Width is canvas width - padding on left/right
-                canvas.getHeight()- chartPadding.getTop()- chartPadding.getBottom());       // Height is canvas height - padding on top/bottom
-
-
-
+        gc.strokeRect(adjPadding.getLeft(), adjPadding.getTop(),                    // Start in top left based on left/top padding
+                canvas.getWidth()-adjPadding.getLeft()-adjPadding.getRight(),         // Width is canvas width - padding on left/right
+                canvas.getHeight()-adjPadding.getTop()-adjPadding.getBottom());       // Height is canvas height - padding on top/bottom
 
 
         // For each point
