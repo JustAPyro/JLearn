@@ -13,7 +13,9 @@ public class LinearRegressionExample {
     public static void main(String[] args) {
 
         // Load the data
+        long before = System.nanoTime();
         DataFrame data = DataFrame.readCSV("C:/Users/Luke/Programming/DataSets/Daniel/Absorbance_BSA");
+        System.out.println((System.nanoTime()-before)/10000000);
 
         // Create a linear regression object and fit the model to data
         LinearRegression lr = new LinearRegression();
@@ -24,9 +26,9 @@ public class LinearRegressionExample {
 
         // Create a GUI and ScatterPlot based on our data
         Window window = new Window();
-
-        // Create a plot and label it with our data
         ScatterPlot plot = new ScatterPlot(data);
+
+        // Label our plot
         plot.setTitle("Bradford Assay BSA Standard Curve");
         plot.setDependentLabel("Absorbance");
         plot.setIndependentLabel("BSA Concentration");

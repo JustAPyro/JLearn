@@ -2,6 +2,7 @@ package com.pyredevelopment.chart;
 
 import com.pyredevelopment.data.DataFrame;
 import com.pyredevelopment.data.Instance;
+import com.pyredevelopment.graphics.Cartesian;
 import com.pyredevelopment.graphics.Point;
 import javafx.geometry.Insets;
 import javafx.geometry.VPos;
@@ -30,7 +31,7 @@ public class ScatterPlot implements Chart{
     String xLabel = "Independent";
     String yLabel = "Dependent";
     Font labelFont = Font.font("verdana", FontWeight.NORMAL, FontPosture.REGULAR, 16);
-    
+
 
     public ScatterPlot(DataFrame data) {
 
@@ -75,45 +76,42 @@ public class ScatterPlot implements Chart{
      * @param canvas The canvas you want to draw to
      */
     public void draw(Canvas canvas) {
-        // Get the graphics Context
+        // Get the graphics Context and set Text to center
         GraphicsContext gc = canvas.getGraphicsContext2D();
-
-        gc.setTextBaseline(VPos.TOP);
         gc.setTextAlign(TextAlignment.CENTER);
+
+        // Draw the title at the top
+        gc.setTextBaseline(VPos.TOP);
         gc.setFont(titleFont);
-
-
-
-
         gc.fillText(title, canvas.getWidth()/2, 0);
 
+        // Adjust the gc to use the label font
         gc.setFont(labelFont);
-        gc.setTextBaseline(VPos.BOTTOM);
 
-        gc.fillText(xLabel, canvas.getWidth()/2, canvas.getHeight());
-
-
+        // Draw the y label (Sideways)
         gc.save();
-
-        gc.setTextBaseline(VPos.TOP);
         gc.translate(0, canvas.getHeight()/2);
         gc.rotate(-90);
         gc.fillText(yLabel, 0, 0);
-
         gc.restore();
+
+        // Draw the x label
+        gc.setTextBaseline(VPos.BOTTOM);
+        gc.fillText(xLabel, canvas.getWidth()/2, canvas.getHeight());
+
 
         Insets adjPadding = new Insets(titleFont.getSize()+plotPadding.getTop(),
                 plotPadding.getRight(),
                 labelFont.getSize() + plotPadding.getBottom(),
                 labelFont.getSize() + plotPadding.getLeft());
 
-
-
-        // Stroke the border of the box
-        gc.strokeRect(adjPadding.getLeft(), adjPadding.getTop(),                    // Start in top left based on left/top padding
+        Cartesian cartesian = new Cartesian(adjPadding.getLeft(), adjPadding.getTop(),                    // Start in top left based on left/top padding
                 canvas.getWidth()-adjPadding.getLeft()-adjPadding.getRight(),         // Width is canvas width - padding on left/right
-                canvas.getHeight()-adjPadding.getTop()-adjPadding.getBottom());       // Height is canvas height - padding on top/bottom
+                canvas.getHeight()-adjPadding.getTop()-adjPadding.getBottom());
+        cartesian.setXParameters(0, 0.3, 6);
+        cartesian.setYParameters(0, 0.7, 7);
 
+        cartesian.draw(canvas);
 
         // For each point
         for (Point p : scatterPoints) {
@@ -121,9 +119,8 @@ public class ScatterPlot implements Chart{
             // Get the size
             double size = p.getSize();
 
-            //gc.fillOval(50, 50, 20, 20);
             // Draw the point
-            gc.fillOval(p.getX()*500+size, canvas.getHeight()-(p.getY()*500+size), size, size);
+            gc.fillOval(cartesian.translateX(p), cartesian.translateY(p), size, size);
         }
     }
 
