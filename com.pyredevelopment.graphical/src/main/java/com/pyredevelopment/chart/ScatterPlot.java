@@ -21,13 +21,15 @@ public class ScatterPlot implements Chart{
 
     // Graphical Information
     private Insets chartPadding = new Insets(0, 0, 0, 0);
+    private Insets plotPadding = new Insets (8, 8, 8, 8);
 
     // Logical/Organization Information
     String title = "Scatter Plot";
     Font titleFont = Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 20);
 
-    String xLabel = "Independent";
-    String yLabel = "Dependent";
+    String xLabel = "BSA Concentration";
+    String yLabel = "Absorbance";
+    Font labelFont = Font.font("verdana", FontWeight.NORMAL, FontPosture.REGULAR, 16);
 
     public ScatterPlot(DataFrame data) {
 
@@ -64,9 +66,29 @@ public class ScatterPlot implements Chart{
         gc.setFont(titleFont);
 
 
+
+
         gc.fillText(title, canvas.getWidth()/2, 0);
 
-        Insets adjPadding = new Insets(titleFont.getSize(), 0, 0, 0);
+        gc.setFont(labelFont);
+        gc.setTextBaseline(VPos.BOTTOM);
+
+        gc.fillText(xLabel, canvas.getWidth()/2, canvas.getHeight());
+
+
+        gc.save();
+
+        gc.setTextBaseline(VPos.TOP);
+        gc.translate(0, canvas.getHeight()/2);
+        gc.rotate(-90);
+        gc.fillText(yLabel, 0, 0);
+
+        gc.restore();
+
+        Insets adjPadding = new Insets(titleFont.getSize()+plotPadding.getTop(),
+                plotPadding.getRight(),
+                labelFont.getSize() + plotPadding.getBottom(),
+                labelFont.getSize() + plotPadding.getLeft());
 
 
 
