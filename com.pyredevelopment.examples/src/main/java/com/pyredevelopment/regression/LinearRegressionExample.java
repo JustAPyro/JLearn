@@ -24,8 +24,14 @@ public class LinearRegressionExample {
 
         // Create a GUI and ScatterPlot based on our data
         Window window = new Window();
+
+        // Create a plot and label it with our data
         ScatterPlot plot = new ScatterPlot(data);
         plot.setTitle("Bradford Assay BSA Standard Curve");
+        plot.setDependentLabel("Absorbance");
+        plot.setIndependentLabel("BSA Concentration");
+
+        // Show plot
         window.show(plot);
 
 

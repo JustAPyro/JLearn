@@ -27,9 +27,10 @@ public class ScatterPlot implements Chart{
     String title = "Scatter Plot";
     Font titleFont = Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 20);
 
-    String xLabel = "BSA Concentration";
-    String yLabel = "Absorbance";
+    String xLabel = "Independent";
+    String yLabel = "Dependent";
     Font labelFont = Font.font("verdana", FontWeight.NORMAL, FontPosture.REGULAR, 16);
+    
 
     public ScatterPlot(DataFrame data) {
 
@@ -43,6 +44,22 @@ public class ScatterPlot implements Chart{
             // Create a new point associated with the data point
             scatterPoints.add(new Point(inst.feature(0), inst.feature(1), 10));
         }
+    }
+
+    /**
+     * Allows you to set the independent variable label (Bottom, x-value label) on the chart
+     * @param xLabel Title of the independent variable.
+     */
+    public void setIndependentLabel(String xLabel) {
+        this.xLabel = xLabel;
+    }
+
+    /**
+     * Allows you to set the dependent variable label (Left, y-value label) on the chart
+     * @param yLabel Title of the dependent variable.
+     */
+    public void setDependentLabel(String yLabel) {
+        this.yLabel = yLabel;
     }
 
     /**
@@ -106,7 +123,6 @@ public class ScatterPlot implements Chart{
 
             //gc.fillOval(50, 50, 20, 20);
             // Draw the point
-            System.out.println(p.getX());
             gc.fillOval(p.getX()*500+size, canvas.getHeight()-(p.getY()*500+size), size, size);
         }
     }
