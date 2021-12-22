@@ -26,6 +26,9 @@ public class ScatterPlot implements Chart{
     String title = "Scatter Plot";
     Font titleFont = Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 20);
 
+    String xLabel = "Independent";
+    String yLabel = "Dependent";
+
     public ScatterPlot(DataFrame data) {
 
         // First check that this is data we can scatter plot
