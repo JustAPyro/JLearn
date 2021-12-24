@@ -43,7 +43,7 @@ public class ScatterPlot implements Chart{
         for (Instance inst : data) {
 
             // Create a new point associated with the data point
-            scatterPoints.add(new Point(inst.feature(0), inst.feature(1), 10));
+            scatterPoints.add(new Point(inst.feature(0), inst.feature(1), 4));
         }
     }
 
@@ -108,8 +108,8 @@ public class ScatterPlot implements Chart{
         Cartesian cartesian = new Cartesian(adjPadding.getLeft(), adjPadding.getTop(),                    // Start in top left based on left/top padding
                 canvas.getWidth()-adjPadding.getLeft()-adjPadding.getRight(),         // Width is canvas width - padding on left/right
                 canvas.getHeight()-adjPadding.getTop()-adjPadding.getBottom());
-        cartesian.setXParameters(0, 0.3, 6);
-        cartesian.setYParameters(0, 0.7, 7);
+        cartesian.setXParameters(0, 900000, 6);
+        cartesian.setYParameters(10000, 8200000, 7);
 
         cartesian.draw(canvas);
 

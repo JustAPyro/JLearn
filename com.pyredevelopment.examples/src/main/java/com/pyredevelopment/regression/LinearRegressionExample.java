@@ -13,9 +13,7 @@ public class LinearRegressionExample {
     public static void main(String[] args) {
 
         // Load the data
-        long before = System.nanoTime();
-        DataFrame data = DataFrame.readCSV("C:/Users/Luke/Programming/DataSets/Daniel/Absorbance_BSA");
-        System.out.println((System.nanoTime()-before)/10000000);
+        DataFrame data = DataFrame.readCSV("C:/Users/Luke/Programming/DataSets/Kaggle/carsales_km_price.csv");
 
         // Create a linear regression object and fit the model to data
         LinearRegression lr = new LinearRegression();
