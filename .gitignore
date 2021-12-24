@@ -1,2 +1,6 @@
 /out/
+/com.pyredevelopment.data/target/
 /com.pyredevelopment.examples/target/
+/com.pyredevelopment.graphical/target/
+/com.pyredevelopment.regression/target/
+
