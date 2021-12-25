@@ -4,6 +4,10 @@ import com.pyredevelopment.chart.ScatterPlot;
 import com.pyredevelopment.window.Window;
 import com.pyredevelopment.data.DataFrame;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 
 /**
  * This class gives an example of simple Linear Regression using JLearn
@@ -33,7 +37,6 @@ public class LinearRegressionExample {
 
         // Show plot
         window.show(plot);
-
 
     }
 
