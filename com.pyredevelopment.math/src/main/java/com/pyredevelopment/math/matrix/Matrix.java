@@ -1,9 +1,17 @@
 package com.pyredevelopment.math.matrix;
 
-public class Matrix {
+public final class Matrix {
 
-    public static void inverse() {
+    /**
+     * Constructor is private as Matrix is a helper class that cannot be instantiated.
+     */
+    private Matrix() {}
 
+    public static double[][] inverse(double[][] matrix) {
+
+        double[][] matrixOfMinors = new double[];
+
+        return null;
     }
 
 }
