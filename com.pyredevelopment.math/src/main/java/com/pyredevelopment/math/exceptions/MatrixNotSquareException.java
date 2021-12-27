@@ -6,8 +6,9 @@ package com.pyredevelopment.math.exceptions;
  */
 public class MatrixNotSquareException extends RuntimeException{
 
-    public MatrixNotSquareException() {
-        super("Tried to perform a function that requires a square matrix on a non-square matrix");
+    public MatrixNotSquareException(String function) {
+        super("Tried to perform " + function + " on a non-square matrix.\n" +
+                function + " requires a square matrix");
     }
 
 }
