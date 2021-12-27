@@ -1,5 +1,6 @@
 package com.pyredevelopment.math.matrix;
 
+import com.pyredevelopment.math.exceptions.MatrixNotSquareException;
 import com.pyredevelopment.math.exceptions.NoInverseMatrixException;
 
 public final class Matrix {
@@ -25,6 +26,77 @@ public final class Matrix {
 
         return null;
     }
+
+
+    public static double[][] matrixOfCofactors(double[][] matrixOfMinors) {
+
+        int n = matrixOfMinors.length;
+
+        for (double[] arr : matrixOfMinors)
+            if (arr.length != n) throw new MatrixNotSquareException("Matrix of Cofactors"); // TODO: Adjust this exception
+
+        double[][] matrixOut = new double[n][n];
+
+        boolean invert = false;
+        for (int row = 0; row < n; row++) {
+            for (int col = 0; col < n; col++) {
+
+                if (!invert)
+                    matrixOut[row][col] = matrixOfMinors[row][col];
+                else
+                    matrixOut[row][col] = matrixOfMinors[row][col]*-1;
+
+            }
+        }
+
+        return matrixOut;
+
+    }
+
+    /**
+     * TODO: Fill Docs
+     * @param matrix
+     * @return
+     */
+    public static double[][] matrixOfMinors(double[][] matrix) {
+
+        // Start by assuming n to be equal to the number of rows
+        int n = matrix.length;
+
+        // Error handle to make sure each row length = number of rows
+        for (double[] arr : matrix)
+            if (arr.length != n) throw new MatrixNotSquareException("Matrix of Minors"); // TODO: Create new exception
+
+        double[][] outputMatrix = new double[n][n];
+
+        // FOR EACH CELL OF THE OUTPUT ARRAY
+        for (int row = 0; row < n; row++) {
+            for (int col = 0; col < n; col++) {
+
+                double[][] determinateMatrix = new double[n-1][n-1];
+
+                // Calculate the output matrix
+                int rowShift = 0;
+                for (int ri = 0; ri < n; ri++) {
+                    if (ri == row) { rowShift++; continue; }
+                    int colShift = 0;
+                    for (int ci = 0; ci < n; ci++) {
+                        if (ci == col) {colShift++; continue; }
+
+                        determinateMatrix[ri-rowShift][ci-colShift] = matrix[ri][ci];
+
+                    }
+                }
+
+                outputMatrix[row][col] = determinant(determinateMatrix);
+
+            }
+        }
+
+        return outputMatrix;
+
+    }
+
 
     /**
      * This method calculates the determinant of a matrix, the determinant is a special value calculate that can
