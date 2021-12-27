@@ -27,6 +27,28 @@ public final class Matrix {
         return null;
     }
 
+    public static double[][] matrixAdjoint(double[][] matrix) {
+
+        int n = matrix.length; // Start by assuming n
+
+        // Check to make sure matrix is square, if not throw error
+        for (double[] arr : matrix)
+            if (arr.length != n) throw new MatrixNotSquareException("Matrix Adjoint");
+
+        // If the matrix is a single unit, just return that unchanged
+        if (n == 1)
+            return new double[][] {{matrix[0][0]}};
+
+        double[][] outMatrix = new double[n][n];
+        for (int row = 0; row < n; row++) {
+            for (int col = 0; col < n; col++) {
+                outMatrix[row][col] = matrix[col][row];
+            }
+        }
+
+        return outMatrix;
+    }
+
 
     public static double[][] matrixOfCofactors(double[][] matrixOfMinors) {
 
@@ -45,8 +67,10 @@ public final class Matrix {
                     matrixOut[row][col] = matrixOfMinors[row][col];
                 else
                     matrixOut[row][col] = matrixOfMinors[row][col]*-1;
-
+                invert = !invert;
             }
+            if (matrixOfMinors.length%2 == 0)
+                invert = !invert;
         }
 
         return matrixOut;
