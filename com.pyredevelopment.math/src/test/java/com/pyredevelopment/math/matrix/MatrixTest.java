@@ -11,6 +11,16 @@ class MatrixTest {
     double[][] expectedMatrix; // Matrix to hold the expected outcome
     double[][] resultMatrix;    // Matrix to store results
 
+    // - - - - - - - - - - Testing Matrix Determinant - - - - - - - - - -
+
+    @Test
+    @DisplayName("Testing 1x1 Matrix Determinant")
+    void test1x1determinant() {
+        testMatrix = new double[][] {{-5}};
+
+        assertEquals(-5, Matrix.determinant(testMatrix));
+    }
+
     @Test
     @DisplayName("Testing 2x2 Matrix Determinant")
     void test2x2determinant() {
@@ -57,6 +67,8 @@ class MatrixTest {
                 {1,7,2,1,5,2,1,4,7,8}};
         assertEquals(-1075387108, Matrix.determinant(testMatrix));
     }
+
+    // - - - - - - - - - - Testing Matrix of Minors Calculation - - - - - - - - - -
 
     @Test
     @DisplayName("Testing 3x3 Matrix Of Minors")
@@ -112,6 +124,8 @@ class MatrixTest {
 
     }
 
+    // - - - - - - - - - - Testing Matrix Cofactor Method - - - - - - - - - -
+
     @Test
     @DisplayName("Testing 2x2 Cofactor")
     void test2x2cofactor() {
@@ -160,6 +174,8 @@ class MatrixTest {
 
     }
 
+    // - - - - - - - - - - Testing Matrix Adjoint method - - - - - - - - - -
+
     @Test
     @DisplayName("Testing 1x1 Adjoint")
     void test1x1adjoint() {
@@ -197,6 +213,8 @@ class MatrixTest {
         assertArrayEquals(expectedMatrix, Matrix.matrixAdjoint(testMatrix));
     }
 
+    // - - - - - - - - - - Matrix Multiplication with double - - - - - - - - - -
+
     @Test
     @DisplayName("Testing Matrix 2x2 multiplication with double")
     void test2x2multiplicationdouble() {
@@ -224,5 +242,39 @@ class MatrixTest {
 
         assertArrayEquals(expectedMatrix, Matrix.matrixMultiply(testMatrix, 0.5));
     }
+
+    // - - - - - - - - - - Testing Matrix Inverse Calculation - - - - - - - - - -
+
+    @Test
+    @DisplayName("Testing Matrix Inversion 2x2")
+    void test2x2inverse() {
+        testMatrix = new double[][] {
+                {2, 7},
+                {2, 1}};
+        expectedMatrix = new double[][] {
+                {-1.0/12, 7.0/12},
+                {1.0/6, -1.0/6}};
+        Matrix.round(expectedMatrix);
+
+
+        assertArrayEquals(expectedMatrix, Matrix.inverse(testMatrix));
+    }
+
+    @Test
+    @DisplayName("Testing Matrix Inversion 3x3")
+    void test3x3inverse() {
+        testMatrix = new double[][] {
+                {3, 0, 2},
+                {2, 0, -2},
+                {0, 1, 1}};
+        expectedMatrix = new double[][] {
+                {0.2, 0.2, 0},
+                {-0.2, 0.3, 1},
+                {0.2, -0.3, 0}};
+
+        assertArrayEquals(expectedMatrix, Matrix.inverse(testMatrix));
+    }
+
+
 
 }

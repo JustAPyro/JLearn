@@ -3,12 +3,25 @@ package com.pyredevelopment.math.matrix;
 import com.pyredevelopment.math.exceptions.MatrixNotSquareException;
 import com.pyredevelopment.math.exceptions.NoInverseMatrixException;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 public final class Matrix {
+
+    private static int rounding = 10;
 
     /**
      * Constructor is private as Matrix is a helper class that cannot be instantiated.
      */
     private Matrix() {}
+
+    public static void round(double[][] matrix) {
+        for (int r = 0; r < matrix.length; r++) {
+            for (int c = 0; c < matrix[r].length; c++) {
+                matrix[r][c] = round(matrix[r][c], rounding);
+            }
+        }
+    }
 
     public static double[][] inverse(double[][] matrix) {
 
@@ -19,12 +32,43 @@ public final class Matrix {
         for (double[] array : matrix)
             if (array.length != n) throw new NoInverseMatrixException();
 
+        // Create a matrix to hold output
+        double[][] matrixOut;
+
         // Step 1 : Find the Matrix Of Minors
-        double[][] matrixOfMinors = new double[n][n];
+        matrixOut = matrixOfMinors(matrix);
 
+        // Step 2 : Get Matrix of Cofactors
+        matrixOut = matrixOfCofactors(matrixOut);
 
+        // Step 3 : Adjoint (Flip on y=-x axis)
+        matrixOut = matrixAdjoint(matrixOut);
 
-        return null;
+        // Step 4: Multiply by 1/Determinant of original
+        double multiple = 1/determinant(matrix);
+        matrixOut = matrixMultiply(matrixOut, multiple);
+
+        // Round off any trailing values from double usage
+        Matrix.round(matrixOut);
+
+        return matrixOut;
+    }
+
+    public static double[][] matrixMultiply(double[][] matrix, double multiple) {
+
+        int rows = matrix.length;
+        int cols = matrix[0].length;
+
+        double[][] matrixOut = new double[rows][cols];
+
+        for (int row = 0; row < rows; row++) {
+            for (int col = 0; col < cols; col++) {
+                matrixOut[row][col] = matrix[row][col]*multiple;
+            }
+        }
+
+        return matrixOut;
+
     }
 
     public static double[][] matrixAdjoint(double[][] matrix) {
@@ -143,6 +187,11 @@ public final class Matrix {
      */
     private static double determinantCalculator(double[][] matrix, int size) {
 
+        // If size is 1, just return that element
+        if (size == 1) {
+            return matrix[0][0];
+        }
+
         // Exit case
         if (size == 2) {
             // If the matrix is size two, just return the smaller calculation
@@ -180,6 +229,14 @@ public final class Matrix {
 
         }
         return result;
+    }
+
+    public static double round(double value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
+
+        BigDecimal bd = new BigDecimal(Double.toString(value));
+        bd = bd.setScale(places, RoundingMode.HALF_UP);
+        return bd.doubleValue();
     }
 
 }
