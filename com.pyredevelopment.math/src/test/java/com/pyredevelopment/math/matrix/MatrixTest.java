@@ -9,6 +9,7 @@ class MatrixTest {
 
     double[][] testMatrix; // matrix used for testing
     double[][] expectedMatrix; // Matrix to hold the expected outcome
+    double[][] resultMatrix;    // Matrix to store results
 
     @Test
     @DisplayName("Testing 2x2 Matrix Determinant")
@@ -109,6 +110,119 @@ class MatrixTest {
 
         assertArrayEquals(expectedMatrix, Matrix.matrixOfMinors(testMatrix));
 
+    }
+
+    @Test
+    @DisplayName("Testing 2x2 Cofactor")
+    void test2x2cofactor() {
+        testMatrix = new double[][] {
+                {1, 1},
+                {1, 1}};
+        expectedMatrix = new double[][] {
+                {1, -1},
+                {-1, 1}};
+
+        assertArrayEquals(expectedMatrix, Matrix.matrixOfCofactors(testMatrix));
+
+    }
+
+    @Test
+    @DisplayName("Testing 3x3 Cofactor")
+    void test3x3cofactor() {
+        testMatrix = new double[][] {
+                {1, 1, 1},
+                {1, -1, -1},
+                {1, 1, 1}};
+        expectedMatrix = new double[][] {
+                {1, -1, 1},
+                {-1, -1, 1},
+                {1, -1, 1}};
+
+        assertArrayEquals(expectedMatrix, Matrix.matrixOfCofactors(testMatrix));
+
+    }
+
+    @Test
+    @DisplayName("Testing 4x4 Cofactor")
+    void testx4x4cofactor() {
+        testMatrix = new double[][] {
+                {5,9,4,8},
+                {6,8,6,8},
+                {8,8,5,6},
+                {9,7,6,5}};
+        expectedMatrix = new double[][] {
+                {5,-9,4,-8},
+                {-6,8,-6,8},
+                {8,-8,5,-6},
+                {-9,7,-6,5}};
+
+        assertArrayEquals(expectedMatrix, Matrix.matrixOfCofactors(testMatrix));
+
+    }
+
+    @Test
+    @DisplayName("Testing 1x1 Adjoint")
+    void test1x1adjoint() {
+        testMatrix = new double[][] {{5}};
+        expectedMatrix = new double[][] {{5}};
+
+        assertArrayEquals(expectedMatrix, Matrix.matrixAdjoint(testMatrix));
+    }
+
+    @Test
+    @DisplayName("Testing 2x2 Adjoint")
+    void test2x2adjoint() {
+        testMatrix = new double[][] {
+                {5, 1},
+                {3, 2}};
+        expectedMatrix = new double[][] {
+                {5, 3},
+                {1, 2}};
+
+        assertArrayEquals(expectedMatrix, Matrix.matrixAdjoint(testMatrix));
+    }
+
+    @Test
+    @DisplayName("Testing 3x3 Adjoint")
+    void test3x3adjoint() {
+        testMatrix = new double[][] {
+                {5, 1, 2},
+                {3, 2, -3},
+                {-1, 3, 5}};
+        expectedMatrix = new double[][] {
+                {5, 3, -1},
+                {1, 2, 3},
+                {2, -3, 5}};
+
+        assertArrayEquals(expectedMatrix, Matrix.matrixAdjoint(testMatrix));
+    }
+
+    @Test
+    @DisplayName("Testing Matrix 2x2 multiplication with double")
+    void test2x2multiplicationdouble() {
+        testMatrix = new double[][] {
+                {2, 2},
+                {2, 2}};
+        expectedMatrix = new double[][] {
+                {4, 4},
+                {4, 4}};
+
+        assertArrayEquals(expectedMatrix, Matrix.matrixMultiply(testMatrix, 2));
+    }
+
+    @Test
+    @DisplayName("Testing Matrix 2x2 multiplication with double")
+    void test3x3multiplicationdouble() {
+        testMatrix = new double[][] {
+                {1, 2, 3},
+                {4, 5, 6},
+                {7, 8, 9}};
+        expectedMatrix = new double[][] {
+                {0.5, 1, 1.5},
+                {2, 2.5, 3},
+                {3.5, 4, 4.5}};
+
+        assertArrayEquals(expectedMatrix, Matrix.matrixMultiply(testMatrix, 0.5));
     }
 
 }
