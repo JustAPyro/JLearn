@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class MatrixTest {
 
     double[][] testMatrix; // matrix used for testing
+    double[][] testMatrixTwo;
     double[][] expectedMatrix; // Matrix to hold the expected outcome
     double[][] resultMatrix;    // Matrix to store results
 
@@ -257,7 +258,7 @@ class MatrixTest {
         Matrix.round(expectedMatrix);
 
 
-        assertArrayEquals(expectedMatrix, Matrix.inverse(testMatrix));
+        assertArrayEquals(expectedMatrix, Matrix.round(Matrix.inverse(testMatrix)));
     }
 
     @Test
@@ -272,9 +273,87 @@ class MatrixTest {
                 {-0.2, 0.3, 1},
                 {0.2, -0.3, 0}};
 
-        assertArrayEquals(expectedMatrix, Matrix.inverse(testMatrix));
+        assertArrayEquals(expectedMatrix, Matrix.round(Matrix.inverse(testMatrix)));
     }
 
+    // - - - - - - - - - - Transpose Testing - - - - - - - - - -
+
+    @Test
+    @DisplayName("Testing Transpose square")
+    void test3x3transpose() {
+        testMatrix = new double[][] {
+                {1, 2, 3},
+                {4, 5, 6},
+                {7, 8, 9}};
+        expectedMatrix = new double[][] {
+                {1, 4, 7},
+                {2, 5, 8},
+                {3, 6, 9}};
+
+        assertArrayEquals(expectedMatrix, Matrix.matrixTranspose(testMatrix));
+    }
+
+    @Test
+    @DisplayName("Testing 2x4 Transpose")
+    void test2x2transpose() {
+        testMatrix = new double[][] {
+                {1, 2},
+                {3, 4},
+                {5, 6},
+                {7, 8}};
+        expectedMatrix = new double[][] {
+                {1, 3, 5, 7},
+                {2, 4, 6, 8}};
+
+        assertArrayEquals(expectedMatrix, Matrix.matrixTranspose(testMatrix));
+    }
+
+    // - - - - - - - - - - Testing Matrix by matrix multiplication - - - - - - - - - -
+
+    @Test
+    @DisplayName("Testing 2x2 * 2x4 Multiplication")
+    void test2x2by2x4multiplication() {
+        testMatrix = new double[][] {
+                {1, 2},
+                {3, 4}};
+        testMatrixTwo = new double[][] {
+                {1, 2, 3, 4},
+                {5, 6, 7, 8}};
+        expectedMatrix = new double[][] {
+                {11, 14, 17, 20},
+                {23, 30, 37, 44}};
+
+        assertArrayEquals(expectedMatrix, Matrix.matrixMultiply(testMatrix, testMatrixTwo));
+
+    }
+
+    @Test
+    @DisplayName("Testing 2x3 * 3x2 Multiplication")
+    void test2x4by4x2multiplication() {
+
+        // Set up
+        // Multiplication matricies
+        testMatrix = new double[][] {
+                {1, 2, 3},
+                {4, 5, 6}};
+        testMatrixTwo = new double[][] {
+                { 7,  8},
+                { 9, 10},
+                {11, 12}};
+
+        // Expected results
+        expectedMatrix = new double[][] {
+                { 58,  64},
+                {139, 154}};
+
+        // Execute
+        resultMatrix = Matrix.matrixMultiply(testMatrix, testMatrixTwo);
+
+        // Verify
+        assertArrayEquals(expectedMatrix, resultMatrix);
+
+
+    }
 
 
 }

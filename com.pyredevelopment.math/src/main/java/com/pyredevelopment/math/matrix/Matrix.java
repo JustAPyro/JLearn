@@ -5,6 +5,7 @@ import com.pyredevelopment.math.exceptions.NoInverseMatrixException;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.security.InvalidParameterException;
 
 public final class Matrix {
 
@@ -15,12 +16,13 @@ public final class Matrix {
      */
     private Matrix() {}
 
-    public static void round(double[][] matrix) {
+    public static double[][] round(double[][] matrix) {
         for (int r = 0; r < matrix.length; r++) {
             for (int c = 0; c < matrix[r].length; c++) {
                 matrix[r][c] = round(matrix[r][c], rounding);
             }
         }
+        return matrix;
     }
 
     public static double[][] inverse(double[][] matrix) {
@@ -48,10 +50,72 @@ public final class Matrix {
         double multiple = 1/determinant(matrix);
         matrixOut = matrixMultiply(matrixOut, multiple);
 
-        // Round off any trailing values from double usage
-        Matrix.round(matrixOut);
+        return matrixOut;
+    }
+
+    public static double[][] matrixTranspose(double [][] matrix) {
+
+        // save rows/cols of matrix
+        int r = matrix.length;
+        int c = matrix[0].length;
+
+        // Ensure it's a safe matrix (All rows have same number of columns
+        for (double[] arr : matrix)
+            if (arr.length != c) throw new MatrixNotSquareException("Transpose"); // TODO: Correct this error to a unsafe matrix
+
+        // Create output matrix
+        double[][] matrixOut = new double[c][r]; // Create an inverted matrix
+
+        // For each unit in original matrix
+        for (int row = 0; row < r; row++) {
+            for (int col = 0; col < c; col++) {
+                matrixOut[col][row] = matrix[row][col]; // Insert the mirrored element
+            }
+        }
+
+        // Return matrix out
+        return matrixOut;
+
+
+
+
+    }
+
+    public static double[][] matrixMultiply(double[][] matrixA, double[][] matrixB) {
+
+        int mar = matrixA.length;
+        int mac = matrixA[0].length;
+        for (double[] arr : matrixA)
+            if (arr.length != mac) throw new MatrixNotSquareException("reg3"); // TODO, change exception type
+
+        int mbr = matrixB.length;
+        int mbc = matrixB[0].length;
+        for(double[] arr : matrixB)
+            if (arr.length != mbc) throw new MatrixNotSquareException("reg2"); // TODO: CHange this as well
+
+        if (mac != mbr) throw new MatrixNotSquareException("reg1");
+
+        // Size of matrix output is equal to the equal shape
+        int n = mar;
+
+
+        double[][] matrixOut = new double[mar][mbc];
+
+        for (int row = 0; row < matrixOut.length; row++) {
+            for (int col = 0; col < matrixOut[row].length; col++) {
+                matrixOut[row][col] = matrixMultiplicationCalculator(row, col, matrixA, matrixB);
+            }
+        }
 
         return matrixOut;
+    }
+
+    private static double matrixMultiplicationCalculator(int row, int col, double[][] mA, double[][] mB) {
+        double output = 0;
+        for (int i = 0; i < mB.length; i++) {
+            output += mA[row][i]*mB[i][col];
+        }
+        return output;
     }
 
     public static double[][] matrixMultiply(double[][] matrix, double multiple) {
