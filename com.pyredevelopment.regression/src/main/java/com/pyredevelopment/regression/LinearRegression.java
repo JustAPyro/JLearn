@@ -27,7 +27,7 @@ import com.pyredevelopment.data.Instance;
  * to predict using your data set you must call the <code>lr.fit(dataObject)</code> method afterwards.
  * This trains the model by calculating the line of best fit for the model. Once that is done, you can access the data
  * in a few ways:
- * <ol>
+ * <ul>
  *     <li>If you only need the line of best fit, you can find it using the <code>lr.toString()</code> method.</li>
  *     <li>If you want to see what it looks like compared to the rest of the data, you can use
  *     the <code>com.pyredevelopment.graphical</code> module to generate a plot of the data
@@ -36,7 +36,7 @@ import com.pyredevelopment.data.Instance;
  *     <li>If you want to use your model to do predictions, you can use the
  *     <code>lr.predict()</code> method. You can do this on a single independent variable,
  *     or you can use it on a single column vector of multiple inputs to predict them all at once.</li>
- * </ol>
+ * </ul><br>
  * Please note that at the current state in the project, there is no way to save a LinearRegression model,
  * so you will have to re-calculate it at run-time for each execution, or save the string representing
  * the equation and then manually perform the calculations after the first fitting.
