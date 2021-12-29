@@ -1,6 +1,7 @@
 package com.pyredevelopment.regression;
 
 import com.pyredevelopment.data.DataFrame;
+import com.pyredevelopment.data.DataObject;
 import com.pyredevelopment.math.matrix.Matrix;
 
 /**
@@ -94,6 +95,17 @@ public class MultipleLinearRegression {
     }
 
     public MultipleLinearRegression() {
+
+    }
+
+    /**
+     * Fits the data to the provided data sets. In this method
+     * you must provide two DataObjects, the first being 2+ col x n rows of independent
+     * (input values), the second being 1 col x n rows of dependent variables (output values).
+     * @param independent A 2+xN DataObject of independent(input) data points.
+     * @param dependent A single column DataObject of dependent(output) data points.
+     */
+    public void fit(DataObject independent, DataObject dependent) {
 
     }
 
