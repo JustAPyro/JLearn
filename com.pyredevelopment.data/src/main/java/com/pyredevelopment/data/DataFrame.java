@@ -12,7 +12,7 @@ import java.util.function.Consumer;
  * This is the dataframe object that the machine learning algorithms take as an input.
  * Note that this is an LinkedList-based object and intended to simulate a Panda dataFrame
  */
-public class DataFrame implements DataObject, Iterable<Instance>{
+public class DataFrame implements Iterable<Instance>{
 
     // - - - - - - - - - - Instance Values - - - - - - - - - -
 
