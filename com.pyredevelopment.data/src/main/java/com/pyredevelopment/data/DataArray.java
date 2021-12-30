@@ -11,8 +11,12 @@ import java.util.stream.Stream;
  */
 public class DataArray implements DataObject{
 
+    // - - - - - - - - - - Instance Values - - - - - - - - - - - -
+
     ArrayList<String> headers;
     ArrayList<ArrayList<Object>> data;
+
+    // - - - - - - - - - - Constructors - - - - - - - - - - - -
 
     public DataArray() {
 
@@ -21,9 +25,21 @@ public class DataArray implements DataObject{
         data = new ArrayList<>();
     }
 
+    // - - - - - - - - - - Getters / Setters - - - - - - - - - - - -
+
+    /**
+     * ALlows you to set the headers of the data (Aka the feature or column titles)
+     * @param headers An ArrayList of the desired headers
+     */
     public void setHeaders(ArrayList<String> headers) {
         this.headers = headers;
     }
+
+    public ArrayList<String> getHeaders() {
+        return this.headers;
+    }
+
+    // - - - - - - - - - - Creator Methods - - - - - - - - - - -
 
     /**
      * Allows the creation of DataArrays from a hashmap object that contains
@@ -57,6 +73,8 @@ public class DataArray implements DataObject{
         // Return the results
         return dataArrayOut;
     }
+
+    // - - - - - - - - - - Overridden Methods - - - - - - - - - -
 
     public String toString() {
 
