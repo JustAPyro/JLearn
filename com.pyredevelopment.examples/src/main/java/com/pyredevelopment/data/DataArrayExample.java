@@ -13,8 +13,8 @@ public class DataArrayExample {
 
         // Creating a data Array from a HashMap<>
         HashMap<String, List<Integer>> hashMap = new HashMap<>();
-        hashMap.put("col1", new ArrayList<>(Arrays.asList(1, 2)));
-        hashMap.put("col2", new ArrayList<>(Arrays.asList(3, 4)));
+        hashMap.put("col1", new ArrayList<>(Arrays.asList(1, 2, 10, 11, 12)));
+        hashMap.put("col2", new ArrayList<>(Arrays.asList(3, 4, 13, 14, 15)));
 
         // Call the .fromHashMap function
         DataArray data = DataArray.fromHashMap(hashMap);
