@@ -16,8 +16,11 @@ public class DataArrayExample {
         hashMap.put("col1", new ArrayList<>(Arrays.asList(1, 2)));
         hashMap.put("col2", new ArrayList<>(Arrays.asList(3, 4)));
 
-        // Call the from map function
+        // Call the .fromHashMap function
         DataArray data = DataArray.fromHashMap(hashMap);
+
+        // Then print to see the results
+        System.out.println("Example DataArray created from a HashMap: \n" + data);
 
 
     }
