@@ -74,7 +74,13 @@ public class DataArray implements DataObject{
         return dataArrayOut;
     }
 
-    // - - - - - - - - - - Overridden Methods - - - - - - - - - -
+    // - - - - - - - - - - DataFrame Imitation Methods - - - - - - - - - -
+
+    public <T> T at(int index, String column) {
+        
+    }
+
+    // - - - - - - - - - - Overridden Object Methods - - - - - - - - - -
 
     public String toString() {
 
