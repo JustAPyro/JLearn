@@ -1,7 +1,6 @@
 package com.pyredevelopment.data;
 
 import java.util.*;
-import java.util.stream.Stream;
 
 /**
  * Array-List based DataObject
@@ -14,7 +13,20 @@ public class DataArray implements DataObject{
     // - - - - - - - - - - Instance Values - - - - - - - - - - - -
 
     ArrayList<String> headers;
-    ArrayList<ArrayList<Object>> data;
+    ArrayList<Type> classes;
+    ArrayList<ArrayList<?>> data;
+
+    private enum Type {
+        BYTE,
+        SHORT,
+        INT,
+        LONG,
+        FLOAT,
+        DOUBLE,
+        BOOLEAN,
+        CHAR,
+        STRING
+    }
 
     // - - - - - - - - - - Constructors - - - - - - - - - - - -
 
@@ -57,16 +69,19 @@ public class DataArray implements DataObject{
             dataArrayOut.headers.add(columns.toString());
 
             // And instantiate a new arrayList to hold data for this
-            ArrayList<Object> featureData = new ArrayList<Object>();
+            ArrayList<Object> featureData = new ArrayList<>();
+
 
             // Iterate through items in the list
             for (Object item : hashMap.get(columns)) {
 
+                System.out.println(item.getClass());
                 // Add it to the list
                 featureData.add(item);
 
             }
 
+            // Add the feature set to the data
             dataArrayOut.data.add(featureData);
         }
 
@@ -76,8 +91,32 @@ public class DataArray implements DataObject{
 
     // - - - - - - - - - - DataFrame Imitation Methods - - - - - - - - - -
 
-    public <T> T at(int index, String column) {
-        
+    public Object at(int index, String column) {
+
+        // If there is a header that contains the string provided
+        if (headers.contains(column)) {
+
+            // Get the index of the column
+            int columnIndex = headers.indexOf(column);
+
+            // Then return the desired data
+            return data.get(columnIndex).get(index);
+        }
+        else    // If that header isn't found throw an exception
+            throw new NoSuchElementException(); // TODO: Modify error thrown
+    }
+
+    /**
+     * The column labels of the DataFrame.
+     * <p>
+     * Imitation of Pandas.DataFrame.columns() - See that documentation here:
+     * <a href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.columns.html#pandas.DataFrame.columns">Pandas.DataFrame.columns</a>
+     *
+     * @return
+     */
+    @Override
+    public ArrayList<String> columns() {
+        return headers;
     }
 
     // - - - - - - - - - - Overridden Object Methods - - - - - - - - - -

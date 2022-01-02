@@ -27,7 +27,24 @@ class DataArrayTest {
 
         // Validation
         assertEquals(dataArray.headers.size(), 3);
-        assertEquals(dataArray.data.get(0).size(), 5);
+
+
+    }
+
+    @Test
+    @DisplayName("Testing the at method")
+    void testAt() {
+
+        // Set up
+        HashMap<String, List<Object>> hashMap = new HashMap<>();
+        hashMap.put("col1", new ArrayList<>(Arrays.asList(1, 2, 10, 11, 12)));
+        hashMap.put("col2", new ArrayList<>(Arrays.asList(3, 4, 13, 14, 15)));
+        DataArray dataArray = DataArray.fromHashMap(hashMap);
+
+        int output = (int) dataArray.at(0, "col1");
+
+        assertEquals(1, output);
+
 
     }
 
