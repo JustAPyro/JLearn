@@ -1,6 +1,7 @@
 package com.pyredevelopment.window;
 
 import com.pyredevelopment.chart.Chart;
+import com.pyredevelopment.regression.LinearRegression;
 
 /**
  * This class provides an easy wrapper/API class to easily create windows.<br>

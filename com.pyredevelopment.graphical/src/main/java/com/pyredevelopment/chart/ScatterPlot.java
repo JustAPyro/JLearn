@@ -76,6 +76,7 @@ public class ScatterPlot implements Chart{
      * @param canvas The canvas you want to draw to
      */
     public void draw(Canvas canvas) {
+
         // Get the graphics Context and set Text to center
         GraphicsContext gc = canvas.getGraphicsContext2D();
         gc.setTextAlign(TextAlignment.CENTER);
@@ -108,8 +109,8 @@ public class ScatterPlot implements Chart{
         Cartesian cartesian = new Cartesian(adjPadding.getLeft(), adjPadding.getTop(),                    // Start in top left based on left/top padding
                 canvas.getWidth()-adjPadding.getLeft()-adjPadding.getRight(),         // Width is canvas width - padding on left/right
                 canvas.getHeight()-adjPadding.getTop()-adjPadding.getBottom());
-        cartesian.setXParameters(0, 900000, 6);
-        cartesian.setYParameters(10000, 8200000, 7);
+        cartesian.setXParameters(0, 0.3, 6);
+        cartesian.setYParameters(0, 0.7, 5);
 
         cartesian.draw(canvas);
 

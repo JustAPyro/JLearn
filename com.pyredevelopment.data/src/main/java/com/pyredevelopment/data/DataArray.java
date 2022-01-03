@@ -89,6 +89,7 @@ public class DataArray implements DataObject{
         return dataArrayOut;
     }
 
+
     // - - - - - - - - - - DataFrame Imitation Methods - - - - - - - - - -
 
     public Object at(int index, String column) {
@@ -160,7 +161,6 @@ public class DataArray implements DataObject{
             }
 
             finalBuilder.append(String.format(formatString.toString(), tempHeaders.toArray()));
-
 
         }
 
