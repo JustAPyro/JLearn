@@ -91,8 +91,14 @@ public class WindowManager extends Application{
 
         // Draw the chart on the canvas
         chart.draw(c);
+    }
 
+    public static void draw(Window window, Drawable drawer) {
+        Stage s = getStage(window); // Get the stage
+        Canvas c = canvases.get(s); // Get the canvas associated with the stage
 
+        // Call the drawer's draw method, passing in the desired canvas
+        drawer.draw(c);
     }
 
     // - - - - - - - - - - Private Methods - - - - - - - - - -

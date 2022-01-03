@@ -122,5 +122,13 @@ public class Window {
         WindowManager.draw(this, chart);
     }
 
+    /**
+     * This method takes a Drawable interface and allows the window to draw it on it's base canvas
+     * @param drawer
+     */
+    public void draw(Drawable drawer) {
+        WindowManager.draw(this, drawer);
+    }
+
 
 }
