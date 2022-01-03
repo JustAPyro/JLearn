@@ -3,7 +3,7 @@ package com.pyredevelopment.window;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Plot {
+public class Plot extends Drawable{
 
     // - - - - - - - - - - Instance Variables - - - - - - - - - -
 
@@ -53,10 +53,19 @@ public class Plot {
     }
 
     public void plot(int[] xValues, int[] yValues, String format) {
-        
+
+        // Initialize the int array and assign the values
+        intArray = new int[][]{xValues, yValues};
+
     }
 
     public void show() {
+
+        Window win = new Window();
+        win.show(this);
+    }
+
+    public void draw(Canvas canvas) {
 
     }
 
