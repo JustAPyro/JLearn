@@ -1,13 +1,9 @@
-package com.pyredevelopment.regression;
+package com.pyredevelopment.examples.regression;
 
-import com.pyredevelopment.chart.ScatterPlot;
+import com.pyredevelopment.regression.LinearRegression;
 import com.pyredevelopment.window.Plot;
-import com.pyredevelopment.window.Window;
 import com.pyredevelopment.data.DataFrame;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 
 /**

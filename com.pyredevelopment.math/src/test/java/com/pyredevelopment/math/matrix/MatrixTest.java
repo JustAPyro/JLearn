@@ -3,6 +3,7 @@ package com.pyredevelopment.math.matrix;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static com.pyredevelopment.math.matrix.Matrix.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class MatrixTest {
@@ -19,7 +20,7 @@ class MatrixTest {
     void test1x1determinant() {
         testMatrix = new double[][] {{-5}};
 
-        assertEquals(-5, Matrix.determinant(testMatrix));
+        assertEquals(-5, determinant(testMatrix));
     }
 
     @Test
@@ -28,7 +29,7 @@ class MatrixTest {
         testMatrix = new double[][]{
                 {7, 5},
                 {2, 1}};
-        assertEquals(-3, Matrix.determinant(testMatrix));
+        assertEquals(-3, determinant(testMatrix));
     }
 
     @Test
@@ -38,7 +39,7 @@ class MatrixTest {
                 {6, 3, 4},
                 {6, 1, 8},
                 {3, 0, 9}};
-        assertEquals(-48, Matrix.determinant(testMatrix));
+        assertEquals(-48, determinant(testMatrix));
     }
 
     @Test
@@ -49,7 +50,7 @@ class MatrixTest {
                 {3, 7, 6, 1},
                 {5, 7, 6, 9},
                 {7, 9, 2, 9}};
-        assertEquals(-288, Matrix.determinant(testMatrix));
+        assertEquals(-288, determinant(testMatrix));
     }
 
     @Test
@@ -66,7 +67,7 @@ class MatrixTest {
                 {4,5,5,0,8,9,5,3,0,9},
                 {5,7,1,7,5,4,2,0,0,1},
                 {1,7,2,1,5,2,1,4,7,8}};
-        assertEquals(-1075387108, Matrix.determinant(testMatrix));
+        assertEquals(-1075387108, determinant(testMatrix));
     }
 
     // - - - - - - - - - - Testing Matrix of Minors Calculation - - - - - - - - - -
@@ -83,7 +84,7 @@ class MatrixTest {
                 {-15, -27, 2},
                 {-12, -18, 4}};
 
-        assertArrayEquals(expectedMatrix, Matrix.matrixOfMinors(testMatrix));
+        assertArrayEquals(expectedMatrix, matrixOfMinors(testMatrix));
 
     }
 
@@ -101,7 +102,7 @@ class MatrixTest {
                 {47,-33,-30, 28},
                 {13,105,-40,-62}};
 
-        assertArrayEquals(expectedMatrix, Matrix.matrixOfMinors(testMatrix));
+        assertArrayEquals(expectedMatrix, matrixOfMinors(testMatrix));
 
     }
 
@@ -121,7 +122,7 @@ class MatrixTest {
                 {-1423,2548,2357,-817,2529},
                 {1294,686,970,2128,2358}};
 
-        assertArrayEquals(expectedMatrix, Matrix.matrixOfMinors(testMatrix));
+        assertArrayEquals(expectedMatrix, matrixOfMinors(testMatrix));
 
     }
 
@@ -137,7 +138,7 @@ class MatrixTest {
                 {1, -1},
                 {-1, 1}};
 
-        assertArrayEquals(expectedMatrix, Matrix.matrixOfCofactors(testMatrix));
+        assertArrayEquals(expectedMatrix, matrixOfCofactors(testMatrix));
 
     }
 
@@ -153,7 +154,7 @@ class MatrixTest {
                 {-1, -1, 1},
                 {1, -1, 1}};
 
-        assertArrayEquals(expectedMatrix, Matrix.matrixOfCofactors(testMatrix));
+        assertArrayEquals(expectedMatrix, matrixOfCofactors(testMatrix));
 
     }
 
@@ -171,7 +172,7 @@ class MatrixTest {
                 {8,-8,5,-6},
                 {-9,7,-6,5}};
 
-        assertArrayEquals(expectedMatrix, Matrix.matrixOfCofactors(testMatrix));
+        assertArrayEquals(expectedMatrix, matrixOfCofactors(testMatrix));
 
     }
 
@@ -183,7 +184,7 @@ class MatrixTest {
         testMatrix = new double[][] {{5}};
         expectedMatrix = new double[][] {{5}};
 
-        assertArrayEquals(expectedMatrix, Matrix.matrixAdjoint(testMatrix));
+        assertArrayEquals(expectedMatrix, matrixAdjoint(testMatrix));
     }
 
     @Test
@@ -196,7 +197,7 @@ class MatrixTest {
                 {5, 3},
                 {1, 2}};
 
-        assertArrayEquals(expectedMatrix, Matrix.matrixAdjoint(testMatrix));
+        assertArrayEquals(expectedMatrix, matrixAdjoint(testMatrix));
     }
 
     @Test
@@ -211,7 +212,7 @@ class MatrixTest {
                 {1, 2, 3},
                 {2, -3, 5}};
 
-        assertArrayEquals(expectedMatrix, Matrix.matrixAdjoint(testMatrix));
+        assertArrayEquals(expectedMatrix, matrixAdjoint(testMatrix));
     }
 
     // - - - - - - - - - - Matrix Multiplication with double - - - - - - - - - -
@@ -226,7 +227,7 @@ class MatrixTest {
                 {4, 4},
                 {4, 4}};
 
-        assertArrayEquals(expectedMatrix, Matrix.matrixMultiply(testMatrix, 2));
+        assertArrayEquals(expectedMatrix, matrixMultiply(testMatrix, 2));
     }
 
     @Test
@@ -241,7 +242,7 @@ class MatrixTest {
                 {2, 2.5, 3},
                 {3.5, 4, 4.5}};
 
-        assertArrayEquals(expectedMatrix, Matrix.matrixMultiply(testMatrix, 0.5));
+        assertArrayEquals(expectedMatrix, matrixMultiply(testMatrix, 0.5));
     }
 
     // - - - - - - - - - - Testing Matrix Inverse Calculation - - - - - - - - - -
@@ -255,10 +256,10 @@ class MatrixTest {
         expectedMatrix = new double[][] {
                 {-1.0/12, 7.0/12},
                 {1.0/6, -1.0/6}};
-        Matrix.round(expectedMatrix);
+        round(expectedMatrix);
 
 
-        assertArrayEquals(expectedMatrix, Matrix.round(Matrix.inverse(testMatrix)));
+        assertArrayEquals(expectedMatrix, round(inverse(testMatrix)));
     }
 
     @Test
@@ -273,7 +274,7 @@ class MatrixTest {
                 {-0.2, 0.3, 1},
                 {0.2, -0.3, 0}};
 
-        assertArrayEquals(expectedMatrix, Matrix.round(Matrix.inverse(testMatrix)));
+        assertArrayEquals(expectedMatrix, round(inverse(testMatrix)));
     }
 
     // - - - - - - - - - - Transpose Testing - - - - - - - - - -
@@ -290,7 +291,7 @@ class MatrixTest {
                 {2, 5, 8},
                 {3, 6, 9}};
 
-        assertArrayEquals(expectedMatrix, Matrix.matrixTranspose(testMatrix));
+        assertArrayEquals(expectedMatrix, matrixTranspose(testMatrix));
     }
 
     @Test
@@ -305,7 +306,7 @@ class MatrixTest {
                 {1, 3, 5, 7},
                 {2, 4, 6, 8}};
 
-        assertArrayEquals(expectedMatrix, Matrix.matrixTranspose(testMatrix));
+        assertArrayEquals(expectedMatrix, matrixTranspose(testMatrix));
     }
 
     // - - - - - - - - - - Testing Matrix by matrix multiplication - - - - - - - - - -
@@ -323,7 +324,7 @@ class MatrixTest {
                 {11, 14, 17, 20},
                 {23, 30, 37, 44}};
 
-        assertArrayEquals(expectedMatrix, Matrix.matrixMultiply(testMatrix, testMatrixTwo));
+        assertArrayEquals(expectedMatrix, matrixMultiply(testMatrix, testMatrixTwo));
 
     }
 
@@ -347,7 +348,7 @@ class MatrixTest {
                 {139, 154}};
 
         // Execute
-        resultMatrix = Matrix.matrixMultiply(testMatrix, testMatrixTwo);
+        resultMatrix = matrixMultiply(testMatrix, testMatrixTwo);
 
         // Verify
         assertArrayEquals(expectedMatrix, resultMatrix);

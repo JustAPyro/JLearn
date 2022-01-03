@@ -11,6 +11,8 @@
     </option>
     <option name="ignoredFiles">
       <set>
+        <option value="$PROJECT_DIR$/com.pyredevelopment.examplesOld/pom.xml" />
+        <option value="$PROJECT_DIR$/com.pyredevelopment.performancetests/pom.xml" />
         <option value="$PROJECT_DIR$/old.com.pyredevelopment.graphical/pom.xml" />
       </set>
     </option>

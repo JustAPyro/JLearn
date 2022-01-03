@@ -1,9 +1,12 @@
 package com.pyredevelopment.window;
 
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class Plot extends Drawable{
+public class Plot implements Drawable{
 
     // - - - - - - - - - - Instance Variables - - - - - - - - - -
 
@@ -61,11 +64,18 @@ public class Plot extends Drawable{
 
     public void show() {
 
-        Window win = new Window();
-        win.show(this);
+        // Create a new window and have it draw this object
+        Window win = new Window();  // Creating new Window instance
+        win.draw(this);      // Requesting that it call this draw method
     }
 
     public void draw(Canvas canvas) {
+
+        // Get the graphics context associated with the canvas
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+
+        gc.strokeRect(25, 25, 250, 250);
+
 
     }
 

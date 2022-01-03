@@ -1,4 +1,6 @@
-package com.pyredevelopment.data;
+package com.pyredevelopment.examples.data;
+
+import com.pyredevelopment.data.DataFrame;
 
 public class DataFrameExample {
 

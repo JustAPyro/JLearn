@@ -3,4 +3,5 @@ module com.pyredevelopment {
     requires com.pyredevelopment.data;
     requires com.pyredevelopment.regression;
     exports com.pyredevelopment.window;
+    exports com.pyredevelopment.chart;
 }
