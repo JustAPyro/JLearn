@@ -74,7 +74,33 @@ public class Plot implements Drawable{
         // Get the graphics context associated with the canvas
         GraphicsContext gc = canvas.getGraphicsContext2D();
 
-        gc.strokeRect(25, 25, 250, 250);
+        int left = 25;
+        int top = 25;
+        int width = 250;
+        int height = 250;
+
+        int tickNums = 7;
+        int tickLength = 4;
+        double tickSpacing = width/((double) tickNums-0.5);
+
+        // Stroke the outside box
+        gc.strokeRect(left, top, width, height);
+
+        // For each of the number of ticks you would like on this Plot
+        for (int i = 0; i < tickNums; i++) {
+
+            // Calculate the increment for this tick
+            double tickIncrement = tickSpacing*0.25+tickSpacing*i;
+
+            // Stroke in the left (Vertical, Y marker) indicators
+            gc.strokeLine(left, top+tickIncrement, left-tickLength, top+tickIncrement);
+
+            // Stroke in the bottom (Horizontal, X Marker) indicators
+            gc.strokeLine(left+tickIncrement, top+height, left+tickIncrement, top+height+tickLength);
+
+        }
+
+
 
 
     }
