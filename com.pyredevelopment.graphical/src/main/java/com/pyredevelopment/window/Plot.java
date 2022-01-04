@@ -6,6 +6,8 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.text.TextAlignment;
 
+import java.util.HashMap;
+
 public class Plot implements Drawable{
 
     private enum LineStyle {
@@ -31,8 +33,8 @@ public class Plot implements Drawable{
 
     // The format values
     Color color;
-    LineStyle line;
-    MarkerStyle marker;
+    LineStyle line = LineStyle.NONE;
+    MarkerStyle marker = MarkerStyle.NONE;
 
 
 
@@ -225,6 +227,41 @@ public class Plot implements Drawable{
         xMax = xmax;
         yMin = ymin;
         yMax = ymax;
+
+    }
+
+    private void parseFormat(String string) {
+
+        // Hashmap representing all line styles
+        HashMap<Character, LineStyle> lines = new HashMap<>();
+        lines.put('-', LineStyle.SOLID);
+
+        // Hashmap representing possible marker styles
+        HashMap<Character, MarkerStyle> markers = new HashMap<>();
+        markers.put('s', MarkerStyle.SQUARE);
+        markers.put('o', MarkerStyle.CIRCLE);
+
+        // HashMap representing possible color styles
+        HashMap<Character, Color> colors = new HashMap<>();
+        colors.put('b', Color.BLUE);
+        colors.put('g', Color.GREEN);
+        colors.put('r', Color.RED);
+        colors.put('c', Color.CYAN);
+        colors.put('m', Color.MAGENTA);
+        colors.put('y', Color.YELLOW);
+        colors.put('k', Color.BLACK);
+        colors.put('w', Color.WHITE);
+
+        // For each character, see which map it's in and then assign the correct value
+        for (char c : string.toCharArray()) {
+            if (lines.containsKey(c))
+                this.line = lines.get(c);
+            if (markers.containsKey(c))
+                this.marker = markers.get(c);
+            if (colors.containsKey(c))
+                this.color = colors.get(c);
+
+        }
 
     }
 
