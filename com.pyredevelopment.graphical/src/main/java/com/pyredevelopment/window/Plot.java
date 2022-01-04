@@ -8,6 +8,17 @@ import javafx.scene.text.TextAlignment;
 
 public class Plot implements Drawable{
 
+    private enum LineStyle {
+        NONE,
+        SOLID
+    }
+
+    private enum MarkerStyle {
+        NONE,
+        CIRCLE,
+        SQUARE
+    }
+
     // - - - - - - - - - - Instance Variables - - - - - - - - - -
 
     // Shows the scale of the plot & viewport
@@ -17,6 +28,13 @@ public class Plot implements Drawable{
     // The label headers for each axis
     private String xLabel;
     private String yLabel;
+
+    // The format values
+    Color color;
+    LineStyle line;
+    MarkerStyle marker;
+
+
 
     // - - - - - - - - - - Constructors - - - - - - - - - -
 

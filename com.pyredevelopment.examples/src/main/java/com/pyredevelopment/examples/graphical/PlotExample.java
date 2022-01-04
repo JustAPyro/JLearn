@@ -22,6 +22,13 @@ public class PlotExample {
         plt.show();
         */
 
+        /* MatPlotLib PyPlot Example Usage 3. */
+        Plot plt = new Plot();
+        plt.plot(new int[]{1, 2, 3, 4}, new int[]{1, 4, 9, 16}, "ro");
+        plt.axis(0, 6, 0, 20);
+        plt.show();
+
+
 
 
 
