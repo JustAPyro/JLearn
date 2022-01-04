@@ -9,7 +9,7 @@ public class PlotExample {
 
         Plot plt = new Plot();
         plt.plot(new int[]{1, 2, 3, 4});
-        plt.ylabel("some numbers");
+        plt.setYLabel("some numbers");
         plt.show();
 
     }

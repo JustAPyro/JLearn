@@ -6,16 +6,17 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.text.TextAlignment;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Plot implements Drawable{
 
     // - - - - - - - - - - Instance Variables - - - - - - - - - -
 
-    // reference variables for readability
-    private final int Y = 0;
-    private final int X = 1;
+    // Shows the scale of the plot & viewport
+    private double xMin, xMax;
+    private double yMin, yMax;
+
+    // The label headers for each axis
+    private String xLabel;
+    private String yLabel;
 
     // - - - - - - - - - - Constructors - - - - - - - - - -
 
@@ -23,7 +24,13 @@ public class Plot implements Drawable{
 
     // - - - - - - - - - - Getters / Setters - - - - - - - - - -
 
+    /**
+     * Allows you to set the y-axis label
+     * @param yLabel The desired label as String
+     */
     public void setYLabel(String yLabel) {
+
+        this.yLabel = yLabel;
 
     }
 
@@ -72,23 +79,28 @@ public class Plot implements Drawable{
     public void show() {
 
         // Create a new window and have it draw this object
-        Window win = new Window();  // Creating new Window instance
+        Window win = new Window(625, 525);  // Creating new Window instance
         win.draw(this);      // Requesting that it call this draw method
     }
 
     public void draw(Canvas canvas) {
+
+        // reference variables for readability
+        final int Y = 0;
+        final int X = 1;
 
         // Get the graphics context associated with the canvas
         GraphicsContext gc = canvas.getGraphicsContext2D();
 
         int left = 50;
         int top = 50;
-        int width = 250;
-        int height = 250;
+        int width = 500;
+        int height = 400;
 
         int tickNums = 7;
         int tickLength = 4;
-        double tickSpacing = width/((double) tickNums-0.5);
+        double tickSpacingX = width/((double) tickNums-0.5);
+        double tickSpacingY = height/((double) tickNums - 0.5);
 
         double startScaleX = 0;
         double endScaleX = 3;
@@ -96,11 +108,11 @@ public class Plot implements Drawable{
         double startScaleY = 1;
         double endScaleY = 4;
 
-        double zeroX = left + tickSpacing*0.25;
-        double zeroY = top + height - tickSpacing*0.25;
+        double zeroX = left + tickSpacingX*0.25;
+        double zeroY = top + height - tickSpacingX*0.25;
 
-        double xScale = (width - (tickSpacing/2)) / (endScaleX - startScaleX);
-        double yScale = (height - (tickSpacing/2)) / (endScaleY  - startScaleY) * -1;
+        double xScale = (width - (tickSpacingX/2)) / (endScaleX - startScaleX);
+        double yScale = (height - (tickSpacingX/2)) / (endScaleY  - startScaleY) * -1;
 
         // Stroke the outside box
         gc.strokeRect(left, top, width, height);
@@ -110,7 +122,9 @@ public class Plot implements Drawable{
         for (int i = 0; i < tickNums; i++) {
 
             // Calculate the increment for this tick
-            double tickIncrement = tickSpacing*0.25+tickSpacing*i;
+            double tickIncrementX = tickSpacingX*0.25+tickSpacingX*i;
+            double tickIncrementY = tickSpacingY*0.25+tickSpacingY*i;
+
 
             String xIndicator = String.format("%.1f", (endScaleX / (tickNums-1)) * i);
             String yIndicator = String.format("%.1f", ((endScaleY - startScaleY) / (tickNums-1)) * (tickNums-i-1) + startScaleY);
@@ -119,19 +133,29 @@ public class Plot implements Drawable{
             gc.setTextAlign(TextAlignment.RIGHT);
             gc.setTextBaseline(VPos.CENTER);
 
-            gc.strokeLine(left, top+tickIncrement, left-tickLength, top+tickIncrement);
-            gc.strokeText(yIndicator, left-tickLength - 3, top+tickIncrement);
+            gc.strokeLine(left, top+tickIncrementY, left-tickLength, top+tickIncrementY);
+            gc.strokeText(yIndicator, left-tickLength - 3, top+tickIncrementY);
 
 
             // Stroke in the bottom (Horizontal, X Marker) indicators and the text
             gc.setTextAlign(TextAlignment.CENTER);
             gc.setTextBaseline(VPos.TOP);
 
-            gc.strokeLine(left+tickIncrement, top+height, left+tickIncrement, top+height+tickLength);
-            gc.strokeText(xIndicator, left+tickIncrement, top+height+tickLength);
+            gc.strokeLine(left+tickIncrementX, top+height, left+tickIncrementX, top+height+tickLength);
+            gc.strokeText(xIndicator, left+tickIncrementX, top+height+tickLength);
 
 
         }
+
+
+        gc.save();
+        gc.setTextAlign(TextAlignment.CENTER);
+        gc.setTextBaseline(VPos.CENTER);
+        gc.translate(left-40, top + (double) height / 2);
+
+        gc.rotate(-90);
+        gc.fillText(yLabel, 0, 0);
+        gc.restore();
 
         gc.setLineWidth(3);
         gc.setStroke(Color.BLUE);
@@ -147,7 +171,16 @@ public class Plot implements Drawable{
 
     // - - - - - - - - - - MatPlotLib Methods - - - - - - - - - -
 
+    // TODO: Fill
     public void ylabel(String yLabel) {
     }
+
+    // TODO: Fill
+    public void axis(double xmin, double xmax, double ymin, double ymax) {
+
+    }
+
+
+    
 
 }
