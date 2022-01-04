@@ -10,6 +10,10 @@ import java.util.HashMap;
 
 public class Plot implements Drawable{
 
+    // reference variables for readability
+    final private int Y = 0;
+    final private int X = 1;
+
     private enum LineStyle {
         NONE,
         SOLID
@@ -111,6 +115,9 @@ public class Plot implements Drawable{
 
         axis(xMin, xMax, yMin, yMax);
 
+        // And finally, parse the format string to adjust those parameters
+        parseFormat(format);
+
     }
 
     public void show() {
@@ -122,9 +129,7 @@ public class Plot implements Drawable{
 
     public void draw(Canvas canvas) {
 
-        // reference variables for readability
-        final int Y = 0;
-        final int X = 1;
+
 
         // Get the graphics context associated with the canvas
         GraphicsContext gc = canvas.getGraphicsContext2D();
@@ -195,16 +200,57 @@ public class Plot implements Drawable{
         gc.restore();
 
         gc.setLineWidth(3);
-        gc.setStroke(Color.BLUE);
+        gc.setStroke(color);
+
+        // Create an array to save all the points
+        double[][] pointLocations = new double[intArray[X].length][2];
+
+        // For each point in the data array, calculate pixel location and insert in new array
+        for (int i = 0; i < intArray[X].length; i++) {
+            pointLocations[i][X] = zeroX + (intArray[X][i]-startScaleX)*xScale;
+            pointLocations[i][Y] = zeroY + (intArray[Y][i]-startScaleY)*yScale;
+        }
+
         // For each of the x values, graph them
         for (int i = 0; i < intArray[X].length-1; i++) {
-            gc.strokeLine(zeroX + (intArray[X][i]-startScaleX)*xScale, zeroY + (intArray[Y][i]-startScaleY)*yScale, zeroX + (intArray[X][i+1]-startScaleX)*xScale, zeroY + (intArray[Y][i+1]-startScaleY)*yScale);
+            if (line != LineStyle.NONE)
+                gc.strokeLine(zeroX + (intArray[X][i]-startScaleX)*xScale, zeroY + (intArray[Y][i]-startScaleY)*yScale, zeroX + (intArray[X][i+1]-startScaleX)*xScale, zeroY + (intArray[Y][i+1]-startScaleY)*yScale);
+
             System.out.println(intArray[Y][i]);
         }
+
+        // If we're drawing the marker
+        gc.setFill(color);
+        if (marker == MarkerStyle.CIRCLE)
+            drawCircles(gc, pointLocations);
+        else if (marker == MarkerStyle.SQUARE)
+            drawSquares(gc, pointLocations);
 
 
     }
 
+    private void drawSquares(GraphicsContext gc, double[][] pointLocations) {
+
+        // Declare the size of the squares
+        double size = 8;
+
+        // For each of the points
+        for (double[] point : pointLocations)
+            // Draw the point at provided location
+            gc.fillRect(point[X]-size/2, point[Y]-size/2, size, size);
+    }
+
+    private void drawCircles(GraphicsContext gc, double[][] pointLocations) {
+
+        // Declare the size of the circles
+        double size = 8;
+
+        // For each of the points
+        for (double[] point : pointLocations)
+            // Draw the point at provided location
+            gc.fillOval(point[X]-size/2, point[Y]-size/2, size, size);
+
+    }
 
     // - - - - - - - - - - MatPlotLib Methods - - - - - - - - - -
 
