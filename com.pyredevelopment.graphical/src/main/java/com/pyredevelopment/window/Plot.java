@@ -74,6 +74,23 @@ public class Plot implements Drawable{
         // Initialize the int array and assign the values
         intArray = new int[][]{yValues, xValues};
 
+        // Create variables to hold scaling values
+        int yMin = Integer.MAX_VALUE;
+        int yMax = Integer.MIN_VALUE;
+        int xMin = Integer.MAX_VALUE;
+        int xMax = Integer.MIN_VALUE;
+
+        for (int i = 0; i < xValues.length; i++) {
+
+            yMin = Math.min(yValues[i], yMin);
+            yMax = Math.max(yValues[i], yMax);
+            xMin = Math.min(xValues[i], xMin);
+            xMax = Math.max(xValues[i], xMax);
+
+        }
+
+        axis(xMin, xMax, yMin, yMax);
+
     }
 
     public void show() {
@@ -102,11 +119,11 @@ public class Plot implements Drawable{
         double tickSpacingX = width/((double) tickNums-0.5);
         double tickSpacingY = height/((double) tickNums - 0.5);
 
-        double startScaleX = 0;
-        double endScaleX = 3;
+        double startScaleX = xMin;
+        double endScaleX = xMax;
 
-        double startScaleY = 1;
-        double endScaleY = 4;
+        double startScaleY = yMin;
+        double endScaleY = yMax;
 
         double zeroX = left + tickSpacingX*0.25;
         double zeroY = top + height - tickSpacingX*0.25;
@@ -161,7 +178,7 @@ public class Plot implements Drawable{
         gc.setStroke(Color.BLUE);
         // For each of the x values, graph them
         for (int i = 0; i < intArray[X].length-1; i++) {
-            gc.strokeLine(zeroX + intArray[X][i]*xScale, zeroY + (intArray[Y][i]-startScaleY)*yScale, zeroX + intArray[X][i+1]*xScale, zeroY + (intArray[Y][i+1]-startScaleY)*yScale);
+            gc.strokeLine(zeroX + (intArray[X][i]-startScaleX)*xScale, zeroY + (intArray[Y][i]-startScaleY)*yScale, zeroX + (intArray[X][i+1]-startScaleX)*xScale, zeroY + (intArray[Y][i+1]-startScaleY)*yScale);
             System.out.println(intArray[Y][i]);
         }
 
@@ -171,13 +188,42 @@ public class Plot implements Drawable{
 
     // - - - - - - - - - - MatPlotLib Methods - - - - - - - - - -
 
-    // TODO: Fill
+    /**
+     * This method allows you to set the y-axis label.
+     * It is identical to {@Code setYLabel()} but has been provided as a replica of the
+     * MatPlotLib method, so anyone who is more comfortable calling it this way can.
+     * @param yLabel
+     */
     public void ylabel(String yLabel) {
+
+        setYLabel(yLabel);
+
     }
 
     // TODO: Fill
     public void axis(double xmin, double xmax, double ymin, double ymax) {
 
+        xMin = xmin;
+        xMax = xmax;
+        yMin = ymin;
+        yMax = ymax;
+
+    }
+
+    public static double getBestIncrement(double input) {
+
+        double workingNumber = input;
+        int counter = 0;
+
+        while (workingNumber < 1) {
+            counter++;
+            workingNumber *=  10;
+        }
+
+        double result = 5*Math.round(workingNumber/5);
+        result /= Math.pow(10, counter);
+
+        return result;
     }
 
 
