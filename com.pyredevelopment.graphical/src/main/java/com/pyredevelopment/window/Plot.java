@@ -58,6 +58,23 @@ public class Plot implements Drawable{
 
     }
 
+    /**
+     * This method allows you to set the scale of the plot by providing
+     * the minimum and maximum values you would like shown in the viewport.
+     * @param xMin Minimum value on the x (horizontal) axis
+     * @param xMax Maximum value on the x (horizontal) axis
+     * @param yMin Minimum value on the y (vertical) axis
+     * @param yMax Maximum value on the y (vertical) axis
+     */
+    public void setAxis(double xMin, double xMax, double yMin, double yMax) {
+
+        // Set the provided parameters
+        this.xMin = xMin;
+        this.xMax = xMax;
+        this.yMin = yMin;
+        this.yMax = yMax;
+    }
+
     // - - - - - - - - - - Other Misc. Methods - - - - - - - - - -
 
     /**
@@ -256,9 +273,9 @@ public class Plot implements Drawable{
 
     /**
      * This method allows you to set the y-axis label.
-     * It is identical to {@Code setYLabel()} but has been provided as a replica of the
+     * It is identical to <code>.setYLabel()</code> but has been provided as a replica of the
      * MatPlotLib method, so anyone who is more comfortable calling it this way can.
-     * @param yLabel
+     * @param yLabel The label title you want given to the y-axis
      */
     public void ylabel(String yLabel) {
 
@@ -266,14 +283,18 @@ public class Plot implements Drawable{
 
     }
 
-    // TODO: Fill
-    public void axis(double xmin, double xmax, double ymin, double ymax) {
-
-        xMin = xmin;
-        xMax = xmax;
-        yMin = ymin;
-        yMax = ymax;
-
+    /**
+     * This is a wrapper method that is identical to the <code>.setAxis()</code> method.
+     * It was provided to allow the library to feel a little more comfortable and usable
+     * for anyone more familiar with MatPlotLibs API. This method can be called identically
+     * to that (Except that this method does not require a list to wrap the values).
+     * @param xMin Minimum value on the x (horizontal) axis
+     * @param xMax Maximum value on the x (horizontal) axis
+     * @param yMin Minimum value on the y (vertical) axis
+     * @param yMax Maximum value on the y (vertical) axis
+     */
+    public void axis(double xMin, double xMax, double yMin, double yMax) {
+        setAxis(xMin, xMax, yMin, yMax);
     }
 
     private void parseFormat(String string) {
