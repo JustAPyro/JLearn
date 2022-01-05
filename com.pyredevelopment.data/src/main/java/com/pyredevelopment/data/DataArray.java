@@ -17,7 +17,7 @@ public class DataArray implements DataObject{
 
     ArrayList<String> headers;
     ArrayList<Type> classes;
-    ArrayList<ArrayList<?>> data;
+    ArrayList<ArrayList<Object>> data;
 
     private enum Type {
         BYTE,
@@ -53,6 +53,18 @@ public class DataArray implements DataObject{
     public ArrayList<String> getHeaders() {
         return this.headers;
     }
+
+    public void addInstance(ArrayList<String> instance) {
+        while (data.size() < instance.size()) {
+            data.add(new ArrayList<Object>());
+        }
+
+        for (int i = 0; i < instance.size(); i++) {
+            data.get(i).add((Object) instance.get(i));
+        }
+    }
+
+
 
     // - - - - - - - - - - Creator Methods - - - - - - - - - - -
 
@@ -124,7 +136,7 @@ public class DataArray implements DataObject{
                 linesToParse.add(lineToBeParsed);
 
             // Then for each line, parse and insert it
-            linesToParse.forEach(csvLine -> output.add(parseCSVLine(csvLine)));
+            linesToParse.forEach(e -> output.addInstance(parseCSVLine(e, divider)));
 
             // Return the DataFrame
             return output;
@@ -253,7 +265,7 @@ public class DataArray implements DataObject{
         return outputHeaders;
     }
 
-    private static void parseCSVLine(String csvLine, char deliminator) {
+    private static ArrayList<String> parseCSVLine(String csvLine, char deliminator) {
 
         ArrayList<String> outputInstance = new ArrayList<>();
 
@@ -266,7 +278,7 @@ public class DataArray implements DataObject{
             // Process it based on the char, the deliminator. Either add the word to output or char to word
             processCSVChar(c, deliminator, wordBuffer, outputInstance);
 
-
+        return outputInstance;
 
     }
 
