@@ -59,7 +59,7 @@ class DataArrayTest {
         testArray = DataArray.readCSV("C:\\Users\\Luke\\Programming\\DataSets\\Kaggle\\MedicalInsuranceCosts.csv", true, ',');
 
         // Verify
-        assertEquals(7, testArray.getHeaders().size());
+        assertEquals(6, testArray.getHeaders().size());
     }
 
 

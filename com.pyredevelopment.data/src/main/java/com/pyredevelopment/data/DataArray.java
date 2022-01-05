@@ -109,17 +109,22 @@ public class DataArray implements DataObject{
             // If we're including fileHeaders read that line first
             if (includeFileHeaders)
                 // set the headers of the output using the readCSVHeader method
-                output.setHeaders(readCSVHeader(bufferedReader, divider));
+                output.setHeaders(parseCSVHeader(bufferedReader, divider));
 
 
+            // Create a Queue of lines to be parsed
+            /* NOTE: Doing it this way, so we have the potential of parsing the lines
+            using multiple threads later. */
 
-            // For each line we iterate through
-            while((currentLine = bufferedReader.readLine()) != null) {
+            Queue<String> linesToParse = new LinkedList<>();
 
-                // Add this line as an instance to the output
-                output.addInstance(Instance.parseCSV(currentLine, divider));
+            // For each (remaining) line of the csv
+            while((lineToBeParsed = bufferedReader.readLine()) != null)
+                // Add this line to the lines to parse
+                linesToParse.add(lineToBeParsed);
 
-            }
+            // Then for each line, parse and insert it
+            linesToParse.forEach(csvLine -> output.add(parseCSVLine(csvLine)));
 
             // Return the DataFrame
             return output;
@@ -225,7 +230,10 @@ public class DataArray implements DataObject{
 
     // - - - - - - - - - - - - - Private Methods - - - - - - - - - -
 
-    private static ArrayList<String> readCSVHeader(BufferedReader reader, char deliminator) throws IOException{
+    /*
+    Parses CSV headers using a reader and a deliminator.
+     */
+    private static ArrayList<String> parseCSVHeader(BufferedReader reader, char deliminator) throws IOException{
 
         // Get the first line of the file
         char[] headerChars = reader.readLine().toCharArray();
@@ -239,22 +247,39 @@ public class DataArray implements DataObject{
         // For each character
         for (char c : headerChars)
             // Process it using the process method
-            processCharForHeader(c, deliminator, buffer, outputHeaders);
+            processCSVChar(c, deliminator, buffer, outputHeaders);
 
         // Return the results
         return outputHeaders;
+    }
+
+    private static void parseCSVLine(String csvLine, char deliminator) {
+
+        ArrayList<String> outputInstance = new ArrayList<>();
+
+        char[] chars = csvLine.toCharArray();
+
+        StringBuilder wordBuffer = new StringBuilder();
+
+        // For each character in the string
+        for (char c: chars)
+            // Process it based on the char, the deliminator. Either add the word to output or char to word
+            processCSVChar(c, deliminator, wordBuffer, outputInstance);
+
+
+
     }
 
     /*
     This processes an individual char, if it's the deliminator character it will push
     buffer into the provided array, otherwise the char will simply be added to the buffer.
      */
-    private static void processCharForHeader(char c, char deliminator, StringBuilder buffer, ArrayList<String> outputHeaders) {
+    private static void processCSVChar(char c, char deliminator, StringBuilder buffer, ArrayList<String> stringList) {
         // If the character is the deliminator (usually comma)
         if (c == deliminator) {
 
             // Add the word to the headers and clear buffer
-            outputHeaders.add(buffer.toString());
+            stringList.add(buffer.toString());
             buffer.setLength(0);
 
         }
@@ -265,6 +290,7 @@ public class DataArray implements DataObject{
 
         }
     }
+
 
 
 }
