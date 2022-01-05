@@ -107,44 +107,11 @@ public class DataArray implements DataObject{
             DataArray output = new DataArray();
 
             // If we're including fileHeaders read that line first
-            if (includeFileHeaders) {
-                readFileHeader
+            if (includeFileHeaders)
+                // set the headers of the output using the readCSVHeader method
+                output.setHeaders(readCSVHeader(bufferedReader, divider));
 
-                // Get the first line of the file
-                String headerLine = bufferedReader.readLine();
 
-                // Create a list of the headers
-                LinkedList<String> headers = new LinkedList<>();
-
-                // And a buffer for each header we might add
-                StringBuilder buffer = new StringBuilder();
-
-                // For each character
-                for (char c : headerLine.toCharArray()) {
-
-                    // If the character is the divider (usually comma)
-                    if (c == divider) {
-
-                        // Add the word to the headers and clear buffer
-                        headers.add(buffer.toString());
-                        buffer = new StringBuilder();
-
-                    }
-                    else {
-
-                        // Other-wise add the character to the buffer
-                        buffer.append(c);
-
-                    }
-                }
-                headers.add(buffer.toString());
-
-                // Set contains headers to true
-                output.setContainsHeaders(true);
-
-                // Convert the list to an array and pass it to setHeaders
-                output.setHeaders(headers.toArray(new String[0]));
-            }
 
             // For each line we iterate through
             while((currentLine = bufferedReader.readLine()) != null) {
@@ -257,5 +224,43 @@ public class DataArray implements DataObject{
     }
 
     // - - - - - - - - - - - - - Private Methods - - - - - - - - - -
+
+    private static ArrayList<String> readCSVHeader(BufferedReader reader, char deliminator) {
+
+        // Get the first line of the file
+        String headerLine = bufferedReader.readLine();
+
+        // Create a list of the headers
+        LinkedList<String> headers = new LinkedList<>();
+
+        // And a buffer for each header we might add
+        StringBuilder buffer = new StringBuilder();
+
+        // For each character
+        for (char c : headerLine.toCharArray()) {
+
+            // If the character is the divider (usually comma)
+            if (c == divider) {
+
+                // Add the word to the headers and clear buffer
+                headers.add(buffer.toString());
+                buffer = new StringBuilder();
+
+            }
+            else {
+
+                // Other-wise add the character to the buffer
+                buffer.append(c);
+
+            }
+        }
+        headers.add(buffer.toString());
+
+        // Set contains headers to true
+        output.setContainsHeaders(true);
+
+        // Convert the list to an array and pass it to setHeaders
+        output.setHeaders(headers.toArray(new String[0]));
+    }
 
 }
