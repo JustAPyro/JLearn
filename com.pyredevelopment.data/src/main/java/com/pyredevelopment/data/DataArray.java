@@ -225,42 +225,46 @@ public class DataArray implements DataObject{
 
     // - - - - - - - - - - - - - Private Methods - - - - - - - - - -
 
-    private static ArrayList<String> readCSVHeader(BufferedReader reader, char deliminator) {
+    private static ArrayList<String> readCSVHeader(BufferedReader reader, char deliminator) throws IOException{
 
         // Get the first line of the file
-        String headerLine = bufferedReader.readLine();
+        char[] headerChars = reader.readLine().toCharArray();
 
         // Create a list of the headers
-        LinkedList<String> headers = new LinkedList<>();
+        ArrayList<String> outputHeaders = new ArrayList<>();
 
-        // And a buffer for each header we might add
+        // Create a buffer for each header
         StringBuilder buffer = new StringBuilder();
 
         // For each character
-        for (char c : headerLine.toCharArray()) {
+        for (char c : headerChars)
+            // Process it using the process method
+            processCharForHeader(c, deliminator, buffer, outputHeaders);
 
-            // If the character is the divider (usually comma)
-            if (c == divider) {
-
-                // Add the word to the headers and clear buffer
-                headers.add(buffer.toString());
-                buffer = new StringBuilder();
-
-            }
-            else {
-
-                // Other-wise add the character to the buffer
-                buffer.append(c);
-
-            }
-        }
-        headers.add(buffer.toString());
-
-        // Set contains headers to true
-        output.setContainsHeaders(true);
-
-        // Convert the list to an array and pass it to setHeaders
-        output.setHeaders(headers.toArray(new String[0]));
+        // Return the results
+        return outputHeaders;
     }
+
+    /*
+    This processes an individual char, if it's the deliminator character it will push
+    buffer into the provided array, otherwise the char will simply be added to the buffer.
+     */
+    private static void processCharForHeader(char c, char deliminator, StringBuilder buffer, ArrayList<String> outputHeaders) {
+        // If the character is the deliminator (usually comma)
+        if (c == deliminator) {
+
+            // Add the word to the headers and clear buffer
+            outputHeaders.add(buffer.toString());
+            buffer.setLength(0);
+
+        }
+        else {
+
+            // Other-wise add the character to the buffer
+            buffer.append(c);
+
+        }
+    }
+
 
 }
