@@ -48,4 +48,19 @@ class DataArrayTest {
 
     }
 
+    @Test
+    @DisplayName("Testing reading from CSV")
+    void testReadCSV() {
+
+        // Set up
+        DataArray testArray;
+
+        // Execution
+        testArray = DataArray.readCSV("C:\\Users\\Luke\\Programming\\DataSets\\Kaggle\\MedicalInsuranceCosts.csv", true, ',');
+
+        // Verify
+        assertEquals(7, testArray.getHeaders().size());
+    }
+
+
 }

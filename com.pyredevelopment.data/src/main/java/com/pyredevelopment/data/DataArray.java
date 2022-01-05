@@ -1,5 +1,8 @@
 package com.pyredevelopment.data;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -89,6 +92,77 @@ public class DataArray implements DataObject{
         return dataArrayOut;
     }
 
+    public static DataArray readCSV(String fileLocation, boolean includeFileHeaders, char divider) {
+
+        // Try, in case we encounter IO exception
+        try {
+
+            // Create a buffered reader from the provided file
+            BufferedReader bufferedReader = new BufferedReader(new FileReader(fileLocation));
+
+            // Create a variable to store the current line being processed
+            String lineToBeParsed;
+
+            // Create a new DataFrame for the output
+            DataArray output = new DataArray();
+
+            // If we're including fileHeaders read that line first
+            if (includeFileHeaders) {
+                readFileHeader
+
+                // Get the first line of the file
+                String headerLine = bufferedReader.readLine();
+
+                // Create a list of the headers
+                LinkedList<String> headers = new LinkedList<>();
+
+                // And a buffer for each header we might add
+                StringBuilder buffer = new StringBuilder();
+
+                // For each character
+                for (char c : headerLine.toCharArray()) {
+
+                    // If the character is the divider (usually comma)
+                    if (c == divider) {
+
+                        // Add the word to the headers and clear buffer
+                        headers.add(buffer.toString());
+                        buffer = new StringBuilder();
+
+                    }
+                    else {
+
+                        // Other-wise add the character to the buffer
+                        buffer.append(c);
+
+                    }
+                }
+                headers.add(buffer.toString());
+
+                // Set contains headers to true
+                output.setContainsHeaders(true);
+
+                // Convert the list to an array and pass it to setHeaders
+                output.setHeaders(headers.toArray(new String[0]));
+            }
+
+            // For each line we iterate through
+            while((currentLine = bufferedReader.readLine()) != null) {
+
+                // Add this line as an instance to the output
+                output.addInstance(Instance.parseCSV(currentLine, divider));
+
+            }
+
+            // Return the DataFrame
+            return output;
+
+        } catch (IOException e) {
+            // If we do encounter an error, just print the error and return null
+            e.printStackTrace();
+            return null;
+        }
+    }
 
     // - - - - - - - - - - DataFrame Imitation Methods - - - - - - - - - -
 
@@ -181,5 +255,7 @@ public class DataArray implements DataObject{
 
         return stringBuilder.toString();
     }
+
+    // - - - - - - - - - - - - - Private Methods - - - - - - - - - -
 
 }
