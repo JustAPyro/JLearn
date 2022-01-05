@@ -184,11 +184,16 @@ public class DataArray implements DataObject{
 
         // Start by assuming the string size of each col is equal to the header
         int stringSize[] = new int[headers.size()];
-        for (int i = 0; i < headers.size(); i++)
-            stringSize[i] = headers.get(i).length();
+        for (int feature = 0; feature < headers.size(); feature++) {
+            stringSize[feature] = headers.get(feature).length();
+            for (int i = 0; i < data.get(feature).size(); i++) {
+                stringSize[feature] = Math.max(stringSize[feature], data.get(feature).get(i).toString().length());
+            }
+        }
 
         // Create a formatter string
-        final StringBuilder formatString = new StringBuilder("| %-2s ");
+        String idSize = String.valueOf((int) Math.floor(Math.log10(data.get(0).size())) + 1);
+        final StringBuilder formatString = new StringBuilder("| %-"+idSize+"s ");
         for (int val : stringSize)
             formatString.append("| %" + "-" + val + "s ");
         formatString.append("|\n");
@@ -197,7 +202,7 @@ public class DataArray implements DataObject{
          * Prepare line for top, bottom & below header row.
          */
         StringBuilder templateBuilder = new StringBuilder();
-        templateBuilder.append("+----+");
+        templateBuilder.append("+-").append("-".repeat(Math.max(0, Integer.parseInt(idSize)))).append("-+");
         for (int val : stringSize)
             templateBuilder.append("-".repeat(val+2)).append("+");
         String line = templateBuilder.toString() + "\n";
