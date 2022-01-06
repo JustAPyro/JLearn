@@ -63,7 +63,7 @@ class DataArrayTest {
         System.out.println(testArray);
 
         // Verify
-        assertEquals(6, testArray.getHeaders().size());
+        assertEquals(7, testArray.getHeaders().size());
     }
 
 

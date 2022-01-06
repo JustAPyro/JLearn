@@ -148,6 +148,10 @@ public class DataArray implements DataObject{
         }
     }
 
+    public static DataArray readCSV(String fileLocation) {
+        return readCSV(fileLocation, true, ',');
+    }
+
     // - - - - - - - - - - DataFrame Imitation Methods - - - - - - - - - -
 
     public Object at(int index, String column) {
@@ -266,6 +270,9 @@ public class DataArray implements DataObject{
             // Process it using the process method
             processCSVChar(c, deliminator, buffer, outputHeaders);
 
+        // Add the final result to the buffer
+        outputHeaders.add(buffer.toString());
+
         // Return the results
         return outputHeaders;
     }
@@ -282,6 +289,9 @@ public class DataArray implements DataObject{
         for (char c: chars)
             // Process it based on the char, the deliminator. Either add the word to output or char to word
             processCSVChar(c, deliminator, wordBuffer, outputInstance);
+
+        // Add the final word left in the buffer
+        outputInstance.add(wordBuffer.toString());
 
         return outputInstance;
 
