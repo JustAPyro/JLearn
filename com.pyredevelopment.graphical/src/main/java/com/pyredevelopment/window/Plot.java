@@ -1,12 +1,15 @@
 package com.pyredevelopment.window;
 
+import com.pyredevelopment.data.DataObject;
 import javafx.geometry.VPos;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.text.TextAlignment;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class Plot implements Drawable{
 
@@ -42,9 +45,12 @@ public class Plot implements Drawable{
 
 
 
+
+
     // - - - - - - - - - - Constructors - - - - - - - - - -
 
     int[][] intArray;
+    ArrayList<Double> doubleList = new ArrayList<>();
 
     // - - - - - - - - - - Getters / Setters - - - - - - - - - -
 
@@ -137,6 +143,25 @@ public class Plot implements Drawable{
 
     }
 
+    public void plot(DataObject data, String xLabel, String yLabel, String format) {
+
+        List<Object> xObjects = data.getFeature(xLabel);
+        List<Object> yObjects = data.getFeature(yLabel);
+
+
+        int[] xArray = new int[xObjects.size()];
+        int[] yArray = new int[yObjects.size()];
+
+        for (int i = 0; i < xObjects.size(); i++) {
+            xArray[i] = Math.round(Float.parseFloat((String) xObjects.get(i)));
+            yArray[i] = Math.round(Float.parseFloat((String) yObjects.get(i)));
+        }
+
+        plot(xArray, yArray, format);
+
+
+    }
+
     public void show() {
 
         // Create a new window and have it draw this object
@@ -185,7 +210,7 @@ public class Plot implements Drawable{
             double tickIncrementY = tickSpacingY*0.25+tickSpacingY*i;
 
 
-            String xIndicator = String.format("%.1f", (endScaleX / (tickNums-1)) * i);
+            String xIndicator = String.format("%.1f", ((endScaleX - startScaleX) / (tickNums-1)) * i + startScaleX);
             String yIndicator = String.format("%.1f", ((endScaleY - startScaleY) / (tickNums-1)) * (tickNums-i-1) + startScaleY);
 
             // Stroke in the left (Vertical, Y marker) indicators
@@ -233,7 +258,6 @@ public class Plot implements Drawable{
             if (line != LineStyle.NONE)
                 gc.strokeLine(zeroX + (intArray[X][i]-startScaleX)*xScale, zeroY + (intArray[Y][i]-startScaleY)*yScale, zeroX + (intArray[X][i+1]-startScaleX)*xScale, zeroY + (intArray[Y][i+1]-startScaleY)*yScale);
 
-            System.out.println(intArray[Y][i]);
         }
 
         // If we're drawing the marker

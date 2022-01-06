@@ -14,7 +14,6 @@ public class PlotExample {
         plt.show();
         */
 
-
         /* MatPlotLib PyPlot Example Usage 2.
         Plot plt = new Plot();
         plt.plot(new int[]{1, 2, 3, 4}, new int[]{1, 4, 9, 16});

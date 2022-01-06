@@ -64,7 +64,14 @@ public class DataArray implements DataObject{
         }
     }
 
+    public ArrayList<Object> getFeature(String feature) {
+        for (int i = 0; i < headers.size(); i++) {
+            if (feature.equalsIgnoreCase(headers.get(i)))
+                return data.get(i);
+        }
 
+        return null;
+    }
 
     // - - - - - - - - - - Creator Methods - - - - - - - - - - -
 

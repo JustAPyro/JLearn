@@ -27,4 +27,6 @@ public interface DataObject {
      */
     public ArrayList<String> columns();
 
+    public ArrayList<Object> getFeature(String feature);
+
 }
