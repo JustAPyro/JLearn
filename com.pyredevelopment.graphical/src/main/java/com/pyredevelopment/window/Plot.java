@@ -17,6 +17,10 @@ public class Plot implements Drawable{
     final private int Y = 0;
     final private int X = 1;
 
+    public enum Scale {
+        COLOR
+    }
+
     private enum LineStyle {
         NONE,
         SOLID
@@ -37,6 +41,8 @@ public class Plot implements Drawable{
     // The label headers for each axis
     private String xLabel;
     private String yLabel;
+
+    private boolean scatter = false;
 
     // The format values
     Color color;
@@ -158,6 +164,12 @@ public class Plot implements Drawable{
         }
 
         plot(xArray, yArray, format);
+
+
+    }
+
+    public void scatter(DataObject data, String xLabel, String yLabel, String scaleOne) {
+
 
 
     }

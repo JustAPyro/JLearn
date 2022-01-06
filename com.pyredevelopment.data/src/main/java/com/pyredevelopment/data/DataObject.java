@@ -29,4 +29,8 @@ public interface DataObject {
 
     public ArrayList<Object> getFeature(String feature);
 
+    public int features();
+
+    public int instances();
+
 }

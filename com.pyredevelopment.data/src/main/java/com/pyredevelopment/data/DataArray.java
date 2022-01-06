@@ -73,6 +73,14 @@ public class DataArray implements DataObject{
         return null;
     }
 
+    public int features() {
+        return headers.size();
+    }
+
+    public int instances() {
+        return data.get(0).size();
+    }
+
     // - - - - - - - - - - Creator Methods - - - - - - - - - - -
 
     /**
