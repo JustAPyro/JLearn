@@ -11,13 +11,44 @@ import java.util.*;
  * <h3>Overview:</h3>
  * // TODO: Fill
  */
-public class DataArray implements DataObject{
+public class DataArray implements DataObject, Iterable<Object[]>{
 
     // - - - - - - - - - - Instance Values - - - - - - - - - - - -
 
     ArrayList<String> headers;
     ArrayList<Type> classes;
     ArrayList<ArrayList<Object>> data;
+
+    /**
+     * Returns an iterator over elements of type {@code T}.
+     *
+     * @return an Iterator.
+     */
+    @Override
+    public Iterator<Object[]> iterator() {
+
+        return new Iterator<>() {
+
+            int index = 0;
+
+            @Override
+            public boolean hasNext() {
+                return index < instances();
+            }
+
+            @Override
+            public Object[] next() {
+                Object[] output = new Object[features()];
+                for (int i = 0; i < features(); i++) {
+                    output[i] = data.get(i).get(index);
+                }
+                index++;
+                return output;
+            }
+
+        };
+
+    }
 
     private enum Type {
         BYTE,
@@ -40,7 +71,19 @@ public class DataArray implements DataObject{
         data = new ArrayList<>();
     }
 
+    public DataArray(DataArray originalArray, String[] features) {
+        headers = new ArrayList<>(Arrays.asList(features));
+        data = new ArrayList<>();
+        for (String feature : features) {
+            data.add(originalArray.getFeature(feature));
+        }
+    }
+
     // - - - - - - - - - - Getters / Setters - - - - - - - - - - - -
+
+    public DataArray getSubset(String[] features) {
+        return new DataArray(this, features);
+    }
 
     /**
      * ALlows you to set the headers of the data (Aka the feature or column titles)

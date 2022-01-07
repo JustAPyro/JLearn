@@ -1,6 +1,7 @@
 package com.pyredevelopment.regression;
 
 import com.pyredevelopment.data.DataFrame;
+import com.pyredevelopment.data.DataObject;
 import com.pyredevelopment.data.Instance;
 
 /**
@@ -66,6 +67,21 @@ public class LinearRegression {
     // y = a + bx
     private double a;   // y-intercept
     private double b;   // slope of line
+
+    public void fit(DataObject data, String target, String... features) {
+
+        // This 2D double array represents the n x n matrix X'X
+        double[][] matrixXpX = new double[features.length+1][features.length+1];
+
+        // This double array represents the n x 1 column vector X'Y
+        double[] matrixXpY = new double[features.length+1];
+
+        // For each instance of the data
+        for (Object[] instance : data.getSubset(features)) {
+
+        }
+
+    }
 
     /**
      * Allows you to fit this linear regression model to a dataframe provided

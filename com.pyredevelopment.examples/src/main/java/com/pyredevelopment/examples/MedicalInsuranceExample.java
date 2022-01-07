@@ -11,8 +11,7 @@ public class MedicalInsuranceExample {
         DataArray data = DataArray.readCSV("C:\\Users\\Luke\\Programming\\DataSets\\Kaggle\\MedicalInsuranceCosts.csv");
 
         Plot plt = new Plot();
-        plt.scatter(data, "children", "charges", "color=children");
-
+        plt.plot(data, "children", "charges", "gs");
         plt.show();
 
 

@@ -2,7 +2,9 @@ package com.pyredevelopment.data;
 
 import java.util.ArrayList;
 
-public interface DataObject {
+public interface DataObject extends Iterable<Object[]> {
+
+
 
     /**
      * Access a single value for a row/column label pair.
@@ -28,6 +30,8 @@ public interface DataObject {
     public ArrayList<String> columns();
 
     public ArrayList<Object> getFeature(String feature);
+
+    public DataObject getSubset(String[] features);
 
     public int features();
 
