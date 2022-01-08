@@ -10,9 +10,8 @@ public class MedicalInsuranceExample {
 
         DataArray data = DataArray.readCSV("C:\\Users\\Luke\\Programming\\DataSets\\Kaggle\\MedicalInsuranceCosts.csv");
 
-        Plot plt = new Plot();
-        plt.plot(data, "children", "charges", "gs");
-        plt.show();
+        data = data.getSubset(new String[]{"age", "bmi", "charges"});
+        System.out.println(data);
 
 
 
