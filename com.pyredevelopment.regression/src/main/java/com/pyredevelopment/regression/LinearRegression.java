@@ -71,14 +71,21 @@ public class LinearRegression {
 
     public void fit(DataObject data, String target, String... features) {
 
+        // Declare a variable for the complexity
+        int n = features.length+1;
+
         // This 2D double array represents the n x n matrix X'X
-        double[][] matrixXpX = new double[features.length+1][features.length+1];
+        double[][] matrixXpX = new double[n][n];
 
         // This double array represents the n x 1 column vector X'Y
-        double[] matrixXpY = new double[features.length+1];
+        double[] matrixXpY = new double[n];
 
         // For each instance of the data
         for (Instance instance : data.getSubset(features)) {
+            for (double val : instance.getValues()) {
+
+            }
+
 
         }
 

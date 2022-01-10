@@ -1,6 +1,7 @@
 package com.pyredevelopment.data;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 
 public class Instance {
@@ -17,6 +18,14 @@ public class Instance {
 
     public void insert(Object o, int index) {
         data[index] = o;
+    }
+
+    public double[] getValues() {
+        double[] values = new double[data.length];
+        for (int i = 0; i < data.length; i++) {
+            values[i] = Double.parseDouble(Arrays.toString(data));
+        }
+        return values;
     }
 
 }
