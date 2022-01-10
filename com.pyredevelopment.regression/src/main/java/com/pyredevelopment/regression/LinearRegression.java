@@ -2,6 +2,7 @@ package com.pyredevelopment.regression;
 
 
 import com.pyredevelopment.data.DataObject;
+import com.pyredevelopment.data.Instance;
 
 
 /**
@@ -77,7 +78,7 @@ public class LinearRegression {
         double[] matrixXpY = new double[features.length+1];
 
         // For each instance of the data
-        for (Object[] instance : data.getSubset(features)) {
+        for (Instance instance : data.getSubset(features)) {
 
         }
 

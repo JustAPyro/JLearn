@@ -25,7 +25,7 @@ public class DataArray implements DataObject, Iterable<Object[]>{
      * @return an Iterator.
      */
     @Override
-    public Iterator<Object[]> iterator() {
+    public Iterator<Instance> iterator() {
 
         return new Iterator<>() {
 
@@ -37,13 +37,21 @@ public class DataArray implements DataObject, Iterable<Object[]>{
             }
 
             @Override
-            public Object[] next() {
-                Object[] output = new Object[features()];
-                for (int i = 0; i < features(); i++) {
-                    output[i] = data.get(i).get(index);
+            public Instance next() {
+
+                // Create a new instance based on the headers of this dataset
+                Instance instance = new Instance(headers);
+
+                // Then for each feature, insert it into the new instance
+                for (int feature = 0; feature < features(); feature++) {
+                    instance.insert(data.get(feature).get(index), feature);
                 }
+
+                // Increment the index
                 index++;
-                return output;
+
+                // And return the instance
+                return instance;
             }
 
         };

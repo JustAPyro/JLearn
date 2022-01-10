@@ -2,7 +2,7 @@ package com.pyredevelopment.data;
 
 import java.util.ArrayList;
 
-public interface DataObject extends Iterable<Object[]> {
+public interface DataObject extends Iterable<Instance> {
 
 
 
