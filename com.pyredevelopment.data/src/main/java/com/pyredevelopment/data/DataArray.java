@@ -11,7 +11,7 @@ import java.util.*;
  * <h3>Overview:</h3>
  * // TODO: Fill
  */
-public class DataArray implements DataObject, Iterable<Object[]>{
+public class DataArray implements DataObject, Iterable<Instance>{
 
     // - - - - - - - - - - Instance Values - - - - - - - - - - - -
 
@@ -262,7 +262,7 @@ public class DataArray implements DataObject, Iterable<Object[]>{
         }
 
         // Create a formatter string
-        String idSize = String.valueOf((int) Math.floor(Math.log10(data.get(0).size())) + 1);
+        String idSize = String.valueOf(Math.max((int) Math.floor(Math.log10(data.get(0).size())) + 1, 2));
         final StringBuilder formatString = new StringBuilder("| %-"+idSize+"s ");
         for (int val : stringSize)
             formatString.append("| %" + "-" + val + "s ");
