@@ -73,6 +73,7 @@ public class LinearRegression {
 
         // Declare a variable for the complexity
         int n = features.length+1;
+        System.out.println(n);
 
         // This 2D double array represents the n x n matrix X'X
         double[][] matrixXpX = new double[n][n];
@@ -82,13 +83,31 @@ public class LinearRegression {
 
         // For each instance of the data
         for (Instance instance : data.getSubset(features)) {
-            for (double val : instance.getValues()) {
 
-            }
+            instance.appendFirst(1);
+            processInstance(matrixXpX, instance);
 
 
         }
 
+        for (int r = 0; r < matrixXpX.length; r++) {
+            for (int c = 0; c < matrixXpX[r].length; c++) {
+                System.out.print(matrixXpX[r][c] + ", ");
+            }
+            System.out.println();
+        }
+
+    }
+
+    private void processInstance(double[][] matrixXpX, Instance instance) {
+
+        for (int r = 0; r < matrixXpX.length; r++) {
+            for (int c = 0; c < matrixXpX[r].length; c++) {
+
+                matrixXpX[r][c] += (instance.getValue(r) * instance.getValue(c));
+
+            }
+        }
     }
 
     /**

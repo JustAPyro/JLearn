@@ -20,12 +20,31 @@ public class Instance {
         data[index] = o;
     }
 
+    public void appendFirst(Object o) {
+        Object[] newData = new Object[data.length+1];
+        newData[0] = 0;
+        for (int i = 0; i < data.length; i++) {
+            newData[i+1] = data[i];
+        }
+        this.data = newData;
+    }
+
     public double[] getValues() {
         double[] values = new double[data.length];
         for (int i = 0; i < data.length; i++) {
             values[i] = Double.parseDouble(Arrays.toString(data));
         }
         return values;
+    }
+
+    public double getValue(int index) {
+        Object val = data[index];
+        if (val instanceof Integer)
+            return (Integer) val;
+        else if (val instanceof String)
+            return Double.parseDouble((String) data[index]);
+
+        return Double.MIN_VALUE;
     }
 
 }

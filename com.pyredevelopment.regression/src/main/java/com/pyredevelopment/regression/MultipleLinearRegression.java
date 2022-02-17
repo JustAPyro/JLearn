@@ -1,6 +1,6 @@
 package com.pyredevelopment.regression;
 
-import com.pyredevelopment.data.DataFrame;
+
 import com.pyredevelopment.data.DataObject;
 import com.pyredevelopment.math.matrix.Matrix;
 
@@ -116,10 +116,6 @@ public class MultipleLinearRegression {
             }
             System.out.println();
         }
-    }
-
-    public void fit(DataFrame data) {
-
     }
 
 
