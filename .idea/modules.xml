@@ -3,9 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/JLearn.iml" filepath="$PROJECT_DIR$/JLearn.iml" />
-      <module fileurl="file://$PROJECT_DIR$/com.pyredevelopment.data/com.pyredevelopment.data.iml" filepath="$PROJECT_DIR$/com.pyredevelopment.data/com.pyredevelopment.data.iml" />
       <module fileurl="file://$PROJECT_DIR$/com.pyredevelopment.examples/com.pyredevelopment.examples.iml" filepath="$PROJECT_DIR$/com.pyredevelopment.examples/com.pyredevelopment.examples.iml" />
       <module fileurl="file://$PROJECT_DIR$/com.pyredevelopment.graphical/com.pyredevelopment.graphical.iml" filepath="$PROJECT_DIR$/com.pyredevelopment.graphical/com.pyredevelopment.graphical.iml" />
+      <module fileurl="file://$PROJECT_DIR$/com.pyredevelopment.data/com.pyredevelopment.jlearn.iml" filepath="$PROJECT_DIR$/com.pyredevelopment.data/com.pyredevelopment.jlearn.iml" />
       <module fileurl="file://$PROJECT_DIR$/com.pyredevelopment.math/com.pyredevelopment.math.iml" filepath="$PROJECT_DIR$/com.pyredevelopment.math/com.pyredevelopment.math.iml" />
       <module fileurl="file://$PROJECT_DIR$/com.pyredevelopment.regression/com.pyredevelopment.regression.iml" filepath="$PROJECT_DIR$/com.pyredevelopment.regression/com.pyredevelopment.regression.iml" />
     </modules>
