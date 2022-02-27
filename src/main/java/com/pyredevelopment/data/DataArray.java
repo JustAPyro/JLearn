@@ -21,9 +21,6 @@ public class DataArray implements DataObject{
 
     }
 
-
-    public DataArray
-
     /**
      * Drops specified indices from rows or columns
      * <p>
@@ -129,7 +126,20 @@ public class DataArray implements DataObject{
      */
     @Override
     public int[] shape() {
-        throw new UnsupportedOperationException("Not supported yet.");
+
+        int columns = mainData.size();
+
+        // If there are no keys/columns in the set
+        if (columns == 0)
+            // It must be an empty DataArray, so return 0, 0
+            return new int[]{0, 0};
+
+        // If it's not empty, calculate the rows by creating an iterator, and getting the size of first value
+        int rows = mainData.entrySet().iterator().next().getValue().size();
+
+        // Now return the results
+        return new int[]{rows, columns};
+
     }
 
     /**
