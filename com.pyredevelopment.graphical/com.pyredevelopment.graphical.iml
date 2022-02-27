@@ -15,7 +15,7 @@
     <orderEntry type="library" name="Maven: org.openjfx:javafx-graphics:win:13" level="project" />
     <orderEntry type="library" name="Maven: org.openjfx:javafx-base:13" level="project" />
     <orderEntry type="library" name="Maven: org.openjfx:javafx-base:win:13" level="project" />
-    <orderEntry type="module" module-name="com.pyredevelopment.jlearn" />
+    <orderEntry type="library" name="Maven: com.pyredevelopment:com.pyredevelopment.data:1.0-SNAPSHOT" level="project" />
     <orderEntry type="module" module-name="com.pyredevelopment.regression" />
     <orderEntry type="module" module-name="com.pyredevelopment.math" />
     <orderEntry type="library" scope="TEST" name="Maven: org.junit.jupiter:junit-jupiter-api:5.8.1" level="project" />
