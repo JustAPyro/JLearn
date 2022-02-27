@@ -1,6 +1,5 @@
 package com.pyredevelopment.examples.data;
 
-import com.pyredevelopment.data.DataArray;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,10 +19,10 @@ public class DataArrayExample {
         hashMap.put("First Name", new ArrayList<>(Arrays.asList("Luke", "John", "Michael")));
 
         // Call the .fromHashMap function
-        DataArray data = DataArray.fromHashMap(hashMap);
+        //DataArray data = DataArray.fromHashMap(hashMap);
 
         // Then print to see the results
-        System.out.println("Example DataArray created from a HashMap: \n" + data);
+        //System.out.println("Example DataArray created from a HashMap: \n" + data);
 
 
     }

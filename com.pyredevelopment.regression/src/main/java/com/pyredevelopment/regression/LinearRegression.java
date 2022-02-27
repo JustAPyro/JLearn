@@ -1,8 +1,6 @@
 package com.pyredevelopment.regression;
 
 
-import com.pyredevelopment.data.DataObject;
-import com.pyredevelopment.data.Instance;
 
 
 /**
@@ -63,8 +61,9 @@ import com.pyredevelopment.data.Instance;
  *     <li><a href="https://www.khanacademy.org/math/statistics-probability/describing-relationships-quantitative-data/more-on-regression/v/regression-line-example">Khan Academy: Linear Regression Example</a></li>
  * </ul>
  */
-public class LinearRegression {
 
+public class LinearRegression {
+/*
     // y = a + bx
     private double a;   // y-intercept
     private double b;   // slope of line
@@ -113,12 +112,12 @@ public class LinearRegression {
     /**
      *
      * @return A string representation of the object
-     */
+
     @Override
     public String toString() {
         return "y = " + b + "x + " + a;
     }
 
 
-
+*/
 }

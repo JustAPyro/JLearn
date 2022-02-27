@@ -86,7 +86,7 @@ public interface DataObject {
     /**
      * Print a concise summary of a DataFrame.
      *
-     * This method prints information about a DataFrame including the index dtype and columns,
+     * This method prints information about a DataFrame including the index data type and columns,
      * non-null values and memory usage.
      *
      * @return The string representation of the summary

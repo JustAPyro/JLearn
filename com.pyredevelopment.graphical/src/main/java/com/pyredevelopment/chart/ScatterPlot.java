@@ -1,6 +1,6 @@
 package com.pyredevelopment.chart;
 
-import com.pyredevelopment.data.Instance;
+
 import com.pyredevelopment.graphics.Cartesian;
 import com.pyredevelopment.graphics.Point;
 import javafx.geometry.Insets;

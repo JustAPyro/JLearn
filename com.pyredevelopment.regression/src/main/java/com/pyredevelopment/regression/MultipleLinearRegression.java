@@ -1,7 +1,5 @@
 package com.pyredevelopment.regression;
 
-
-import com.pyredevelopment.data.DataObject;
 import com.pyredevelopment.math.matrix.Matrix;
 
 /**
@@ -43,6 +41,8 @@ import com.pyredevelopment.math.matrix.Matrix;
  * class, you should refer mostly to the <code>com.pyredevelopment.math.Matrix</code> class as well as the associated docs.
  */
 public class MultipleLinearRegression {
+
+    /*
 
     public static void main(String[] args) {
 
@@ -104,7 +104,7 @@ public class MultipleLinearRegression {
      * (input values), the second being 1 col x n rows of dependent variables (output values).
      * @param independent A 2+xN DataObject of independent(input) data points.
      * @param dependent A single column DataObject of dependent(output) data points.
-     */
+
     public void fit(DataObject independent, DataObject dependent) {
 
     }
@@ -117,6 +117,5 @@ public class MultipleLinearRegression {
             System.out.println();
         }
     }
-
-
+*/
 }

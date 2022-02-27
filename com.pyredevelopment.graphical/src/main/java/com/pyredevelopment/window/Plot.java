@@ -1,6 +1,5 @@
 package com.pyredevelopment.window;
 
-import com.pyredevelopment.data.DataObject;
 import javafx.geometry.VPos;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -149,6 +148,7 @@ public class Plot implements Drawable{
 
     }
 
+    /*
     public void plot(DataObject data, String xLabel, String yLabel, String format) {
 
         List<Object> xObjects = data.getFeature(xLabel);
@@ -173,7 +173,7 @@ public class Plot implements Drawable{
 
 
     }
-
+*/
     public void show() {
 
         // Create a new window and have it draw this object
