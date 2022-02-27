@@ -15,6 +15,17 @@ public class DataArray implements DataObject{
 
     public DataArray(Map<?, ? extends List<?>> hashMap) {
 
+        // Initialize the mainData set
+        mainData = new LinkedHashMap<>();
+
+        // Iterate through the keys
+        for (Object columns : hashMap.keySet()) {
+
+            // For each, insert it into mainData, creating a new ArrayList with target List
+            mainData.put(columns.toString(), new ArrayList<>(hashMap.get(columns)));
+
+        }
+
     }
 
     public DataArray(FileType fileType, String fileLocation) {
@@ -117,6 +128,23 @@ public class DataArray implements DataObject{
     }
 
     /**
+     * Returns an array contains the columns
+     * <p>
+     * This will return an array containing the column headers. This can be useful to either
+     * quickly check the number of columns or to check what data a DataObject contains.
+     *
+     * @return Array of strings representing column headers.
+     */
+    @Override
+    public ArrayList<String> getColumns() {
+
+        // Return the key-set of mainData as an array
+        return new ArrayList<>(mainData.keySet());
+
+    }
+
+
+    /**
      * Returns an indicator of the dimensions of DataObject.
      * <p>
      * Returns a 2 entry integer array indicating the shape of the of DataObject
@@ -127,6 +155,7 @@ public class DataArray implements DataObject{
     @Override
     public int[] shape() {
 
+        // Each column is defined by a key, so size() returns columns
         int columns = mainData.size();
 
         // If there are no keys/columns in the set
@@ -211,5 +240,13 @@ public class DataArray implements DataObject{
     @Override
     public String tail(int numberRows) {
         throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    // - - - - - - - - - - Static Methods - - - - - - - - - -
+
+    public static DataArray fromMap(Map<?, ? extends List<?>> hashMap) {
+
+        return new DataArray(hashMap);
+
     }
 }

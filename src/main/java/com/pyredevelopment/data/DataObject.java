@@ -1,5 +1,7 @@
 package com.pyredevelopment.data;
 
+import java.util.ArrayList;
+
 public interface DataObject {
 
     /**
@@ -72,6 +74,16 @@ public interface DataObject {
      * @param data The data object that you would like to append to the caller.
      */
     void concatColumns(DataObject data);
+
+    /**
+     * Returns an array contains the columns
+     *
+     * This will return an array containing the column headers. This can be useful to either
+     * quickly check the number of columns or to check what data a DataObject contains.
+     *
+     * @return Array of strings representing column headers.
+     */
+    ArrayList<String> getColumns();
 
     /**
      * Returns an indicator of the dimensions of DataObject.
