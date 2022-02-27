@@ -74,21 +74,69 @@ public interface DataObject {
     void concatColumns(DataObject data);
 
     /**
+     * Returns an indicator of the dimensions of DataObject.
+     *
      * Returns a 2 entry integer array indicating the shape of the of DataObject
      * in the form of [Rows, Columns]
      *
      * @return An integer array representing the dimensionality of the DataObject
      */
-    String shape();
+    int[] shape();
 
+    /**
+     * Print a concise summary of a DataFrame.
+     *
+     * This method prints information about a DataFrame including the index dtype and columns,
+     * non-null values and memory usage.
+     *
+     * @return The string representation of the summary
+     */
     String info();
 
-    String head();
+    /**
+     * Returns the first 5 rows
+     *
+     * This function returns the first 5 rows for the object based on position.
+     * It is useful for quickly testing if your object has the right type of data in it.
+     *
+     * @return The first 5 rows of the DataObject
+     */
+    DataObject head();
 
-    String head(int numberRows);
+    /**
+     * Returns the first <code>numberRows</code> rows
+     *
+     * Returns the first <code>numberRows</code> rows for the object based on position.
+     * It is useful for quickly testing if your object has the right type of data in it.
+     * For negative values of n, this function will return all rows <i>except</i> the
+     * last <code>numberRows</code> rows, equivalent to the python <code>list[:-numberRows]</code>
+     *
+     * @param numberRows Number of rows to select
+     * @return The first <code>numberRows</code> of the caller object.
+     */
+    DataObject head(int numberRows);
 
+    /**
+     * Returns the last 5 rows.
+     *
+     * This function returns the last 5 rows from the object based on position.
+     * It is useful for quickly verifying data, for example, after sorting or appending rows.
+     *
+     * @return The last 5 rows of the caller object.
+     */
     String tail();
 
+    /**
+     * Returns the last <code>numberRows</code> rows.
+     *
+     * This function returns the last <code>numberRows</code> rows from the object based on position.
+     * It is useful for quickly verifying data, for example after sorting or appending rows.
+     * For negative values of <code>numberRows</code> this function returns all rows except the <i>first</i>
+     * <code>numberRows</code>, equivalent to the python list[numberRows:]
+     *
+     * @param numberRows The number of rows to select
+     * @return The last <code>numberRows</code> rows of the caller object.
+     */
     String tail(int numberRows);
 
 }
