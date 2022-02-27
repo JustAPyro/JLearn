@@ -7,6 +7,23 @@ import static org.junit.jupiter.api.Assertions.*;
 class DataArrayTest {
 
     @Test
+    void createNoParameters() {
+        // Test variables
+        DataArray dataArray;
+
+        // --- Creates an empty DataArray
+        // Set-up
+            // None
+
+        // Execution
+        dataArray = new DataArray();
+
+        // Assert
+        assertNotNull(dataArray);
+
+    }
+
+    @Test
     void drop() {
     }
 

@@ -1,10 +1,28 @@
 package com.pyredevelopment.data;
 
+import java.util.*;
+
 public class DataArray implements DataObject{
 
+    LinkedHashMap<String, ArrayList<?>> mainData;
+
     public DataArray() {
-        throw new UnsupportedOperationException("Not supported yet.");
+
+        // Initialize the mainData set
+        mainData = new LinkedHashMap<>();
+
     }
+
+    public DataArray(Map<?, ? extends List<?>> hashMap) {
+
+    }
+
+    public DataArray(FileType fileType, String fileLocation) {
+
+    }
+
+
+    public DataArray
 
     /**
      * Drops specified indices from rows or columns
