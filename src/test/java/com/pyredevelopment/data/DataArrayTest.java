@@ -9,17 +9,38 @@ class DataArrayTest {
     @Test
     void createNoParameters() {
         // Test variables
-        DataArray dataArray;
+        DataArray dataArray;    // The object created
+        int[] expectedSize ;    // The expected size
 
-        // --- Creates an empty DataArray
+        // ITEM:----- Creates a non-null collection -----:
         // Set-up
-            // None
+        // ---> None
 
         // Execution
         dataArray = new DataArray();
 
         // Assert
         assertNotNull(dataArray);
+
+        // ITEM:----- Creates a object of shape 0,0 -----:
+        // Set-up
+        expectedSize = new int[]{0, 0};
+
+        // Execution
+        dataArray = new DataArray();
+
+        // Assert
+        assertArrayEquals(expectedSize, dataArray.shape());
+
+    }
+
+    @Test
+    void createWithHashMap() {
+
+    }
+
+    @Test
+    void createWithCSV() {
 
     }
 
