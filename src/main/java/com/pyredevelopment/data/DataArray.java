@@ -4,7 +4,8 @@ import java.util.*;
 
 public class DataArray implements DataObject{
 
-    LinkedHashMap<String, ArrayList<?>> mainData;
+    HashMap<String, ArrayList<?>> mainData;
+    ArrayList<ArrayList<?>> listsByIndex;
 
     public DataArray() {
 
@@ -21,8 +22,12 @@ public class DataArray implements DataObject{
         // Iterate through the keys
         for (Object columns : hashMap.keySet()) {
 
+            ArrayList<?> list = new ArrayList<Object>(hashMap.get(columns));
+
             // For each, insert it into mainData, creating a new ArrayList with target List
-            mainData.put(columns.toString(), new ArrayList<>(hashMap.get(columns)));
+            mainData.put(columns.toString(), list);
+
+            listsByIndex.add(list);
 
         }
 
@@ -126,6 +131,17 @@ public class DataArray implements DataObject{
     public void concatColumns(DataObject data) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
+
+    @Override
+    public double getValue(int row, int col) {
+        return (double) listsByIndex.get(col).get(row);
+    }
+
+    @Override
+    public double getValue(int row, String col) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
 
     /**
      * Returns an array contains the columns

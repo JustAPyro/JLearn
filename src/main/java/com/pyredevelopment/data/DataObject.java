@@ -2,6 +2,16 @@ package com.pyredevelopment.data;
 
 import java.util.ArrayList;
 
+/**
+ * It's worth establishing some basic terminology right off the bat here that will (hopefully) be used
+ * consistently throughout all the JLearn documentation:
+ * Do note that these are subject to change before first stable release of JLearn
+ *
+ * A "Row", "Instance', "Observation" or "Sample" will be called an "Entry"
+ * A "Column", "Attribute", "Independent variable", will be called a "Feature"
+ * A SINGLE data point (The intersection of an entry and a feature) will be called a cell
+ *
+ */
 public interface DataObject {
 
     /**
@@ -74,6 +84,13 @@ public interface DataObject {
      * @param data The data object that you would like to append to the caller.
      */
     void concatColumns(DataObject data);
+
+    //TODO FILL
+    double getValue(int row, int col);
+
+    //TODO FILL
+    double getValue(int row, String col);
+
 
     /**
      * Returns an array contains the columns
