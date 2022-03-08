@@ -16,11 +16,13 @@ public class DataArray implements DataObject{
 
     public DataArray(Map<?, ? extends List<?>> hashMap) {
 
+
         // Initialize the mainData set
         mainData = new LinkedHashMap<>();
 
         // Iterate through the keys
         for (Object columns : hashMap.keySet()) {
+
 
             ArrayList<?> list = new ArrayList<Object>(hashMap.get(columns));
 

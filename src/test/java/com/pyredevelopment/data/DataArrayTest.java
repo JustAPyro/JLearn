@@ -75,7 +75,7 @@ class DataArrayTest {
         // Assert
         assertArrayEquals(expectedShape, dataArray.shape());
 
-        // ITEM:----- Correctly labels keys -----:
+        // ITEM:----- Correctly labels keys as headers-----:
         // Set-up
         hashMap = new HashMap<>();
         hashMap.put("One", List.of(1));
@@ -94,7 +94,12 @@ class DataArrayTest {
         assertTrue(dataArray.getColumns().contains("Four"));
         assertTrue(dataArray.getColumns().contains("Five"));
 
+        // TODO: Test "Correct Values Preserved
+
+        // TODO: Test "Error thrown from null hashmap"
     }
+
+
 
     @Test
     void createWithCSV() {
