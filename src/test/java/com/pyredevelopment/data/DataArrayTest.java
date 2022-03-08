@@ -104,6 +104,24 @@ class DataArrayTest {
     @Test
     void createWithCSV() {
 
+        // Test variables
+        String targetFile;
+        DataArray dataArray;
+        int[] expectedShape;
+
+        // ITEM:----- Returns data object of correct size from 1x5 -----:
+        // Set-up
+        targetFile = "src/test/resources/empty_file.csv";
+        expectedShape = new int[]{0, 0};
+
+        // Execution
+        dataArray = DataArray.readCSV(targetFile);
+
+        // Assert
+        assertArrayEquals(expectedShape, dataArray.shape());
+
+
+
     }
 
     @Test

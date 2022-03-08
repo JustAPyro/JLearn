@@ -1,5 +1,7 @@
 package com.pyredevelopment.data;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.*;
 
 public class DataArray implements DataObject{
@@ -16,6 +18,8 @@ public class DataArray implements DataObject{
 
     public DataArray(Map<?, ? extends List<?>> hashMap) {
 
+        // Create a new list by index
+        listsByIndex = new ArrayList<>();
 
         // Initialize the mainData set
         mainData = new LinkedHashMap<>();
@@ -35,9 +39,45 @@ public class DataArray implements DataObject{
 
     }
 
-    public DataArray(FileType fileType, String fileLocation) {
+    /**
+     * TODO: Fill this
+     * @param fileLocation The String location of the file
+     */
+    public DataArray(String fileLocation) {
+
+        // Create a new list by index
+        listsByIndex = new ArrayList<>();
+
+        // Initialize the mainData set
+        mainData = new LinkedHashMap<>();
+
+        // Declare a Scanner we will use to scan the files
+        Scanner fileScanner;
+
+        // Try and attach the scanner to a file, if it fails, throw an exception
+        try {
+            fileScanner = new Scanner(new File(fileLocation));
+        } catch (FileNotFoundException e) {
+            throw new DataObjectException(DataObjectException.FILE_NOT_FOUND);
+        }
+
+        // Set the delimiter to comma since this is a CSV
+        fileScanner.useDelimiter(",");
+
+        // Check to make sure there are ANY lines in the file
+        if (!fileScanner.hasNext())
+            return;
+
+
+        // Iterate through
+        while (fileScanner.hasNext())  //returns a boolean value
+        {
+            System.out.print(fileScanner.next());  //find and returns the next complete token from this scanner
+        }
+
 
     }
+
 
     /**
      * Drops specified indices from rows or columns
@@ -265,6 +305,12 @@ public class DataArray implements DataObject{
     public static DataArray fromMap(Map<?, ? extends List<?>> hashMap) {
 
         return new DataArray(hashMap);
+
+    }
+
+    public static DataArray readCSV(String location) {
+
+        return new DataArray(location);
 
     }
 }
