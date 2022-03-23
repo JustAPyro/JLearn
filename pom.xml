@@ -8,12 +8,7 @@
     <artifactId>JLearn</artifactId>
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
-    <modules>
-        <module>com.pyredevelopment.regression</module>
-        <module>com.pyredevelopment.graphical</module>
-        <module>com.pyredevelopment.math</module>
-        <module>com.pyredevelopment.examples</module>
-    </modules>
+
 
     <properties>
         <maven.compiler.sourcesZS>17</maven.compiler.sourcesZS>
