@@ -6,10 +6,11 @@ public class LinearRegressionExample {
 
         // Load data set
         Dataset insurance = Dataset.readCSV("src/main/resources/insurance.csv");
+        System.out.println("Here's a sample of what our data looks like: \n" + insurance.getHead());
 
-        System.out.println(insurance);
         // Split the insurance data set into 70% test and 30% train
-        // Dataset[] splitData = Dataset.splitTestTrain(70, testing, training);
+        Dataset[] splitData = Dataset.splitTestTrain(70, insurance);
+
         // Dataset xTrain = splitData[Dataset.TRAIN_INPUTS];
         // Dataset yTrain = splitData[Dataset.TRAIN_OUTPUT];
 

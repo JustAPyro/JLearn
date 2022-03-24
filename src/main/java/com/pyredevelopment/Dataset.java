@@ -118,13 +118,33 @@ public class Dataset {
         return data.get(headers.get(i));
     }
 
-
+    public String getHead() {
+        return stringify(0, 5);
+    }
 
     // - - - - - - - - - - Overridden Object Methods - - - - - - - - - -
 
     public String toString() {
 
-        // Start by assuming the string size of each col is equal to the header
+        // Stringify data from 0 to the maximum size (all of it)
+        return stringify(0, getColumn(0).size());
+
+    }
+
+    // - - - - - - - - - - Static Methods - - - - - - - - - -
+
+    public static Dataset[] splitTestTrain(int percent, Dataset inputData) {
+       return new Dataset[4];
+    }
+
+    public static Dataset readCSV(String filepath) {
+        return new Dataset(filepath, ',', true);
+    }
+
+    // - - - - - - - - - - Private Methods - - - - - - - - - -
+
+    private String stringify(int start, int end) {
+
         //This array contains the size that each column has to be
         int[] stringSize = new int[headers.size()];
 
@@ -135,7 +155,7 @@ public class Dataset {
             stringSize[feature] = headers.get(feature).length();
 
             // Then for each
-            for (int i = 0; i < getColumn(feature).size(); i++) {
+            for (int i = start; i < end; i++) {
                 stringSize[feature] = Math.max(stringSize[feature], getColumn(feature).get(i).toString().length());
             }
         }
@@ -158,15 +178,15 @@ public class Dataset {
 
         // Create the final table
         StringBuilder finalBuilder = new StringBuilder(line);
-        ArrayList<String> tempHeaders = new ArrayList<String>();
+        ArrayList<String> tempHeaders = new ArrayList<>();
         tempHeaders.add("id");
         tempHeaders.addAll(headers);
         finalBuilder.append(String.format(formatString.toString(), tempHeaders.toArray()));
         finalBuilder.append(line);
 
-        for (int sample = 0; sample < getColumn(0).size(); sample++) {
+        for (int sample = start; sample < end; sample++) {
 
-            tempHeaders = new ArrayList<String>();
+            tempHeaders = new ArrayList<>();
             tempHeaders.add(String.valueOf(sample));
             for (int feature = 0; feature < headers.size(); feature++) {
                 tempHeaders.add(getColumn(feature).get(sample).toString());
@@ -176,33 +196,11 @@ public class Dataset {
 
         }
 
-        if (true)
-            return finalBuilder.toString();
+        return finalBuilder.toString();
 
 
         // Create the string builder
-        StringBuilder stringBuilder = new StringBuilder();
-
-        // Format the headers
-        stringBuilder.append("| i | ");
-        for (String columnHead : headers)
-            stringBuilder.append(columnHead).append("\t| ");
-
-        // Append the dividers
-        stringBuilder.append("\n+---+");
-        stringBuilder.append("-".repeat(Math.max(0, stringBuilder.length()-4)));
-
-        // Return the final constructed string
-        return stringBuilder.toString();
     }
-
-    // - - - - - - - - - - Static Methods - - - - - - - - - -
-
-    public static Dataset readCSV(String filepath) {
-        return new Dataset(filepath, ',', true);
-    }
-
-    // - - - - - - - - - - Private Methods - - - - - - - - - -
 
     /*
     This method is here to parse lines (mostly for CSV's) on a delimiter.
