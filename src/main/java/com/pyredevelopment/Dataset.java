@@ -16,7 +16,7 @@ public class Dataset {
     private ArrayList<String> headers = new ArrayList<>();
 
     // This map contains all the columns sorted by header name keys
-    private HashMap<String, ArrayList<Double>> data = new HashMap<>();
+    HashMap<String, ArrayList<Double>> data = new HashMap<>();
 
     /**
      * TODO: Fill
@@ -118,6 +118,83 @@ public class Dataset {
         return data.get(headers.get(i));
     }
 
+
+
+    // - - - - - - - - - - Overridden Object Methods - - - - - - - - - -
+
+    public String toString() {
+
+        // Start by assuming the string size of each col is equal to the header
+        //This array contains the size that each column has to be
+        int[] stringSize = new int[headers.size()];
+
+        // For each feature/column in the data
+        for (int feature = 0; feature < headers.size(); feature++) {
+
+            // Start by assuming that the largest entry is the same as the header string
+            stringSize[feature] = headers.get(feature).length();
+
+            // Then for each
+            for (int i = 0; i < getColumn(feature).size(); i++) {
+                stringSize[feature] = Math.max(stringSize[feature], getColumn(feature).get(i).toString().length());
+            }
+        }
+
+        // Create a formatter string
+        String idSize = String.valueOf(Math.max((int) Math.floor(Math.log10(getColumn(0).size())) + 1, 2));
+        final StringBuilder formatString = new StringBuilder("| %-"+idSize+"s ");
+        for (int val : stringSize)
+            formatString.append("| %" + "-" + val + "s ");
+        formatString.append("|\n");
+
+        /*
+         * Prepare line for top, bottom & below header row.
+         */
+        StringBuilder templateBuilder = new StringBuilder();
+        templateBuilder.append("+-").append("-".repeat(Math.max(0, Integer.parseInt(idSize)))).append("-+");
+        for (int val : stringSize)
+            templateBuilder.append("-".repeat(val+2)).append("+");
+        String line = templateBuilder.toString() + "\n";
+
+        // Create the final table
+        StringBuilder finalBuilder = new StringBuilder(line);
+        ArrayList<String> tempHeaders = new ArrayList<String>();
+        tempHeaders.add("id");
+        tempHeaders.addAll(headers);
+        finalBuilder.append(String.format(formatString.toString(), tempHeaders.toArray()));
+        finalBuilder.append(line);
+
+        for (int sample = 0; sample < getColumn(0).size(); sample++) {
+
+            tempHeaders = new ArrayList<String>();
+            tempHeaders.add(String.valueOf(sample));
+            for (int feature = 0; feature < headers.size(); feature++) {
+                tempHeaders.add(getColumn(feature).get(sample).toString());
+            }
+
+            finalBuilder.append(String.format(formatString.toString(), tempHeaders.toArray()));
+
+        }
+
+        if (true)
+            return finalBuilder.toString();
+
+
+        // Create the string builder
+        StringBuilder stringBuilder = new StringBuilder();
+
+        // Format the headers
+        stringBuilder.append("| i | ");
+        for (String columnHead : headers)
+            stringBuilder.append(columnHead).append("\t| ");
+
+        // Append the dividers
+        stringBuilder.append("\n+---+");
+        stringBuilder.append("-".repeat(Math.max(0, stringBuilder.length()-4)));
+
+        // Return the final constructed string
+        return stringBuilder.toString();
+    }
 
     // - - - - - - - - - - Static Methods - - - - - - - - - -
 

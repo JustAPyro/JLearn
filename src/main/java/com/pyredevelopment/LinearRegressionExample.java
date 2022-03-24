@@ -5,8 +5,9 @@ public class LinearRegressionExample {
     public static void main(String[] args) {
 
         // Load data set
-        Dataset insurance = Dataset.readCSV("");
+        Dataset insurance = Dataset.readCSV("src/main/resources/insurance.csv");
 
+        System.out.println(insurance);
         // Split the insurance data set into 70% test and 30% train
         // Dataset[] splitData = Dataset.splitTestTrain(70, testing, training);
         // Dataset xTrain = splitData[Dataset.TRAIN_INPUTS];
