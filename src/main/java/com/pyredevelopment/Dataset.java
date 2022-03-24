@@ -4,13 +4,16 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
 
 
 public class Dataset {
+
+    // Static variables
+    public static final int TRAIN_INPUTS = 0;
+    public static final int TRAIN_OUTPUT = 1;
+    public static final int TEST_INPUTS = 2;
+    public static final int TEST_OUTPUT = 3;
 
     // This list contains all headers and is an ordered list
     private ArrayList<String> headers = new ArrayList<>();
@@ -110,6 +113,10 @@ public class Dataset {
         }
     }
 
+    public int getEntries() {
+        return getColumn(0).size();
+    }
+
     public ArrayList<Double> getColumn(String string) {
         return data.get(string);
     }
@@ -134,7 +141,25 @@ public class Dataset {
     // - - - - - - - - - - Static Methods - - - - - - - - - -
 
     public static Dataset[] splitTestTrain(int percent, Dataset inputData) {
+
+        // Create an array of datasets to return
+        Dataset[] split = new Dataset[4];
+
+        // Calculate how many training and values we should have
+        int numberOfTrainingValues = (int) (inputData.getEntries() * ((float) percent/100));
+
+        Random randomGenerator = new Random(0);
+
+        // Generate a random set of numbers, the entries at these indexes will be used for training purposes
+        Set<Integer> trainingIndexes = new HashSet<>();
+        while (trainingIndexes.size() < numberOfTrainingValues)
+            trainingIndexes.add(randomGenerator.nextInt(inputData.getEntries()));
+
+
+
+
        return new Dataset[4];
+
     }
 
     public static Dataset readCSV(String filepath) {
