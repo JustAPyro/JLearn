@@ -78,6 +78,8 @@ public class Dataset {
                     // Convert to a Double
                     Double doubleValue = Double.valueOf(parsedLine.get(n));
 
+                    // Add it to the appropriate column
+                    getColumn(n).add(doubleValue);
 
                 }
             }
@@ -108,6 +110,13 @@ public class Dataset {
         }
     }
 
+    public ArrayList<Double> getColumn(String string) {
+        return data.get(string);
+    }
+
+    public ArrayList<Double> getColumn(int i) {
+        return data.get(headers.get(i));
+    }
 
 
     // - - - - - - - - - - Static Methods - - - - - - - - - -
