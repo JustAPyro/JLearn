@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.*;
 
 
-public class Dataset {
+public class Dataset implements Iterable<Double[]>{
 
     // Static variables
     public static final int TRAIN_INPUTS = 0;
@@ -20,6 +20,14 @@ public class Dataset {
 
     // This map contains all the columns sorted by header name keys
     HashMap<String, ArrayList<Double>> data = new HashMap<>();
+
+    public Dataset() {
+
+    }
+
+    public Dataset(ArrayList<String> headers) {
+        setHeaders(new ArrayList<>(List.copyOf(headers)));
+    }
 
     /**
      * TODO: Fill
@@ -102,6 +110,25 @@ public class Dataset {
 
     // - - - - - - - - - - Getters/Setters - - - - - - - - - -
 
+    public void addEntry(Double[] entry) {
+
+        if (entry.length != headers.size()) {
+            System.out.printf("ERROR: Input entry has %d features, target data has %d features.", entry.length, headers.size());
+            throw new UnsupportedOperationException();
+
+        }
+
+
+        for (int i = 0; i < entry.length; i++) {
+            getColumn(i).add(entry[i]);
+        }
+
+    }
+
+    public ArrayList<String> getHeaders() {
+        return headers;
+    }
+
     public void setHeaders(ArrayList<String> headers) {
 
         // Set the list of headers
@@ -117,6 +144,23 @@ public class Dataset {
         return getColumn(0).size();
     }
 
+    public Map<String, ArrayList<Double>> dropColumn(int columnIndex) {
+        String columnName = headers.remove(columnIndex);
+        return Map.of(columnName, data.remove(columnName));
+    }
+
+    public void concatColumn(Map<String, ArrayList<Double>> column) {
+
+        if (column.size() != 1)
+            throw new UnsupportedOperationException();
+
+        for (String header : column.keySet()) {
+            headers.add(header);
+            data.put(header, column.get(header));
+        }
+
+    }
+
     public ArrayList<Double> getColumn(String string) {
         return data.get(string);
     }
@@ -127,6 +171,36 @@ public class Dataset {
 
     public String getHead() {
         return stringify(0, 5);
+    }
+
+    // - - - - - - - - - - Overridden Iterable Methods - - - - - - - - - - -
+
+    @Override
+    public Iterator<Double[]> iterator() {
+
+        return new Iterator<>() {
+
+            // The index the iterator is currently on
+            int index = 0;
+
+            // The buffer that we will use to return the values
+            final Double[] buffer = new Double[headers.size()];
+
+            @Override
+            public boolean hasNext() {
+                return index < getEntries();
+            }
+
+            @Override
+            public Double[] next() {
+                for (int i = 0; i < buffer.length; i++) {
+                    buffer[i] = getColumn(i).get(index);
+                }
+                index++;
+                return buffer;
+            }
+        };
+
     }
 
     // - - - - - - - - - - Overridden Object Methods - - - - - - - - - -
@@ -143,7 +217,8 @@ public class Dataset {
     public static Dataset[] splitTestTrain(int percent, Dataset inputData) {
 
         // Create an array of datasets to return
-        Dataset[] split = new Dataset[4];
+        Dataset train = new Dataset(inputData.getHeaders());
+        Dataset test = new Dataset(inputData.getHeaders());
 
         // Calculate how many training and values we should have
         int numberOfTrainingValues = (int) (inputData.getEntries() * ((float) percent/100));
@@ -156,9 +231,26 @@ public class Dataset {
             trainingIndexes.add(randomGenerator.nextInt(inputData.getEntries()));
 
 
+        int i = 0;
+        for (Double[] entry : inputData) {
 
+            if (trainingIndexes.contains(i)) {
+                train.addEntry(entry);
+            }
+            else {
+                test.addEntry(entry);
+            }
+            i++;
 
-       return new Dataset[4];
+        }
+
+        Dataset trainOutput = new Dataset();
+        trainOutput.concatColumn(train.dropColumn(train.getHeaders().size()-1));
+
+        Dataset testOutput = new Dataset();
+        test.dropColumn(test.getHeaders().size()-1);
+
+       return new Dataset[] {train, trainOutput};
 
     }
 
@@ -276,5 +368,6 @@ public class Dataset {
 
         }
     }
+
 
 }

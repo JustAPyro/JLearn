@@ -11,11 +11,11 @@ public class LinearRegressionExample {
         // Split the insurance data set into 70% test and 30% train
         Dataset[] splitData = Dataset.splitTestTrain(70, insurance);
 
-        // Dataset xTrain = splitData[Dataset.TRAIN_INPUTS];
-        // Dataset yTrain = splitData[Dataset.TRAIN_OUTPUT];
+        Dataset xTrain = splitData[Dataset.TRAIN_INPUTS];
+        Dataset yTrain = splitData[Dataset.TRAIN_OUTPUT];
 
         // Train model
-        // LinearRegression model = new LinearRegression(xTrain, yTrain);
+        LinearRegression model = new LinearRegression(xTrain, yTrain);
 
         // Get the testing input values from our split array
         // Dataset xTest = splitData[Dataset.TEST_INPUTS];
