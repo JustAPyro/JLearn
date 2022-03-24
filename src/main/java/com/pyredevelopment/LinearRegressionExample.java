@@ -2,8 +2,8 @@ package com.pyredevelopment;
 
 public class LinearRegressionExample {
 
-    // Load dataset
-    // Dataset insurance = Dataset.readCSV("");
+    // Load data set
+    Dataset insurance = Dataset.readCSV("");
 
     // Split the insurance data set into 70% test and 30% train
     // Dataset[] splitData = Dataset.splitTestTrain(70, testing, training);

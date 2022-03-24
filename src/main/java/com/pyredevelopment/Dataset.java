@@ -5,13 +5,23 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Queue;
+
 
 public class Dataset {
+
+    // This list contains all headers and is an ordered list
+    private ArrayList<String> headers = new ArrayList<>();
+
+    // This map contains all the columns sorted by header name keys
+    private HashMap<String, ArrayList<Double>> data = new HashMap<>();
 
     /**
      * TODO: Fill
      */
-    public Dataset(String csvFilePath) {
+    public Dataset(String csvFilePath, char delimiter, boolean includeFileHeaders) {
 
         // Create a buffered reader to read in the lines of the CSV
         BufferedReader reader;
@@ -30,7 +40,80 @@ public class Dataset {
 
         }
 
+        // This string holds the line we're planning on parse
         String lineToBeParsed;
+
+        // Create a Queue of lines to be parsed
+        /* NOTE: Doing it this way, so we have the potential of parsing the lines
+        using multiple threads later. */
+        Queue<String> linesToParse = new LinkedList<>();
+
+        try {
+            // If we're including fileHeaders read that line first
+            if (includeFileHeaders)
+                // set the headers of the output using the readCSVHeader method
+                setHeaders(parseDelimitedLine(reader.readLine(), delimiter));
+
+            // For each (remaining) line of the csv
+            while((lineToBeParsed = reader.readLine()) != null)
+
+                // Add this line to the lines to parse
+                linesToParse.add(lineToBeParsed);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            return;
+        }
+
+        // For each line of the csv
+        for (int i = 0; i < linesToParse.size(); i++) {
+
+            // Parse the line
+            ArrayList<String> parsedLine = parseDelimitedLine(linesToParse.poll(), delimiter);
+
+            // For each value in this line, try to cast to a double and insert into numerical values
+            try {
+                for (int n = 0; n < parsedLine.size(); n++) {
+
+                    // Convert to a Double
+                    Double doubleValue = Double.valueOf(parsedLine.get(n));
+
+
+                }
+            }
+            // If for some reason part of it can't be cast to double we deal with it here
+            catch (NumberFormatException e) {
+                // TODO: Add logging / error handling here
+                e.printStackTrace();
+            }
+
+
+        }
+
+
+
+
+    }
+
+    // - - - - - - - - - - Getters/Setters - - - - - - - - - -
+
+    public void setHeaders(ArrayList<String> headers) {
+
+        // Set the list of headers
+        this.headers = headers;
+
+        // For each header insert into map as a key and instantiate a new column list
+        for (String header : headers) {
+            data.put(header, new ArrayList<Double>());
+        }
+    }
+
+
+
+    // - - - - - - - - - - Static Methods - - - - - - - - - -
+
+    public static Dataset readCSV(String filepath) {
+        return new Dataset(filepath, ',', true);
     }
 
     // - - - - - - - - - - Private Methods - - - - - - - - - -
