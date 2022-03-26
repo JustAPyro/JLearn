@@ -32,7 +32,12 @@ public class Matrix {
     }
 
     public Number determinant() {
+        return calculateDeterminant(this);
+    }
 
+    public Number calculateDeterminant(Matrix input) {
+
+        // If it's not square
         if (!isSquare())
             throw new RuntimeException("Non-square matrix doesn't have determinant.");
 
@@ -47,23 +52,70 @@ public class Matrix {
         // If the matrix is larger, recursively calculate down
         double sum = 0.0;
         for (int i = 0; i < nCols; i++) {
-            int multiple = ((i % 2) == 0) ? 1 : -1;
-            //sum += multiple * matrix.getValueAt(0, i) * determinant(submatrix(matrix, 0, i));
+            int multiple = ((i % 2) == 0) ? 1 : -1; // If it's even subtract, if odd add
+            sum += multiply(multiple, get(0, i), calculateDeterminant(newSubMatrix(0, i)));
         }
         return sum;
 
     }
 
+    /*
+    Matrix mat = new Matrix(matrix.getNrows(), matrix.getNcols());
+    for (int i=0;i<matrix.getNrows();i++) {
+        for (int j=0; j<matrix.getNcols();j++) {
+            mat.setValueAt(i, j, changeSign(i) * changeSign(j) *
+                             determinant(createSubMatrix(matrix, i, j)));
+        }
+    }
 
-    public Matrix newSubMatrix(int row, int col) {
+    return mat;
+     */
+    public Matrix cofactor() {
+        Matrix outMatrix = new Matrix(nRows, nCols);
+        for (int r = 0; r < nRows; r++) {
+            for (int c = 0; c < nCols; c++) {
+                int rowMultiple = ((r % 2) == 0) ? 1 : -1;
+                int colMultiple = ((c & 2) == 0) ? 1 : -1;
+                outMatrix.add(r, c, multiply(rowMultiple, colMultiple, newSubMatrix(r, c).determinant()));
+            }
+        }
+        return outMatrix;
+    }
 
 
+    public Matrix newSubMatrix(int removeRow, int removeCol) {
+
+        Matrix outMatrix = new Matrix(nRows-1, nCols-1);
+
+        int rAdd = -1;
+        for (int r = 0; r < nRows; r++) {
+
+            if (r == removeRow)
+                continue;
+
+            rAdd++;
+            int cAdd = -1;
+            for (int c = 0; c < nCols; c++) {
+
+                if (c == removeCol)
+                    continue;
+
+                cAdd++;
+                outMatrix.add(rAdd, cAdd, get(r, c));
+            }
+        }
+
+        return outMatrix;
 
     }
 
     /* Multiply two Numbers by getting the Double value and returning the result as a Number */
-    private static Double multiply(Number a, Number b) {
-        return a.doubleValue() * b.doubleValue();
+    private static Double multiply(Number ... nums) {
+        double product = 1.0;
+        for (Number num : nums)
+            product *= num.doubleValue();
+
+        return product;
     }
 
 
