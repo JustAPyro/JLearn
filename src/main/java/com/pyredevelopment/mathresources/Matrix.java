@@ -31,6 +31,31 @@ public class Matrix {
         return nRows;
     }
 
+    public Matrix inverse() {
+        cofactor().
+    }
+
+    /*
+    public static Matrix transpose(Matrix matrix) {
+    Matrix transposedMatrix = new Matrix(matrix.getNcols(), matrix.getNrows());
+    for (int i=0;i<matrix.getNrows();i++) {
+        for (int j=0;j<matrix.getNcols();j++) {
+            transposedMatrix.setValueAt(j, i, matrix.getValueAt(i, j));
+        }
+    }
+    return transposedMatrix;
+}
+     */
+    public Matrix transpose() {
+        Matrix outMatrix = new Matrix(nRows, nCols);
+        for (int r = 0; r < nRows; r++) {
+            for (int c = 0; c < nCols; c++) {
+                outMatrix.add(r, c, get(c, r));
+            }
+        }
+        return outMatrix;
+    }
+
     public Number determinant() {
         return calculateDeterminant(this);
     }
