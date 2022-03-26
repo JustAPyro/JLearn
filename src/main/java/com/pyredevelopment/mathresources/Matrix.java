@@ -32,7 +32,7 @@ public class Matrix {
     }
 
     public Matrix inverse() {
-        cofactor().
+        cofactor().transpose().multiply
     }
 
     /*
@@ -107,6 +107,13 @@ public class Matrix {
         return outMatrix;
     }
 
+    public void multiply(Number constant) {
+        for (int r = 0; r < nRows; r++) {
+            for (int c = 0; c < nCols; c++) {
+                add(r, c, multiply(get(r, c), constant));
+            }
+        }
+    }
 
     public Matrix newSubMatrix(int removeRow, int removeCol) {
 
