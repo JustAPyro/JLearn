@@ -12,12 +12,37 @@ public class Matrix {
         data = new Number[nCols][nRows];
     }
 
+    public static void main(String[] args) {
+        Matrix samplex = new Matrix(3, 3);
+        samplex.add(0, 0, 1);
+        samplex.add(0, 1, 4);
+        samplex.add(0, 2, 7);
+        samplex.add(1, 0, 0);
+        samplex.add(1, 1, 5);
+        samplex.add(1, 2, 0);
+        samplex.add(2, 0, 1);
+        samplex.add(2, 1, 5);
+        samplex.add(2, 2, 6);
+
+        Matrix sample = samplex.inverse();
+
+        System.out.println(sample.getSize());
+        System.out.printf("%f %f %f\n%f %f %f\n%f %f %f",
+                sample.get(0, 0), sample.get(0, 1), sample.get(0, 2),
+                sample.get(1, 0), sample.get(1, 1), sample.get(1, 2),
+                sample.get(2, 0), sample.get(2, 1), sample.get(2, 2));
+
+
+
+
+    }
+
     public void add(int r, int c, Number value) {
         data[r][c] = value;
     }
 
-    public Number get(int r, int c) {
-        return data[r][c];
+    public Double get(int r, int c) {
+        return data[r][c].doubleValue();
     }
 
     public boolean isSquare() {
@@ -32,7 +57,10 @@ public class Matrix {
     }
 
     public Matrix inverse() {
-        cofactor().transpose().multiply
+        Matrix invertedMatrix = cofactor();
+        invertedMatrix.transpose();
+        invertedMatrix.multiply(divide(1.0, determinant()));
+        return invertedMatrix;
     }
 
     /*
@@ -57,28 +85,29 @@ public class Matrix {
     }
 
     public Number determinant() {
+        System.out.println("Starting with " + nCols);
         return calculateDeterminant(this);
     }
 
     public Number calculateDeterminant(Matrix input) {
 
         // If it's not square
-        if (!isSquare())
+        if (!input.isSquare())
             throw new RuntimeException("Non-square matrix doesn't have determinant.");
 
         // If the matrix is only one cell, then that is the determinant
-        if (getSize() == 1)
+        if (input.getSize() == 1)
             return data[0][0];
 
         // If the matrix is two cells, then matrix is (ac-bd)
-        if (getSize() == 2)
-            return (multiply(get(0, 0), get(1, 1))) - (multiply(get(1, 0), get(0, 1)));
+        if (input.getSize() == 2)
+            return (multiply(input.get(0, 0), input.get(1, 1))) - (multiply(input.get(1, 0), input.get(0, 1)));
 
         // If the matrix is larger, recursively calculate down
         double sum = 0.0;
-        for (int i = 0; i < nCols; i++) {
+        for (int i = 0; i < input.getSize(); i++) {
             int multiple = ((i % 2) == 0) ? 1 : -1; // If it's even subtract, if odd add
-            sum += multiply(multiple, get(0, i), calculateDeterminant(newSubMatrix(0, i)));
+            sum += multiply(multiple, input.get(0, i), calculateDeterminant(input.newSubMatrix(0, i)));
         }
         return sum;
 
@@ -113,6 +142,10 @@ public class Matrix {
                 add(r, c, multiply(get(r, c), constant));
             }
         }
+    }
+
+    public Number divide(Number a, Number b) {
+        return a.doubleValue() / b.doubleValue();
     }
 
     public Matrix newSubMatrix(int removeRow, int removeCol) {
