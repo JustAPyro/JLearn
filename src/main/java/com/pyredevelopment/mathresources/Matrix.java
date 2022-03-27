@@ -26,7 +26,7 @@ public class Matrix {
 
         Matrix sample = samplex.inverse();
 
-        System.out.println(sample.getSize());
+        //System.out.println(sample.getSize());
         System.out.printf("%f %f %f\n%f %f %f\n%f %f %f",
                 sample.get(0, 0), sample.get(0, 1), sample.get(0, 2),
                 sample.get(1, 0), sample.get(1, 1), sample.get(1, 2),
@@ -58,8 +58,8 @@ public class Matrix {
 
     public Matrix inverse() {
         Matrix invertedMatrix = cofactor();
-        invertedMatrix.transpose();
-        invertedMatrix.multiply(divide(1.0, determinant()));
+
+        System.out.println(determinant());
         return invertedMatrix;
     }
 
@@ -129,7 +129,7 @@ public class Matrix {
         for (int r = 0; r < nRows; r++) {
             for (int c = 0; c < nCols; c++) {
                 int rowMultiple = ((r % 2) == 0) ? 1 : -1;
-                int colMultiple = ((c & 2) == 0) ? 1 : -1;
+                int colMultiple = ((c % 2) == 0) ? 1 : -1;
                 outMatrix.add(r, c, multiply(rowMultiple, colMultiple, newSubMatrix(r, c).determinant()));
             }
         }
