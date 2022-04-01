@@ -24,6 +24,7 @@ public class Matrix {
         samplex.add(2, 1, 5);
         samplex.add(2, 2, 6);
 
+        // Error here
         Matrix sample = samplex.inverse();
 
         //System.out.println(sample.getSize());
