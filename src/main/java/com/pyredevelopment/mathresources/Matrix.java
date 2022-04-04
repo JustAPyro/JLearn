@@ -57,7 +57,10 @@ public class Matrix {
         return nRows;
     }
 
+    // There error is here somewhere
     public Matrix inverse() {
+
+
         Matrix invertedMatrix = cofactor();
 
         System.out.println(determinant());
