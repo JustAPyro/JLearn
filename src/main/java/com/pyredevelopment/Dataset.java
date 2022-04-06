@@ -110,6 +110,19 @@ public class Dataset implements Iterable<Double[]>{
 
     // TODO: Fill this
     public Dataset(double[][] doubles) {
+
+        // Create a header for the doubles
+        for (int i = 0; i < doubles[0].length; i++) {
+            headers.add(Integer.toString(i));
+        }
+
+        // For each column
+        for (int col = 0; col < doubles[0].length; col++) {
+
+            //Iterate through the row enteries and insert them
+
+
+        }
     }
 
     // - - - - - - - - - - Getters/Setters - - - - - - - - - -
