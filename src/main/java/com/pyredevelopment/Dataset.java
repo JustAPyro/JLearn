@@ -108,6 +108,10 @@ public class Dataset implements Iterable<Double[]>{
 
     }
 
+    // TODO: Fill this
+    public Dataset(double[][] doubles) {
+    }
+
     // - - - - - - - - - - Getters/Setters - - - - - - - - - -
 
     public void addEntry(Double[] entry) {

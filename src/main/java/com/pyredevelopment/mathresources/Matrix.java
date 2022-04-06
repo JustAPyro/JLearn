@@ -39,7 +39,7 @@ public class Matrix {
 
     }
 
-    public double determinant(Dataset matrix) {
+    public static double determinant(Dataset matrix) {
         return 0.0;
     }
 
