@@ -1,5 +1,7 @@
 package com.pyredevelopment.mathresources;
 
+import com.pyredevelopment.Dataset;
+
 public class Matrix {
 
     private int nRows;  // Number of rows
@@ -35,7 +37,10 @@ public class Matrix {
 
 
 
+    }
 
+    public double determinant(Dataset matrix) {
+        return 0.0;
     }
 
     public void add(int r, int c, Number value) {
