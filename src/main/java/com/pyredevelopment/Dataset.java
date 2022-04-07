@@ -25,6 +25,14 @@ public class Dataset implements Iterable<Double[]>{
 
     }
 
+    public int rows() {
+        return getEntries();
+    }
+
+    public int columns() {
+        return headers.size();
+    }
+
     public Dataset(ArrayList<String> headers) {
         setHeaders(new ArrayList<>(List.copyOf(headers)));
     }
@@ -111,17 +119,27 @@ public class Dataset implements Iterable<Double[]>{
     // TODO: Fill this
     public Dataset(double[][] doubles) {
 
+        // Instantiate headers list
+        headers = new ArrayList<>();
+        data = new HashMap<>();
+
+        // If it's an empty double then we need to create an empty dataset so just return
+        if (doubles.length == 0)
+            return;
+
         // Create a header for the doubles
         for (int i = 0; i < doubles[0].length; i++) {
             headers.add(Integer.toString(i));
+            data.put(Integer.toString(i), new ArrayList<>());
         }
 
-        // For each column
+        // For each cell
         for (int col = 0; col < doubles[0].length; col++) {
+            for (int row = 0; row < doubles.length; row++) {
 
-            //Iterate through the row enteries and insert them
-
-
+                // Insert the associated data by getting the list and adding it
+                data.get(Integer.toString(col)).add(doubles[row][col]);
+            }
         }
     }
 
@@ -158,6 +176,11 @@ public class Dataset implements Iterable<Double[]>{
     }
 
     public int getEntries() {
+
+        // If we have no data return 0
+        if (data.size() == 0)
+            return 0;
+
         return getColumn(0).size();
     }
 
