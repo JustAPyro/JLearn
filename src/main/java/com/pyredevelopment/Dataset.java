@@ -9,11 +9,15 @@ import java.util.*;
 
 public class Dataset implements Iterable<Double[]>{
 
+    /* - - - - - - - - - - Static Variables - - - - - - - - - - */
+
     // Static variables
     public static final int TRAIN_INPUTS = 0;
     public static final int TRAIN_OUTPUT = 1;
     public static final int TEST_INPUTS = 2;
     public static final int TEST_OUTPUT = 3;
+
+    /* - - - - - - - - - - - Instance Variables - - - - - - - - - - - */
 
     // This list contains all headers and is an ordered list
     private ArrayList<String> headers = new ArrayList<>();
@@ -21,16 +25,10 @@ public class Dataset implements Iterable<Double[]>{
     // This map contains all the columns sorted by header name keys
     HashMap<String, ArrayList<Double>> data = new HashMap<>();
 
+    /* - - - - - - - - - - Constructors - - - - - - - - - - */
+
     public Dataset() {
 
-    }
-
-    public int rows() {
-        return getEntries();
-    }
-
-    public int columns() {
-        return headers.size();
     }
 
     public Dataset(ArrayList<String> headers) {
@@ -102,19 +100,26 @@ public class Dataset implements Iterable<Double[]>{
 
                 }
             }
+
             // If for some reason part of it can't be cast to double we deal with it here
             catch (NumberFormatException e) {
                 // TODO: Add logging / error handling here
                 e.printStackTrace();
             }
-
-
         }
-
-
-
-
     }
+
+    public int rows() {
+        return getEntries();
+    }
+
+    public int columns() {
+        return headers.size();
+    }
+
+
+
+
 
     // TODO: Fill this
     public Dataset(double[][] doubles) {
