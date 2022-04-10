@@ -11,7 +11,7 @@ public class Dataset implements Iterable<Double[]>{
 
     /* - - - - - - - - - - Static Variables - - - - - - - - - - */
 
-    // Static variables
+    // Indexes of datasets after split
     public static final int TRAIN_INPUTS = 0;
     public static final int TRAIN_OUTPUT = 1;
     public static final int TEST_INPUTS = 2;
@@ -27,16 +27,26 @@ public class Dataset implements Iterable<Double[]>{
 
     /* - - - - - - - - - - Constructors - - - - - - - - - - */
 
+    /**
+     * TODO: Fill
+     * Creates empty dataset
+     */
     public Dataset() {
 
     }
 
+    /**
+     * TODO: Fill
+     * Creates empty dataset with headers
+     * @param headers
+     */
     public Dataset(ArrayList<String> headers) {
         setHeaders(new ArrayList<>(List.copyOf(headers)));
     }
 
     /**
      * TODO: Fill
+     * Creates dataset from a CSV with provided path, delimiters, and headers
      */
     public Dataset(String csvFilePath, char delimiter, boolean includeFileHeaders) {
 
@@ -49,6 +59,7 @@ public class Dataset implements Iterable<Double[]>{
             reader = new BufferedReader(new FileReader(csvFilePath));
 
         }
+
         catch (FileNotFoundException e) {
 
             // If we couldn't find the file, print the error and return empty object.
@@ -66,6 +77,7 @@ public class Dataset implements Iterable<Double[]>{
         Queue<String> linesToParse = new LinkedList<>();
 
         try {
+
             // If we're including fileHeaders read that line first
             if (includeFileHeaders)
                 // set the headers of the output using the readCSVHeader method
@@ -77,9 +89,13 @@ public class Dataset implements Iterable<Double[]>{
                 // Add this line to the lines to parse
                 linesToParse.add(lineToBeParsed);
 
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
+
+            // If there's an IO error just print it
             e.printStackTrace();
             return;
+
         }
 
         // For each line of the csv
@@ -107,6 +123,16 @@ public class Dataset implements Iterable<Double[]>{
                 e.printStackTrace();
             }
         }
+    }
+
+    /* - - - - - - - - - - - Getters / Setters - - - - - - - - - - - */
+
+    public double[][] getDoubles() {
+        double[][] output = new double[
+    }
+
+    public double getValue(int row, int col) {
+        return data.get(getHeaders().get(col)).get(row);
     }
 
     public int rows() {

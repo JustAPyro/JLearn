@@ -40,7 +40,34 @@ public class Matrix {
     }
 
     public static double determinant(Dataset matrix) {
-        return 0.0;
+        double[] A = matrix.getDoubles();
+        int n = matrix.columns();
+        for(int i = 0; i < n - 1; i++){
+            int pivotRow = i;
+            for(int j = i + 1; j < n; j++){
+                if(Math.abs(A[j][i]) > Math.abs(A[pivotRow][i])){
+                    pivotRow = j;
+                }
+            }
+            for(int k = i; k < n + 1; k++){
+                double temp = A[pivotRow][k];
+                A[pivotRow][k] = A[i][k];
+                A[i][k] = temp;
+            }
+            for(int j = i + 1; j < n; j++){
+                double temp = A[j][i] / A[i][i];
+                for(int k = i; k < n + 1; k++){
+                    A[j][k] = A[j][k] - A[i][k] * temp;
+                }
+            }
+        }
+        System.out.println();
+        for(double[] row : A){
+            System.out.println();
+            for(double num : row) {
+                System.out.printf("%4.0f", num);
+            }
+        }
     }
 
     public void add(int r, int c, Number value) {

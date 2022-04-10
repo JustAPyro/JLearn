@@ -56,6 +56,12 @@ class DatasetTest {
         assertEquals(expectedCols, testDataset.columns());
         assertEquals(expectedRows, testDataset.rows());
 
+        // Assert the outer indexes
+        assertEquals(1, testDataset.getValue(0, 0));
+        assertEquals(3, testDataset.getValue(0, 2));
+        assertEquals(3, testDataset.getValue(5, 0));
+        assertEquals(1, testDataset.getValue(5, 2));
+
         /* - - - - - Test creating an empty dataset - - - - - */
 
         // Setup
