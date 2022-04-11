@@ -1,9 +1,8 @@
 package com.pyredevelopment.mathresources;
 
-import com.pyredevelopment.Dataset;
-
 public class Matrix {
 
+    private static int rounding = 8;
     private int nRows;  // Number of rows
     private int nCols;  // Number of columns
     private Number[][] data;    // Main dataset
@@ -14,34 +13,19 @@ public class Matrix {
         data = new Number[nCols][nRows];
     }
 
-    public static void main(String[] args) {
-        Matrix samplex = new Matrix(3, 3);
-        samplex.add(0, 0, 1);
-        samplex.add(0, 1, 4);
-        samplex.add(0, 2, 7);
-        samplex.add(1, 0, 0);
-        samplex.add(1, 1, 5);
-        samplex.add(1, 2, 0);
-        samplex.add(2, 0, 1);
-        samplex.add(2, 1, 5);
-        samplex.add(2, 2, 6);
+    // Thanks to Daniel for this solution (mostly)
+    public static double determinant(double[][] A) {
 
-        // Error here
-        Matrix sample = samplex.inverse();
+        guardMatrixSquare(A); // Guard against non-square matrices
 
-        //System.out.println(sample.getSize());
-        System.out.printf("%f %f %f\n%f %f %f\n%f %f %f",
-                sample.get(0, 0), sample.get(0, 1), sample.get(0, 2),
-                sample.get(1, 0), sample.get(1, 1), sample.get(1, 2),
-                sample.get(2, 0), sample.get(2, 1), sample.get(2, 2));
+        int n = A.length;
 
 
+        // If the matrix is 1x1 the determinant is the single value
+        if (n == 1) return Math.abs(A[0][0]);
 
-    }
-
-    public static double determinant(Dataset matrix) {
-        double[] A = matrix.getDoubles();
-        int n = matrix.columns();
+        /* Below is an implementation of Gauss–Jordan elimination I credit to my friend Daniel */
+        int swaps = 0;
         for(int i = 0; i < n - 1; i++){
             int pivotRow = i;
             for(int j = i + 1; j < n; j++){
@@ -49,25 +33,89 @@ public class Matrix {
                     pivotRow = j;
                 }
             }
-            for(int k = i; k < n + 1; k++){
+            if (pivotRow > i)
+                swaps++;
+            for(int k = i; k < n; k++){
                 double temp = A[pivotRow][k];
                 A[pivotRow][k] = A[i][k];
                 A[i][k] = temp;
             }
             for(int j = i + 1; j < n; j++){
                 double temp = A[j][i] / A[i][i];
-                for(int k = i; k < n + 1; k++){
+                for(int k = i; k < n; k++){
                     A[j][k] = A[j][k] - A[i][k] * temp;
                 }
             }
         }
-        System.out.println();
-        for(double[] row : A){
-            System.out.println();
-            for(double num : row) {
-                System.out.printf("%4.0f", num);
-            }
+        /* End Gauss-Jordan elimination, A is now row-echelon form */
+
+        // Create a variable to hold the output
+        double determinant = 1;
+
+        // Now get the product of the main diagonal
+        for (int i = 0; i < n; i++) {
+            determinant *= A[i][i];
         }
+
+        // If we have an odd number of swaps, multiply by -1
+        determinant *= (swaps%2 == 0) ? 1 : -1;
+
+        // For now, round the value to remove floating point error
+        determinant = Math.round(determinant * Math.pow(10, rounding) / Math.pow(10, rounding));
+
+        // Return final results
+        return determinant;
+
+    }
+
+    private static void guardMatrixRectangular(double[][] matrix) {
+
+        // Save the length of the first row
+        int rowLength = matrix[0].length;
+
+        // Ensure that every row after is the same length, if not throw exception
+        for (double[] row : matrix)
+            if (rowLength != row.length)
+                throw new IllegalArgumentException("Matrix non-rectangular!");
+
+    }
+
+    private static void guardMatrixSquare(double[][] matrix) {
+
+        // For each row in the matrix
+        for (double[] row : matrix)
+            if (row.length != matrix.length)
+                // Check if the length of the row equals columns, if not throw error
+                throw new IllegalArgumentException("Matrix non-square!");
+
+
+    }
+
+
+
+    public static double[][] getSubMatrix(double[][] matrix, int excluding_row, int excluding_col) {
+
+        guardMatrixRectangular(matrix); // Make sure this dataset is a real matrix (aka, all rows are same length)
+
+        // Create an output matrix of one less length and width
+        double[][] output = new double[matrix.length-1][matrix[0].length-1];
+
+        // Helps map the rows after we skip
+        int inc = 0;
+
+        // Iterate through each row
+        for (int row = 0; row < matrix.length; row++) {
+
+            // If this is the row we're excluding, set the increment and then skip the rest to continue loop
+            if (row == excluding_row) { inc = -1; continue; }
+
+            // Copy the parts of the array up until the excluding_col and then everything after, ignoring the excluding_col
+            System.arraycopy(matrix[row], 0, output[row+inc], 0, excluding_col);
+            System.arraycopy(matrix[row], excluding_col+1, output[row+inc], excluding_col, matrix[row].length-excluding_col-1);
+
+        }
+
+        return output;
     }
 
     public void add(int r, int c, Number value) {

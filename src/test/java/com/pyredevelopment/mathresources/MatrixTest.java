@@ -102,7 +102,7 @@ class MatrixTest {
         };
 
         // Execute
-        expected = Matrix.determinant(testMatrix);
+        result = Matrix.determinant(testMatrix);
 
         // Assert
         assertEquals(expected, result);

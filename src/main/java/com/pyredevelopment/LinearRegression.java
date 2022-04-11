@@ -2,11 +2,30 @@ package com.pyredevelopment;
 
 public class LinearRegression {
 
+    double[][] matrixXtX;
 
     public LinearRegression(Dataset inputs, Dataset output) {
 
-        Double[][] matrixXtX = multiplyMatrixLinear(inputs);
+        // The number of features in the input dataset
+        int features = inputs.columns();
 
+        // Create a matrix of doubles that represents the transposition of X multiplied by itself
+        matrixXtX = new double[features][features];
+
+        // Iterate through each point in the matrix and calculate the appropriate value
+        // TODO: This can be multithreaded at a later point if performance becomes an issue
+        for (int m = 0; m < matrixXtX.length; m++) {
+            for (int n = 0; n < matrixXtX[m].length; n++){
+
+                matrixXtX[m][n] = 0f;
+                for (int i = 0; i < inputs.rows(); i++) {
+                    matrixXtX[m][n] += (inputs.getValue(m, i) * inputs.getValue(n, i));
+                }
+
+            }
+        }
+
+        // Now that we have X.transposed * X, we calculate the inverse
 
 
 
@@ -14,11 +33,16 @@ public class LinearRegression {
     }
 
 
-    private Double[][] multiplyMatrixLinear(Dataset input) {
+    /**
+     * This method will take a dataset and generate a double[][] that represents the
+     * @param input
+     * @return
+     */
+    private double[][] multiplyMatrixBySelfTransposed(Dataset input) {
 
         int features = input.getHeaders().size();
 
-        Double[][] matrixXtX = new Double[features][features];
+        double[][] matrixXtX = new double[features][features];
 
         for (int m = 0; m < matrixXtX.length; m++) {
             for (int n = 0; n < matrixXtX[m].length; n++) {

@@ -127,10 +127,6 @@ public class Dataset implements Iterable<Double[]>{
 
     /* - - - - - - - - - - - Getters / Setters - - - - - - - - - - - */
 
-    public double[][] getDoubles() {
-        double[][] output = new double[
-    }
-
     public double getValue(int row, int col) {
         return data.get(getHeaders().get(col)).get(row);
     }
