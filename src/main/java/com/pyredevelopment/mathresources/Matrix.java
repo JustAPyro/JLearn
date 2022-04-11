@@ -68,6 +68,36 @@ public class Matrix {
 
     }
 
+    public static double[][] cofactor(double[][] matrix) {
+
+        guardMatrixRectangular(matrix); // Ensures the double[][] array is rectangular (all rows equal)
+
+        // Create an output array for the cofactor matrix
+        double[][] cofactorMatrix = new double[matrix.length][matrix[0].length];
+
+        // For each entry in the matrix
+        for (int row = 0; row < matrix.length; row++) {
+            for (int col = 0; col < matrix[0].length; col++) {
+
+                // insert the determinant of the sub-matrix created by ignoring the row and column we are on
+                cofactorMatrix[row][col] = determinant(subMatrix(matrix, row, col));
+
+            }
+        }
+
+        // Then we iterate through and flip the signs on every other one
+        for (int i = 0; i < matrix.length*matrix[0].length; i++) {
+            // If it's an even iteration do nothing, otherwise flip signs
+            int multiple = (i%2 == 0)? 1 : -1;
+            // Actually apply to the cofactor matrix
+            cofactorMatrix[i/matrix[0].length][i%matrix[0].length] *= multiple;
+        }
+
+        // Return the resulting matrix
+        return cofactorMatrix;
+
+    }
+
     private static void guardMatrixRectangular(double[][] matrix) {
 
         // Save the length of the first row
@@ -93,7 +123,7 @@ public class Matrix {
 
 
 
-    public static double[][] getSubMatrix(double[][] matrix, int excluding_row, int excluding_col) {
+    private static double[][] subMatrix(double[][] matrix, int excluding_row, int excluding_col) {
 
         guardMatrixRectangular(matrix); // Make sure this dataset is a real matrix (aka, all rows are same length)
 

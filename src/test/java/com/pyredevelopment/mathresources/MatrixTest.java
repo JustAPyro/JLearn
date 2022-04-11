@@ -23,7 +23,7 @@ class MatrixTest {
 
         /* - - - - - Testing 1x1 Matrix Determinant - - - - - */
 
-        // Set up
+        // Setup
         expected = 5.0;
         testMatrix = new double[][] {{-5}};
 
@@ -107,8 +107,39 @@ class MatrixTest {
         // Assert
         assertEquals(expected, result);
 
+    }
+
+    @Test
+    @DisplayName("Testing Matrix Cofactor")
+    void cofactor() {
+
+        double[][] test;
+        double[][] expected;
+        double[][] result;
+
+        /* - - - - - Testing cofactor of a 3x3 matrix - - - - - */
+
+        // Setup
+        test = new double[][]{
+                {1, 9, 3},
+                {2, 5, 4},
+                {3, 7, 8}
+        };
+        expected = new double[][]{
+                {12, -4, -1},
+                {-51, -1, 20},
+                {21, 2, -13}
+        };
+
+        // Execute
+        result = Matrix.cofactor(test);
+
+        // assert that each row is correct
+        for (int i = 0; i < expected.length; i++)
+            assertArrayEquals(expected[i], result[i]);
 
     }
+
 
 
 }
