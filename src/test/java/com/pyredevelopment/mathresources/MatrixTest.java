@@ -13,7 +13,7 @@ class MatrixTest {
     @DisplayName("Testing Matrix Determinants")
     void determinant() {
 
-        Dataset testMatrix;
+        double[][] testMatrix;
         double expected;
         double result;
 
@@ -24,8 +24,8 @@ class MatrixTest {
         /* - - - - - Testing 1x1 Matrix Determinant - - - - - */
 
         // Set up
-        expected = -5.0;
-        testMatrix = new Dataset(new double[][] {{5}});
+        expected = 5.0;
+        testMatrix = new double[][] {{-5}};
 
         // Executing
         result = Matrix.determinant(testMatrix);
@@ -37,10 +37,10 @@ class MatrixTest {
 
         // Setup
         expected = -3.0;
-        testMatrix = new Dataset(new double[][] {
+        testMatrix = new double[][] {
                 {7, 5},
                 {2, 1}
-        });
+        };
 
         // Executing
         result = Matrix.determinant(testMatrix);
@@ -52,11 +52,11 @@ class MatrixTest {
 
         // Setup
         expected = -48.0;
-        testMatrix = new Dataset(new double[][] {
+        testMatrix = new double[][] {
                 {6, 3, 4},
                 {6, 1, 8},
                 {3, 0, 9}
-        });
+        };
 
         // Execute
         result = Matrix.determinant(testMatrix);
@@ -68,12 +68,12 @@ class MatrixTest {
 
         // Setup
         expected = -288.0;
-        testMatrix = new Dataset(new double[][] {
+        testMatrix = new double[][] {
                 {3, 8, 8, 4},
                 {3, 7, 6, 1},
                 {5, 7, 6, 9},
                 {7, 9, 2, 9}
-        });
+        };
 
         // Execute
         result = Matrix.determinant(testMatrix);
@@ -88,7 +88,7 @@ class MatrixTest {
 
         // Setup
         expected = -1075387108;
-        testMatrix = new Dataset(new double[][] {
+        testMatrix = new double[][] {
                 {8,8,8,9,3,7,3,8,8,4},
                 {7,2,5,7,4,3,6,9,3,9},
                 {9,0,0,2,3,4,0,1,8,8},
@@ -99,7 +99,7 @@ class MatrixTest {
                 {4,5,5,0,8,9,5,3,0,9},
                 {5,7,1,7,5,4,2,0,0,1},
                 {1,7,2,1,5,2,1,4,7,8}
-        });
+        };
 
         // Execute
         expected = Matrix.determinant(testMatrix);
