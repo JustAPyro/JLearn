@@ -139,7 +139,14 @@ public class Dataset implements Iterable<Double[]>{
         return headers.size();
     }
 
-
+    public void padRight(double value) {
+        headers.add("Pad");
+        ArrayList<Double> padding = new ArrayList<>();
+        for (int i = 0; i < rows(); i++) {
+            padding.add(value);
+        }
+        data.put("Pad", padding);
+    }
 
 
 

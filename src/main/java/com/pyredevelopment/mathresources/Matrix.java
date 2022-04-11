@@ -52,6 +52,31 @@ public class Matrix {
 
     }
 
+    public static double[][] multiply(double[][] matrixA, double[][] matrixB) {
+
+        guardMatrixCanMultiply(matrixA, matrixB); // First, guard that these are actually matrix that can multiply
+        guardMatrixRectangular(matrixA, matrixB); // Also confirm that each matrix is a rectangle
+
+        // Create an output matrix
+        double[][] output = new double[matrixA.length][matrixB[0].length];
+
+        // Then for each position in the output
+        for (int row = 0; row < output.length; row++) {
+            for (int col = 0; col < output[0].length; col++) {
+
+                // For each cell of the output, calculate the dot product and insert
+                for (int dot = 0; dot < matrixB.length; dot++) {
+                    output[row][col] += matrixA[row][dot] * matrixB[dot][col];
+                }
+
+            }
+        }
+
+        // Return the results
+        return output;
+
+    }
+
     public static double[][] transpose(double[][] matrix) {
 
         guardMatrixRectangular(matrix); // Ensures the data is rectangular (all rows equal)
@@ -192,15 +217,29 @@ public class Matrix {
 
     /* - - - - - - - - - - Guards (Add to beginning to check for valid input) - - - - - - - - - - */
 
-    private static void guardMatrixRectangular(double[][] matrix) {
+    private static void guardMatrixCanMultiply(double[][] matrixA, double[][] matrixB) {
 
-        // Save the length of the first row
-        int rowLength = matrix[0].length;
+        // Make sure that both matrix are rectangular with all rows of equal length
+        guardMatrixRectangular(matrixA, matrixB);
 
-        // Ensure that every row after is the same length, if not throw exception
-        for (double[] row : matrix)
-            if (rowLength != row.length)
-                throw new IllegalArgumentException("Matrix non-rectangular!");
+        if (matrixA[0].length != matrixB.length)
+            throw new IllegalArgumentException("Matrix cannot be multiplied unless A.rows == B.cols");
+    }
+
+    private static void guardMatrixRectangular(double[][] ... matrices) {
+
+        // For each matrix provided
+        for (double[][] matrix : matrices) {
+
+            // Save the length of the first row
+            int rowLength = matrix[0].length;
+
+            // Ensure that every row after is the same length, if not throw exception
+            for (double[] row : matrix)
+                if (rowLength != row.length)
+                    throw new IllegalArgumentException("Matrix non-rectangular!");
+
+        }
 
     }
 

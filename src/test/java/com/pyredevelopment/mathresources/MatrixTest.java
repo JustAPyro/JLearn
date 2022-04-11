@@ -253,6 +253,65 @@ class MatrixTest {
     }
 
     @Test
+    @DisplayName("Testing Matrix Multiplication by Matrix")
+    void multiply_matrix() {
+
+        double[][] matrixA;
+        double[][] matrixB;
+        double[][] expected;
+        double[][] result;
+
+        /* - - - - - Testing multiplication of two square matrices- - - - - */
+
+        // Setup
+        matrixA = new double[][]{
+                {0, 2},
+                {-2, -5}
+        };
+        matrixB = new double[][]{
+                {6, -6},
+                {3, 0}
+        };
+        expected = new double[][]{
+                {6, 0},
+                {-27, 12}
+        };
+
+        // Execute
+        result = Matrix.multiply(matrixA, matrixB);
+
+        // assert that each row is correct
+        for (int i = 0; i < expected.length; i++)
+            assertArrayEquals(expected[i], result[i]);
+
+        /* - - - - - Testing multiplication of two vectors matrices- - - - - */
+
+        // Setup
+        matrixA = new double[][]{
+                {6},
+                {-3}
+        };
+        matrixB = new double[][]{
+                {-5, 4}
+        };
+        expected = new double[][]{
+                {-30, 24},
+                {15, -12}
+        };
+
+        // Execute
+        result = Matrix.multiply(matrixA, matrixB);
+
+        // assert that each row is correct
+        for (int i = 0; i < expected.length; i++)
+            assertArrayEquals(expected[i], result[i]);
+
+
+
+
+    }
+
+    @Test
     @DisplayName("Testing Matrix Inverse")
     void inverse() {
 
