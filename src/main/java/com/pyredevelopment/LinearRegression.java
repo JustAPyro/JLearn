@@ -43,6 +43,9 @@ public class LinearRegression {
         double[][] matrixXtY = new double[][]{vectorXtY};
 
         // Perform the actual calculation
+        System.out.println("XtX: " + matrixXtX.length + ", " + matrixXtX[0].length);
+        System.out.println("XtY: " + matrixXtY.length + ", " + matrixXtY[0].length);
+
         double[][] tempBetas = Matrix.multiply(Matrix.inverse(matrixXtX), matrixXtY);
 
         // Now assign it into the betaValues vector
@@ -85,7 +88,7 @@ public class LinearRegression {
             for (int n = 0; n < matrixXtX[m].length; n++){
 
                 matrixXtX[m][n] = 0f;
-                for (int i = 0; i < inputs.rows(); i++) {
+                for (int i = 0; i < inputs.columns(); i++) {
                     matrixXtX[m][n] += (inputs.getValue(m, i) * inputs.getValue(n, i));
                 }
 

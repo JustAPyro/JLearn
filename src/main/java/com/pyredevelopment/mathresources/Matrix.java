@@ -223,7 +223,7 @@ public class Matrix {
         guardMatrixRectangular(matrixA, matrixB);
 
         if (matrixA[0].length != matrixB.length)
-            throw new IllegalArgumentException("Matrix cannot be multiplied unless A.rows == B.cols");
+            throw new IllegalArgumentException("Matrix cannot be multiplied unless A.rows == B.cols, " + matrixA[0].length + " != " + matrixB.length);
     }
 
     private static void guardMatrixRectangular(double[][] ... matrices) {
