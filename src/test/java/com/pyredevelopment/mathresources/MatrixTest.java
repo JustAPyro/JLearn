@@ -140,6 +140,57 @@ class MatrixTest {
 
     }
 
+    @Test
+    @DisplayName("Testing Transposing a Matrix")
+    void transpose() {
 
+        double[][] test;
+        double[][] result;
+        double[][] expected;
+
+        /* - - - - - Testing transposing a 2x5 matrix - - - - - */
+
+        // Setup
+        test = new double[][] {
+                {0, 1, 2, 3, 4},
+                {5, 6, 7, 8, 9}
+        };
+        expected = new double[][] {
+                {0, 5},
+                {1, 6},
+                {2, 7},
+                {3, 8},
+                {4, 9}
+        };
+
+        // Execute
+        result = Matrix.transpose(test);
+
+        // Assert that each row is correct
+        for (int i = 0; i < expected.length; i++)
+            assertArrayEquals(expected[i], result[i]);
+
+        /* - - - - - Testing transposing a square matrix - - - - - */
+
+        // Setup
+        test = new double[][] {
+                {1, 2, 3},
+                {4, 5, 6},
+                {7, 8, 9}
+        };
+        expected = new double[][] {
+                {1, 4, 7},
+                {2, 5, 8},
+                {3, 6, 9}
+        };
+
+        // Execute
+        result = Matrix.transpose(test);
+
+        // Assert that each row is correct
+        for (int i = 0; i < expected.length; i++)
+            assertArrayEquals(expected[i], result[i]);
+
+    }
 
 }

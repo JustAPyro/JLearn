@@ -13,6 +13,35 @@ public class Matrix {
         data = new Number[nCols][nRows];
     }
 
+    public static double[][] inverse(double[][] matrix) {
+
+        guardMatrixSquare(matrix); // Requires that the matrix must be square
+        guardMatrixInverse(matrix); // Requires that the matrix HAS an inverse (det != 0)
+
+
+
+    }
+
+    public static double[][] transpose(double[][] matrix) {
+
+        guardMatrixRectangular(matrix); // Ensures the data is rectangular (all rows equal)
+
+        // Create a new transposed double that is swaps the size of rows and cols
+        double[][] transposedMatrix = new double[matrix[0].length][matrix.length];
+
+        // For each entry in the matrix
+        for (int row = 0; row < matrix.length; row++) {
+            for (int col = 0; col < matrix[0].length; col++) {
+                // Insert the data at the flipped position
+                transposedMatrix[col][row] = matrix[row][col];
+            }
+        }
+
+        // Return the result
+        return transposedMatrix;
+
+    }
+
     // Thanks to Daniel for this solution (mostly)
     public static double determinant(double[][] A) {
 
@@ -121,6 +150,12 @@ public class Matrix {
 
     }
 
+    private static void guardMatrixInverse(double [][] matrix) {
+        // If the determinant of the matrix is 0
+        if (determinant(matrix) == 0)
+            // Then there is no inverse
+            throw new IllegalArgumentException("This matrix has no inverse: Determinant is 0");
+    }
 
 
     private static double[][] subMatrix(double[][] matrix, int excluding_row, int excluding_col) {
