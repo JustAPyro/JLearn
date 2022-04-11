@@ -138,6 +138,29 @@ class MatrixTest {
         for (int i = 0; i < expected.length; i++)
             assertArrayEquals(expected[i], result[i]);
 
+        /* - - - - - Testing Case that caused error 4/10/22 - - - - - */
+
+        // Setup
+        test = new double[][]{
+                {1, 2, 3},
+                {0, 1, 4},
+                {5, 6, 0}
+        };
+        expected = new double[][]{
+                {-24, 20, -5},
+                {18, -15, 4},
+                {5, -4, 1}
+        };
+
+        // Execute
+        result = Matrix.cofactor(test);
+
+        // assert that each row is correct
+        for (int i = 0; i < expected.length; i++)
+            assertArrayEquals(expected[i], result[i]);
+
+
+
     }
 
     @Test
@@ -194,7 +217,7 @@ class MatrixTest {
     }
 
     @Test
-    @DisplayName("Testing matrix multiplication by constant")
+    @DisplayName("Testing Matrix Multiplication by Constant")
     void multiply_constant() {
 
         double[][] testMatrix;
@@ -224,6 +247,40 @@ class MatrixTest {
         // Assert that each row is correct
         for (int i = 0; i < expected.length; i++)
             assertArrayEquals(expected[i], result[i]);
+
+
+
+    }
+
+    @Test
+    @DisplayName("Testing Matrix Inverse")
+    void inverse() {
+
+        double[][] test;
+        double[][] expected;
+        double[][] result;
+
+        /* - - - - - Testing inverse of a 3x3 matrix - - - - - */
+
+        // Setup
+        test = new double[][]{
+                {1, 2, 3},
+                {0, 1, 4},
+                {5, 6, 0}
+        };
+        expected = new double[][]{
+                {-24, 18, 5},
+                {20, -15, -4},
+                {-5, 4, 1}
+        };
+
+        // Execute
+        result = Matrix.inverse(test);
+
+        // assert that each row is correct
+        for (int i = 0; i < expected.length; i++)
+            assertArrayEquals(expected[i], result[i]);
+
 
 
 

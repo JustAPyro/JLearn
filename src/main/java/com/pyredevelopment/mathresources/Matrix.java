@@ -1,5 +1,7 @@
 package com.pyredevelopment.mathresources;
 
+import java.util.Arrays;
+
 public class Matrix {
 
     private static int rounding = 8;
@@ -20,15 +22,24 @@ public class Matrix {
 
         double[][] output;
 
+        for (double[] row : matrix)
+            System.out.println(Arrays.toString(row));
+
         // First get the cofactor
         output = cofactor(matrix);
+
+
 
         // Then transpose it
         output = transpose(output);
 
+
+
         // Then multiply by the constant 1/determinant(matrix)
         double constant = 1.0/determinant(matrix);
         output = multiply(output, constant);
+
+
 
         // Return the result
         return output;
@@ -77,12 +88,19 @@ public class Matrix {
     }
 
     // Thanks to Daniel for this solution (mostly)
-    public static double determinant(double[][] A) {
+    public static double determinant(double[][] matrix) {
 
-        guardMatrixSquare(A); // Guard against non-square matrices
+        guardMatrixSquare(matrix); // Guard against non-square matrices
 
-        int n = A.length;
+        // Save the length
+        int n = matrix.length;
 
+        // Create a duplicate for us to work with
+        double[][] A = new double[n][n];
+
+        // Copy each row of values into A
+        for (int row = 0; row < n; row++)
+            System.arraycopy(matrix[row], 0, A[row], 0, n);
 
         // If the matrix is 1x1 the determinant is the single value
         if (n == 1) return Math.abs(A[0][0]);
@@ -236,15 +254,7 @@ public class Matrix {
         return nRows;
     }
 
-    // There error is here somewhere
-    public Matrix inverse() {
 
-
-        Matrix invertedMatrix = cofactor();
-
-        System.out.println(determinant());
-        return invertedMatrix;
-    }
 
     /*
     public static Matrix transpose(Matrix matrix) {
