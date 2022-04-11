@@ -18,6 +18,40 @@ public class Matrix {
         guardMatrixSquare(matrix); // Requires that the matrix must be square
         guardMatrixInverse(matrix); // Requires that the matrix HAS an inverse (det != 0)
 
+        double[][] output;
+
+        // First get the cofactor
+        output = cofactor(matrix);
+
+        // Then transpose it
+        output = transpose(output);
+
+        // Then multiply by the constant 1/determinant(matrix)
+        double constant = 1.0/determinant(matrix);
+        output = multiply(output, constant);
+
+        // Return the result
+        return output;
+
+    }
+
+    public static double[][] multiply(double[][] matrix, double constant) {
+
+        guardMatrixRectangular(matrix); // Ensures the data is rectangular (all rows equal)
+
+        // create an output matrix
+        double[][] output = new double[matrix.length][matrix[0].length];
+
+        // Then for each entry
+        for (int row = 0; row < matrix.length; row++) {
+            for (int col = 0; col < matrix.length; col++) {
+                // Insert the relevant value multiplied by the constant
+                output[row][col] = matrix[row][col] * constant;
+            }
+        }
+
+        // Return the results
+        return output;
 
 
     }

@@ -193,4 +193,40 @@ class MatrixTest {
 
     }
 
+    @Test
+    @DisplayName("Testing matrix multiplication by constant")
+    void multiply_constant() {
+
+        double[][] testMatrix;
+        double testConstant;
+
+        double[][] expected;
+        double[][] result;
+
+        /* - - - - - Testing Multiplication on a 3x3 - - - - - */
+
+        // Setup
+        testConstant = 2.0;
+        testMatrix = new double[][]{
+                {-10, -10, -10},
+                {3, 3, 3},
+                {2.5, 2.5, 2.5}
+        };
+        expected = new double[][] {
+                {-20, -20, -20},
+                {6, 6, 6},
+                {5, 5, 5}
+        };
+
+        // Execute
+        result = Matrix.multiply(testMatrix, testConstant);
+
+        // Assert that each row is correct
+        for (int i = 0; i < expected.length; i++)
+            assertArrayEquals(expected[i], result[i]);
+
+
+
+    }
+
 }
