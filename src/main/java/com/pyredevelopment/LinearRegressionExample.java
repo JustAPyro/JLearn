@@ -18,10 +18,10 @@ public class LinearRegressionExample {
         LinearRegression model = new LinearRegression(xTrain, yTrain);
 
         // Get the testing input values from our split array
-        // Dataset xTest = splitData[Dataset.TEST_INPUTS];
+        Dataset xTest = splitData[Dataset.TEST_INPUTS];
 
         // Use the model to predict results
-        // Dataset predictions = model.predict(xTest);
+        Dataset predictions = model.predict(xTest);
 
         // Finally, we get our actual test output values from the split data
         // Dataset actual = splitData[Dataset.TEST_OUTPUT];

@@ -36,6 +36,20 @@ public class LinearRegression {
 
     }
 
+    public double predict(double[] inputs) { return 0f; };
+
+    public Dataset predict(Dataset values) {
+
+        // Create a vector to hold predictions
+        double[] predictions = new double[values.rows()];
+
+        for (int i = 0; i < values.rows(); i++) {
+            predictions[i] = predict(values.getRow(i));
+        }
+
+        return new Dataset(predictions);
+
+    }
 
     private void calculateBetaValues() {
 
