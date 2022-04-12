@@ -39,8 +39,13 @@ public class LinearRegression {
 
     private void calculateBetaValues() {
 
+        // Initialize the list
+        betaValues = new double[features+1];
+
         // Even though this is a vector convert it to a matrix to do the calculation
-        double[][] matrixXtY = new double[][]{vectorXtY};
+        double[][] matrixXtY = new double[vectorXtY.length][1];
+        for (int i = 0; i < vectorXtY.length; i++)
+            matrixXtY[i][0] = vectorXtY[i];
 
         // Perform the actual calculation
         System.out.println("XtX: " + matrixXtX.length + ", " + matrixXtX[0].length);
