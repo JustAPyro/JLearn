@@ -8,6 +8,9 @@ public class LinearRegressionExample {
         Dataset insurance = Dataset.readCSV("src/main/resources/insurance.csv");
         System.out.println("Here's a sample of what our data looks like: \n" + insurance.getHead());
 
+
+        System.out.println(insurance.rows());
+
         // Split the insurance data set into 70% test and 30% train
         Dataset[] splitData = Dataset.splitTestTrain(70, insurance);
 
@@ -18,10 +21,10 @@ public class LinearRegressionExample {
         LinearRegression model = new LinearRegression(xTrain, yTrain);
 
         // Get the testing input values from our split array
-        Dataset xTest = splitData[Dataset.TEST_INPUTS];
+        //Dataset xTest = splitData[Dataset.TEST_INPUTS];
 
         // Use the model to predict results
-        Dataset predictions = model.predict(xTest);
+        //Dataset predictions = model.predict(xTest);
 
         // Finally, we get our actual test output values from the split data
         // Dataset actual = splitData[Dataset.TEST_OUTPUT];

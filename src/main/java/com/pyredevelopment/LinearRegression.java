@@ -2,6 +2,8 @@ package com.pyredevelopment;
 
 import com.pyredevelopment.mathresources.Matrix;
 
+import java.util.Arrays;
+
 public class LinearRegression {
 
     private int features;   // Number of features in the algorithm
@@ -12,6 +14,22 @@ public class LinearRegression {
     // These are so we don't have to repeat matrix multiplication every time we add a sample
     private double[][] matrixXtX;   // Carry the running values of the XtX matrix
     private double[] vectorXtY;     // Carries the running values of XtY matrix
+
+    public static void main(String[] args) {
+
+        // Load data set
+        Dataset xTrain = Dataset.readCSV("src/main/resources/inputs.csv");
+        Dataset yTrain = Dataset.readCSV("src/main/resources/out.csv");
+
+
+        System.out.println(xTrain.rows());
+
+        // Train model
+        LinearRegression model = new LinearRegression(xTrain, yTrain);
+
+
+
+    }
 
     public LinearRegression(Dataset inputs, Dataset output) {
 
@@ -25,18 +43,34 @@ public class LinearRegression {
         features = inputs.columns();
         samples = inputs.rows();
 
-        inputs.padRight(1);
+        inputs.padLeft(1);
+
+        System.out.println(inputs);
 
         // Note that since these can be reused, they are assigned to instance variables
         calculateXtX(inputs);           // Calculate transpose(X)*X
+
         calculateXtY(inputs, output);   // Calculate transpose(X)*Y
+
+        for (int i = 0; i < vectorXtY.length; i++) {
+            System.out.println(vectorXtY[i]);
+        }
 
         // Now that we've calculated / loaded both XtX and XtY, we update the betavalues
         calculateBetaValues(); // Calculates inverse(XtX) * XtY and assigns it to betaValues[] variable
 
+
+        System.out.println(Arrays.toString(betaValues));
+
     }
 
-    public double predict(double[] inputs) { return 0f; };
+    public double predict(double[] inputs) {
+
+        double prediction = 0;
+
+        return 1;
+
+    };
 
     public Dataset predict(Dataset values) {
 
@@ -44,10 +78,9 @@ public class LinearRegression {
         double[] predictions = new double[values.rows()];
 
         for (int i = 0; i < values.rows(); i++) {
-            predictions[i] = predict(values.getRow(i));
+            //predictions[i] = predict(values.getRow(i));
         }
-
-        return new Dataset(predictions);
+        return null;
 
     }
 
@@ -101,20 +134,22 @@ public class LinearRegression {
         // Create a matrix of doubles that represents the transposition of X multiplied by itself
         matrixXtX = new double[features][features];
 
-        // Iterate through each point in the matrix and calculate the appropriate value
-        // TODO: This can be multithreaded at a later point if performance becomes an issue
-        for (int m = 0; m < matrixXtX.length; m++) {
-            for (int n = 0; n < matrixXtX[m].length; n++){
 
-                matrixXtX[m][n] = 0f;
-                for (int i = 0; i < inputs.columns(); i++) {
-                    matrixXtX[m][n] += (inputs.getValue(m, i) * inputs.getValue(n, i));
+        System.out.println(inputs.rows());
+        for (int i = 0; i < inputs.rows(); i++) {
+
+            for (int row = 0; row < matrixXtX.length; row++) {
+                for (int col = 0; col < matrixXtX[row].length; col++) {
+                    matrixXtX[row][col] += (inputs.getValue(i, col) * inputs.getValue(i, row));
+
                 }
-
             }
+
         }
 
     }
+
+
 
 
 }

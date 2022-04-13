@@ -98,11 +98,15 @@ public class Dataset implements Iterable<Double[]>{
 
         }
 
-        // For each line of the csv
-        for (int i = 0; i < linesToParse.size(); i++) {
 
+
+        // For each line of the csv
+        int lines = linesToParse.size();
+        for (int i = 0; i < lines; i++) {
+
+            System.out.println("Parsing: " + i);
             // Parse the line
-            ArrayList<String> parsedLine = parseDelimitedLine(linesToParse.poll(), delimiter);
+            ArrayList<String> parsedLine = parseDelimitedLine(Objects.requireNonNull(linesToParse.poll()), delimiter);
 
             // For each value in this line, try to cast to a double and insert into numerical values
             try {
@@ -123,6 +127,8 @@ public class Dataset implements Iterable<Double[]>{
                 e.printStackTrace();
             }
         }
+
+        System.out.println("Finals rows: " + rows());
     }
 
     /* - - - - - - - - - - - Getters / Setters - - - - - - - - - - - */
@@ -146,6 +152,16 @@ public class Dataset implements Iterable<Double[]>{
             padding.add(value);
         }
         data.put("Pad", padding);
+    }
+
+    public void padLeft(double value) {
+
+        ArrayList<Double> padding = new ArrayList<>();
+        for (int i = 0; i < rows(); i++) {
+            padding.add(value);
+        }
+        data.put("Pad", padding);
+        headers.add(0, "Pad");
     }
 
 
