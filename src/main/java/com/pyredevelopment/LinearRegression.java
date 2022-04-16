@@ -45,13 +45,17 @@ public class LinearRegression {
 
         inputs.padLeft(1);
 
-        System.out.println(inputs);
-
         // Note that since these can be reused, they are assigned to instance variables
         calculateXtX(inputs);           // Calculate transpose(X)*X
 
+        System.out.println("Matrix XtX");
+        for (int i = 0; i < matrixXtX.length; i++) {
+            System.out.println(Arrays.toString(matrixXtX[i]));
+        }
+
         calculateXtY(inputs, output);   // Calculate transpose(X)*Y
 
+        System.out.println("Vector XtY");
         for (int i = 0; i < vectorXtY.length; i++) {
             System.out.println(vectorXtY[i]);
         }
@@ -84,6 +88,8 @@ public class LinearRegression {
 
     }
 
+
+    // Both XtX and XtY are now confirmed, so there must be an error here in the beta calculations
     private void calculateBetaValues() {
 
         // Initialize the list
@@ -116,7 +122,7 @@ public class LinearRegression {
             for (int col = 0; col < inputs.columns(); col++) {
                 // Multiply them and add to appropriate indexes
                 vectorXtY[col] += inputs.getValue(row, col) * outputs.getValue(row, 0);
-            }
+ }
         }
 
     }

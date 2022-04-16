@@ -104,7 +104,7 @@ public class Dataset implements Iterable<Double[]>{
         int lines = linesToParse.size();
         for (int i = 0; i < lines; i++) {
 
-            System.out.println("Parsing: " + i);
+
             // Parse the line
             ArrayList<String> parsedLine = parseDelimitedLine(Objects.requireNonNull(linesToParse.poll()), delimiter);
 
@@ -128,7 +128,7 @@ public class Dataset implements Iterable<Double[]>{
             }
         }
 
-        System.out.println("Finals rows: " + rows());
+
     }
 
     /* - - - - - - - - - - - Getters / Setters - - - - - - - - - - - */
