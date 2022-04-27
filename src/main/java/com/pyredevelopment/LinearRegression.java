@@ -101,8 +101,12 @@ public class LinearRegression {
             matrixXtY[i][0] = vectorXtY[i];
 
         // Perform the actual calculation
-        System.out.println("XtX: " + matrixXtX.length + ", " + matrixXtX[0].length);
-        System.out.println("XtY: " + matrixXtY.length + ", " + matrixXtY[0].length);
+        System.out.println("XtX shape: " + matrixXtX.length + ", " + matrixXtX[0].length);
+        System.out.println("XtY shape: " + matrixXtY.length + ", " + matrixXtY[0].length);
+
+        System.out.println("Inverse of XtX:");
+        for (double[] a : Matrix.inverse(matrixXtX))
+            System.out.println(Arrays.toString(a));
 
         double[][] tempBetas = Matrix.multiply(Matrix.inverse(matrixXtX), matrixXtY);
 
@@ -154,8 +158,5 @@ public class LinearRegression {
         }
 
     }
-
-
-
 
 }

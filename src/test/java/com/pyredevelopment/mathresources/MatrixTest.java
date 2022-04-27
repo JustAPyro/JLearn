@@ -340,6 +340,25 @@ class MatrixTest {
         for (int i = 0; i < expected.length; i++)
             assertArrayEquals(expected[i], result[i]);
 
+        /* - - - - - Testing inverse that threw errors on 4/27/22 - - - - - */
+
+        // Setup
+        test = new double[][]{
+                {10, 55},
+                {55, 385}
+        };
+        expected = new double[][]{
+                {0.4666666666666667, -0.0667},
+                {-0.0667, 0.0121}
+        };
+
+        // Execute
+        result = Matrix.inverse(test);
+
+        // assert that each row is correct
+        for (int i = 0; i < expected.length; i++)
+            assertArrayEquals(expected[i], result[i]);
+
 
 
 
