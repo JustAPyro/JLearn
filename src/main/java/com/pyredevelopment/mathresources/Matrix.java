@@ -162,6 +162,7 @@ public class Matrix {
 
         guardMatrixRectangular(matrix); // Ensures the double[][] array is rectangular (all rows equal)
 
+        System.out.println("\nNew matrix:");
         // Create an output array for the cofactor matrix
         double[][] cofactorMatrix = new double[matrix.length][matrix[0].length];
 
@@ -171,17 +172,35 @@ public class Matrix {
 
                 // insert the determinant of the sub-matrix created by ignoring the row and column we are on
                 cofactorMatrix[row][col] = determinant(subMatrix(matrix, row, col));
+                System.out.printf("row: %d | col %d | det: %f\n", row, col, cofactorMatrix[row][col]);
 
             }
         }
 
-        // Then we iterate through and flip the signs on every other one
-        for (int i = 0; i < matrix.length*matrix[0].length; i++) {
-            // If it's an even iteration do nothing, otherwise flip signs
-            int multiple = (i%2 == 0)? 1 : -1;
-            // Actually apply to the cofactor matrix
-            cofactorMatrix[i/matrix[0].length][i%matrix[0].length] *= multiple;
+
+        /* This will apply a check board pattern where some cells have their sign flipped */
+
+        boolean rowStartPositive = true;
+        for (int col = 0; col < matrix[0].length; col++) {
+
+            boolean positive = rowStartPositive;
+            for (int row = 0; row < matrix.length; row++) {
+
+                // Get a multiple that's either -1 or 1
+                int multiple = positive? 1 : -1;
+
+                // Multiple this cell by either 1 or negative 1 depending on multiple
+                cofactorMatrix[row][col] *= multiple;
+
+                // After each cell flip the sign we're multiplying by
+                positive = !positive;
+            }
+
+            // At the end of each row flip the starting sign of the next row
+            rowStartPositive = !rowStartPositive;
         }
+
+
 
         // Return the resulting matrix
         return cofactorMatrix;

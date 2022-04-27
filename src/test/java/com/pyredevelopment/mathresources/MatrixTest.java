@@ -159,6 +159,25 @@ class MatrixTest {
         for (int i = 0; i < expected.length; i++)
             assertArrayEquals(expected[i], result[i]);
 
+        /* - - - - - Testing Case that caused error 4/27/22 - - - - - */
+
+        // Setup
+        test = new double[][]{
+                {10, 55},
+                {55, 385}
+        };
+        expected = new double[][]{
+                {385, -55},
+                {-55, 10}
+        };
+
+        // Execute
+        result = Matrix.cofactor(test);
+
+        // assert that each row is correct
+        for (int i = 0; i < expected.length; i++)
+            assertArrayEquals(expected[i], result[i]);
+
 
 
     }
@@ -348,8 +367,8 @@ class MatrixTest {
                 {55, 385}
         };
         expected = new double[][]{
-                {0.4666666666666667, -0.0667},
-                {-0.0667, 0.0121}
+                {0.4666666666666667, -0.06666666666666667},
+                {-0.06666666666666667, 0.012121212121212121}
         };
 
         // Execute
