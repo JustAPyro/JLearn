@@ -32,6 +32,12 @@ public class Matrix {
 
     }
 
+    /**
+     * Multiplies a matrix by a constant
+     * @param matrix Input matrix of doubles
+     * @param constant Constant to multiply
+     * @return The output matrix as a 2D double array
+     */
     public static double[][] multiply(double[][] matrix, double constant) {
 
         guardMatrixRectangular(matrix); // Ensures the data is rectangular (all rows equal)
@@ -52,6 +58,13 @@ public class Matrix {
 
     }
 
+    /**
+     * Multiplies a matrix by another matrix
+     * Note that order does matter with matrix multiplication
+     * @param matrixA First matrix
+     * @param matrixB Second matrix
+     * @return The output matrix
+     */
     public static double[][] multiply(double[][] matrixA, double[][] matrixB) {
 
         guardMatrixCanMultiply(matrixA, matrixB); // First, guard that these are actually matrix that can multiply
